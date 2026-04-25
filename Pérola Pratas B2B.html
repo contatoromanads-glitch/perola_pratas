@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pérola Pratas — Revendedores B2B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+/* ─── COLOR TOKENS ─── */
+:root {
+  --bg-a:        #1b6b42;
+  --bg-b:        #0f4d2e;
+  --bg-c:        #236e46;
+  --forest:      #f0fdf4;
+  --forest-mid:  #d1fae5;
+  --forest-soft: #a7f3d0;
+  --muted:       #6ee7b7;
+  --muted-light: #34d399;
+  --teal:        #34d399;
+  --teal-dark:   #10b981;
+  --white:       #ffffff;
+  --cream:       #022c22;
+  --card:        rgba(0,0,0,0.18);
+  --card-border: rgba(255,255,255,0.12);
+  --border:      rgba(255,255,255,0.1);
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: linear-gradient(160deg, var(--bg-c) 0%, var(--bg-a) 40%, var(--bg-b) 100%);
+  background-attachment: fixed;
+  color: var(--forest);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 10% 20%, rgba(16,185,129,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(6,78,59,0.08) 0%, transparent 60%);
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-a); }
+::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 0; }
+
+::selection { background: var(--teal); color: #fff; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ─── LOGO FILTER: white logo → dark forest green ─── */
+.logo-img {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+.logo-img-light {
+  filter: brightness(0) saturate(100%) invert(25%) sepia(40%) saturate(500%) hue-rotate(130deg) brightness(1.1);
+}
+
+/* ─── SECTION LABEL ─── */
+.section-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+/* ─── BUTTONS ─── */
+.btn-teal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #022c22;
+  color: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s;
+}
+.btn-teal:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--forest);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ─── CARD ─── */
+.card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(16,185,129,0.16);
+  border-color: rgba(16,185,129,0.55);
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(10,50,28,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  animation: fadeIn 0.6s ease forwards;
+}
+.nav-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+.nav-logo { height: 36px; display: block; }
+.nav-links { display: flex; gap: 2.5rem; align-items: center; }
+.nav-links a {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: #fff; }
+.nav-cta {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal);
+  text-decoration: none;
+  padding: 0.55rem 1.25rem;
+  border: 1.5px solid var(--teal);
+  transition: all 0.2s;
+}
+.nav-cta:hover { background: var(--teal); color: #022c22; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 68px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-grid-bg {
+  position: absolute; inset: 0;
+  backgroundImage: radial-gradient(circle, rgba(6,78,59,0.07) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 70% 90% at 30% 50%, black, transparent);
+  -webkit-mask-image: radial-gradient(ellipse 70% 90% at 30% 50%, black, transparent);
+}
+.hero-ghost {
+  position: absolute;
+  right: -4%;
+  bottom: -12%;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18rem, 36vw, 55rem);
+  line-height: 0.8;
+  color: var(--forest);
+  font-weight: 600;
+  opacity: 0.04;
+  letter-spacing: -0.06em;
+  pointer-events: none;
+  user-select: none;
+  font-style: italic;
+}
+.hero-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  align-items: center;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.hero-eyebrow-line { width: 28px; height: 2px; background: var(--teal); }
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 8.5vw, 8.5rem);
+  line-height: 0.92;
+  color: var(--forest);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.75rem;
+}
+.hero-h1 em {
+  font-style: italic;
+  background: linear-gradient(130deg, #34d399 0%, #6ee7b7 50%, #a7f3d0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: var(--forest-soft);
+  max-width: 380px;
+  font-weight: 300;
+  margin-bottom: 2.25rem;
+}
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  padding-top: 2rem;
+  border-top: 1.5px solid rgba(6,78,59,0.12);
+}
+.stat-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--forest);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-img-wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.hero-img {
+  max-height: 78vh;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 80px rgba(6,78,59,0.2)) drop-shadow(0 0 60px rgba(16,185,129,0.12));
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Hero logo badge */
+.hero-logo-badge {
+  position: absolute;
+  top: 50%;
+  right: 2.5rem;
+  transform: translateY(-50%);
+  opacity: 0.07;
+  pointer-events: none;
+  width: 320px;
+}
+
+/* ─── MARQUEE ─── */
+.marquee-wrap {
+  background: var(--forest);
+  padding: 1.1rem 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 28s linear infinite;
+}
+.marquee-item {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  padding: 0 2.5rem;
+}
+.marquee-item span { color: var(--teal); margin-right: 2.5rem; }
+
+/* ─── SECTION SHARED ─── */
+.section {
+  padding: 8rem 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.section-inner { max-width: 1320px; margin: 0 auto; }
+
+/* ─── DIFFERENTIAL ─── */
+.diff-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+.diff-header-line { flex: 1; height: 1px; background: var(--border); }
+.diff-row {
+  display: grid;
+  grid-template-columns: 5rem 1fr 2px 2.5fr;
+  align-items: center;
+  gap: 3rem;
+  padding: 2.75rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: default;
+  transition: background 0.3s;
+}
+.diff-row:first-child { border-top: 1px solid var(--border); }
+.diff-row:hover { background: rgba(255,255,255,0.04); }
+.diff-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem;
+  color: rgba(255,255,255,0.08);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  user-select: none;
+}
+.diff-icon-wrap {
+  width: 44px; height: 44px;
+  border: 1.5px solid rgba(16,185,129,0.4);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1rem;
+}
+.diff-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  color: var(--forest);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.diff-divider { height: 60px; background: var(--border); width: 1px; }
+.diff-desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--forest-soft);
+  font-weight: 300;
+  max-width: 420px;
+}
+
+/* ─── ARGUMENT ─── */
+.arg-section {
+  background: #011a12;
+  position: relative;
+  overflow: hidden;
+}
+.arg-ghost {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16rem, 28vw, 44rem);
+  line-height: 0.85;
+  color: #fff;
+  opacity: 0.04;
+  font-weight: 600;
+  letter-spacing: -0.08em;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  font-style: italic;
+}
+.arg-grid {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+  z-index: 1;
+}
+.arg-left {
+  padding: clamp(4.5rem,9vw,9rem) clamp(2.5rem,5vw,5.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.arg-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  line-height: 0.92;
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.arg-h2 em {
+  font-style: italic;
+  background: linear-gradient(130deg, #7dd9c4 0%, #00c4a0 50%, #a0f0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.arg-right {
+  padding: clamp(4.5rem,9vw,9rem) clamp(2.5rem,5vw,5.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  background: rgba(255,255,255,0.04);
+}
+.arg-p {
+  font-family: 'Jost', sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  line-height: 2;
+  color: rgba(255,255,255,0.7);
+  font-weight: 300;
+}
+.arg-proof {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+.arg-proof-line { width: 24px; height: 1.5px; background: var(--teal); }
+.arg-proof-text {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.08em;
+}
+/* Logo watermark in dark section */
+.arg-logo-bg {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  width: 200px;
+  opacity: 0.05;
+  filter: invert(1);
+  pointer-events: none;
+}
+
+/* ─── ADVANTAGE ─── */
+.adv-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  margin-bottom: 4.5rem;
+}
+.adv-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4.2vw, 4rem);
+  color: var(--forest);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin-top: 1.25rem;
+}
+.adv-p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--forest-soft);
+  font-weight: 300;
+  align-self: end;
+}
+.adv-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.adv-card {
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.adv-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(16,185,129,0.18);
+  border-color: rgba(16,185,129,0.6);
+}
+.adv-card-num {
+  position: absolute;
+  top: 0.5rem; right: 1.25rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 6rem;
+  color: var(--forest);
+  opacity: 0.04;
+  font-weight: 300;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.adv-icon {
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(16,185,129,0.35);
+  background: rgba(16,185,129,0.08);
+}
+.adv-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.75rem;
+  color: var(--forest);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.adv-card-desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: var(--forest-soft);
+  font-weight: 300;
+}
+
+/* ─── GALLERY ─── */
+.gallery-section { background: rgba(0,0,0,0.12); border-top: 1px solid var(--border); }
+.gallery-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+.gallery-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.4rem, 4.2vw, 4rem);
+  color: var(--forest);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  margin-top: 1.25rem;
+}
+.gallery-desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  color: var(--forest-soft);
+  line-height: 1.8;
+  max-width: 340px;
+  font-weight: 300;
+  text-align: right;
+}
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 4fr 5fr 3fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.gallery-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--forest-mid);
+  cursor: pointer;
+}
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.75;
+  transition: opacity 0.6s, transform 0.8s;
+  display: block;
+}
+.gallery-card:hover img { opacity: 0.95; transform: scale(1.05); }
+.gallery-card-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.75rem;
+  background: linear-gradient(to top, rgba(6,78,59,0.92) 0%, transparent 100%);
+}
+.gallery-card-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.gallery-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.3rem;
+}
+.gallery-card-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+}
+.gallery-footer {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.gallery-footer-line { flex: 1; height: 1px; background: var(--border); }
+.gallery-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.gallery-footer a:hover { opacity: 0.65; }
+
+/* ─── HERITAGE ─── */
+.heritage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+.heritage-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+  line-height: 0.95;
+  color: var(--forest);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  margin: 1.5rem 0 2rem;
+}
+.heritage-h2 em { font-style: italic; color: var(--teal); }
+.heritage-p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--forest-soft);
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+.heritage-stats {
+  display: flex;
+  gap: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1.5px solid var(--border);
+  margin-top: 1rem;
+}
+.heritage-stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.75rem, 4.5vw, 4rem);
+  color: var(--forest);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.6rem;
+}
+.heritage-img-wrap {
+  position: relative;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+}
+.heritage-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85) saturate(0.7);
+  transition: filter 0.9s, transform 0.9s;
+}
+.heritage-img-wrap:hover img {
+  filter: brightness(0.9) saturate(1);
+  transform: scale(1.03);
+}
+.heritage-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(6,78,59,0.5) 0%, transparent 55%);
+  pointer-events: none;
+}
+.heritage-corner {
+  position: absolute;
+  width: 36px; height: 36px;
+  pointer-events: none;
+}
+.heritage-corner.tr { top: 1.5rem; right: 1.5rem; border-top: 1.5px solid rgba(16,185,129,0.5); border-right: 1.5px solid rgba(16,185,129,0.5); }
+.heritage-corner.bl { bottom: 1.5rem; left: 1.5rem; border-bottom: 1.5px solid rgba(16,185,129,0.5); border-left: 1.5px solid rgba(16,185,129,0.5); }
+
+/* ─── LEAD CAPTURE ─── */
+.lead-section {
+  background: #011a12;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.lead-dots {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.lead-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(16,185,129,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.lead-inner {
+  position: relative;
+  max-width: 640px;
+  margin: 0 auto;
+  z-index: 1;
+}
+.lead-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 5.5vw, 4.5rem);
+  line-height: 1.1;
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  margin: 2rem 0 1.75rem;
+}
+.lead-h2 em { font-style: italic; color: var(--teal); }
+.lead-p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  margin-bottom: 3rem;
+}
+.lead-logo { height: 48px; margin-bottom: 1rem; filter: invert(1); opacity: 0.9; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: #0a3a1e;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 5rem 2.5rem 3rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.footer-inner { max-width: 560px; margin: 0 auto; }
+.footer-logo { height: 44px; margin-bottom: 2rem; }
+.footer-divider { display: flex; align-items: center; gap: 1.5rem; margin: 2.5rem 0; }
+.footer-divider-line { flex: 1; height: 1px; background: var(--border); }
+.footer-divider-gem { color: var(--teal); font-size: 0.5rem; }
+.footer-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.15;
+  color: var(--forest);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+.footer-h2 em { font-style: italic; color: var(--teal); }
+.footer-p {
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 2.5rem;
+}
+.footer-copy {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-top: 4rem;
+}
+
+/* SVG ICONS inline */
+svg { vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" style="text-decoration:none;">
+      <img src="logo.png" alt="Pérola Pratas" class="nav-logo logo-img" />
+    </a>
+    <div class="nav-links">
+      <a href="#colecoes">Coleções</a>
+      <a href="#atacado">Atacado</a>
+      <a href="#artesanal">Artesanal</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#cadastro" class="nav-cta">Aplicar Agora</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section class="hero">
+  <div class="hero-grid-bg" style="background-image:radial-gradient(circle, rgba(6,78,59,0.07) 1px, transparent 1px); background-size:32px 32px;"></div>
+  <div class="hero-ghost">925</div>
+
+  <div class="hero-inner">
+    <!-- LEFT -->
+    <div style="display:flex;flex-direction:column;animation:fadeUp 1s ease forwards;">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="section-label">Parceiros B2B Exclusivos</span>
+      </div>
+      <h1 class="hero-h1">
+        O<br>
+        <em style="font-family: &quot;Cormorant Garamond&quot;">Reflexo</em><br>
+        Curado.
+      </h1>
+      <p class="hero-p">
+        Eleve seu portfólio com prata de atacado de qualidade editorial.
+        Feito para visionários, desenhado para distinção.
+      </p>
+      <div class="hero-btns">
+        <a href="#cadastro" class="btn-teal">Analisar Ser de Atração</a>
+        <a href="#colecoes" class="btn-outline">Explorar Coleções</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-value">925</div>
+          <div class="stat-label">Prata Pura</div>
+        </div>
+        <div>
+          <div class="stat-value">B2B</div>
+          <div class="stat-label">Exclusivo</div>
+        </div>
+        <div>
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Fab. Própria</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="hero-img-wrap">
+      <video
+        src="jew.mp4"
+        autoplay muted loop playsinline
+        class="hero-img"
+        style="max-height:78vh;width:100%;object-fit:contain;filter:drop-shadow(0 30px 80px rgba(0,0,0,0.5)) drop-shadow(0 0 60px rgba(52,211,153,0.15));"
+      ></video>
+    </div>
+  </div>
+
+  <!-- logo watermark -->
+  <img src="logo.png" alt="" class="hero-logo-badge logo-img" aria-hidden="true" />
+
+  <!-- Scroll indicator -->
+  <div style="position:absolute;bottom:2.5rem;left:2.5rem;display:flex;align-items:center;gap:1rem;animation:fadeIn 1.5s 1.2s ease both;">
+    <div style="width:28px;height:1px;background:rgba(255,255,255,0.15)"></div>
+    <span style="font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);">Scroll</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MARQUEE ═══════════════════════ -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <!-- 2 copies for seamless loop -->
+    <span class="marquee-item"><span>◆</span> Prata 925 Legítima</span>
+    <span class="marquee-item"><span>◆</span> Fabricação Própria</span>
+    <span class="marquee-item"><span>◆</span> Garantia Vitalícia</span>
+    <span class="marquee-item"><span>◆</span> Atacado Exclusivo</span>
+    <span class="marquee-item"><span>◆</span> Alta Joalheria</span>
+    <span class="marquee-item"><span>◆</span> Margens Otimizadas</span>
+    <span class="marquee-item"><span>◆</span> Suporte Editorial</span>
+    <span class="marquee-item"><span>◆</span> Prata 925 Legítima</span>
+    <span class="marquee-item"><span>◆</span> Fabricação Própria</span>
+    <span class="marquee-item"><span>◆</span> Garantia Vitalícia</span>
+    <span class="marquee-item"><span>◆</span> Atacado Exclusivo</span>
+    <span class="marquee-item"><span>◆</span> Alta Joalheria</span>
+    <span class="marquee-item"><span>◆</span> Margens Otimizadas</span>
+    <span class="marquee-item"><span>◆</span> Suporte Editorial</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ DIFFERENTIAL ═══════════════════════ -->
+<section class="section" id="colecoes">
+  <div class="section-inner">
+    <div class="diff-header reveal">
+      <span class="section-label">Diferencial</span>
+      <div class="diff-header-line"></div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.7rem,2.6vw,2.5rem);color:var(--forest);font-weight:400;letter-spacing:-0.01em;">
+        O Diferencial Pérola Pratas
+      </h2>
+    </div>
+
+    <div>
+      <!-- Row 1 -->
+      <div class="diff-row reveal">
+        <span class="diff-num">01</span>
+        <div>
+          <div class="diff-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+          </div>
+          <div class="diff-title">Fabricação Própria</div>
+        </div>
+        <div class="diff-divider"></div>
+        <p class="diff-desc">Controle absoluto dos nossos padrões — exclusividade e distinção em cada detalhe da peça.</p>
+      </div>
+      <!-- Row 2 -->
+      <div class="diff-row reveal reveal-delay-1">
+        <span class="diff-num">02</span>
+        <div>
+          <div class="diff-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="diff-title">Garantia Vitalícia</div>
+        </div>
+        <div class="diff-divider"></div>
+        <p class="diff-desc">Prata 925 legítima. Garantia para você e confiança total para o seu cliente final.</p>
+      </div>
+      <!-- Row 3 -->
+      <div class="diff-row reveal reveal-delay-2">
+        <span class="diff-num">03</span>
+        <div>
+          <div class="diff-icon-wrap">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="diff-title">Margem de Lucro</div>
+        </div>
+        <div class="diff-divider"></div>
+        <p class="diff-desc">Preços de atacado otimizados para maximizar o seu faturamento e escalar o seu negócio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ARGUMENT ═══════════════════════ -->
+<section class="arg-section" id="atacado">
+  <div class="arg-ghost">100</div>
+  <img src="logo.png" alt="" class="arg-logo-bg" aria-hidden="true" />
+  <div class="arg-grid">
+    <div class="arg-left reveal">
+      <span class="section-label" style="color:rgba(16,185,129,0.9);">Potencial</span>
+      <h2 class="arg-h2">
+        Escale<br>para<br>
+        <em>R$ 100<br>Mil/mês</em>
+      </h2>
+    </div>
+    <div class="arg-right reveal reveal-delay-1">
+      <p class="arg-p">
+        Estruturamos modelos de negócio onde a alta liquidez da prata 925 encontra
+        tickets médios de R$ 1.000,00. Nossa metodologia de escala é desenhada para
+        que parceiros alcancem faturamentos superiores a R$ 100 mil/mês, com margens
+        líquidas agressivas e um suporte comercial focado exclusivamente em expansão
+        financeira.
+      </p>
+      <div class="arg-proof">
+        <div class="arg-proof-line"></div>
+        <span class="arg-proof-text">Retorno comprovado em 90 dias</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ADVANTAGE ═══════════════════════ -->
+<section class="section" style="border-top: 1px solid var(--border);">
+  <div class="section-inner">
+    <div class="adv-header reveal">
+      <div>
+        <span class="section-label" style="display:block;">À Vantagem</span>
+        <h2 class="adv-h2">Além da Transação</h2>
+      </div>
+      <p class="adv-p">
+        Fornecemos mais do que estoque; oferecemos uma classe de ativos curada
+        para maximizar sua margem e elevar a narrativa da sua marca.
+      </p>
+    </div>
+
+    <div class="adv-cards">
+      <div class="adv-card reveal">
+        <span class="adv-card-num">01</span>
+        <div class="adv-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div class="adv-card-title">Margens Otimizadas</div>
+        <p class="adv-card-desc">Estruturas de aquisição direto da fonte garantindo lucratividade excepcional sem comprometer o valor intrínseco da prata pura.</p>
+      </div>
+      <div class="adv-card reveal reveal-delay-1">
+        <span class="adv-card-num">02</span>
+        <div class="adv-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9z"/><path d="M11 3L8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
+        </div>
+        <div class="adv-card-title">Arquivos Exclusivos</div>
+        <p class="adv-card-desc">Acesso a designs de tiragem limitada e coleções sob medida, permitindo que seu catálogo permaneça distinto em um mercado saturado.</p>
+      </div>
+      <div class="adv-card reveal reveal-delay-2">
+        <span class="adv-card-num">03</span>
+        <div class="adv-icon">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg>
+        </div>
+        <div class="adv-card-title">Suporte Editorial</div>
+        <p class="adv-card-desc">Acesso à nossa biblioteca de ativos de alta resolução com qualidade de lookbook para garantir que sua presença digital reflita puro luxo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ GALLERY ═══════════════════════ -->
+<section class="section gallery-section" id="portfolio">
+  <div class="section-inner">
+    <div class="gallery-header reveal">
+      <div>
+        <span class="section-label" style="display:block;margin-bottom:1.25rem;">Nossa Curadoria</span>
+        <h2 class="gallery-h2">Arquivos Curados</h2>
+      </div>
+      <p class="gallery-desc">Uma seleção das nossas silhuetas mais cobiçadas, estruturadas para ambientes de varejo premium.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div style="margin-top:5rem;" class="reveal">
+        <div class="gallery-card" style="aspect-ratio:3/4;">
+          <img src="https://images.unsplash.com/photo-1515362778563-6a8d0e44bc0b?w=600&q=80" alt="Anéis" />
+          <div class="gallery-card-overlay">
+            <span class="gallery-card-label">Anéis</span>
+            <div class="gallery-card-title">Conjunto Obsidian Band</div>
+            <div class="gallery-card-sub">Atacado Nível 1</div>
+          </div>
+        </div>
+      </div>
+      <div style="box-shadow:0 40px 100px rgba(0,0,0,0.2);" class="reveal reveal-delay-1">
+        <div class="gallery-card" style="aspect-ratio:4/5;">
+          <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800&q=80" alt="Correntes" />
+          <div class="gallery-card-overlay">
+            <span class="gallery-card-label">Correntes Assinatura</span>
+            <div class="gallery-card-title" style="font-size:1.45rem;">Corrente Lumina Anchor</div>
+            <div class="gallery-card-sub">Atacado Nível 2</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:-2rem;" class="reveal reveal-delay-2">
+        <div class="gallery-card" style="aspect-ratio:1/1;">
+          <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80" alt="Pulseiras" />
+          <div class="gallery-card-overlay">
+            <span class="gallery-card-label">Pulseiras</span>
+            <div class="gallery-card-title">Braceletes Arquitetônicos</div>
+            <div class="gallery-card-sub">Atacado Nível 1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-footer reveal">
+      <div class="gallery-footer-line"></div>
+      <a href="#lookbook">
+        Ver Lookbook Completo
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <div class="gallery-footer-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ HERITAGE ═══════════════════════ -->
+<section class="section" id="artesanal" style="border-top:1px solid var(--border);">
+  <div class="section-inner">
+    <div class="heritage-grid">
+      <div class="reveal">
+        <span class="section-label">Nossa Herança</span>
+        <h2 class="heritage-h2">
+          Forjado na<br>
+          <em>Tradição.</em>
+        </h2>
+        <p class="heritage-p">
+          Dedicamos o propósito da Pérola Pratas à ciência artesanal, à elevação da prata 925 e ao estímulo da excelência em cada peça produzida.
+        </p>
+        <p class="heritage-p">
+          Nossas instalações combinam métodos centenários com fundição de precisão moderna, garantindo que cada peça entregue aos nossos parceiros possua integridade estrutural e acabamento inigualável.
+        </p>
+        <div class="heritage-stats">
+          <div>
+            <div class="heritage-stat-val"><span id="counter925">0</span></div>
+            <div class="section-label">Prata 925</div>
+          </div>
+          <div>
+            <div class="heritage-stat-val"><span id="counter100">0</span>%</div>
+            <div class="section-label">Produção Própria</div>
+          </div>
+        </div>
+      </div>
+      <div class="heritage-img-wrap reveal reveal-delay-1">
+        <img src="hero.png" alt="Pérola Pratas — tradição artesanal" />
+        <div class="heritage-img-overlay"></div>
+        <div class="heritage-corner tr"></div>
+        <div class="heritage-corner bl"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ LEAD CAPTURE ═══════════════════════ -->
+<section class="section lead-section" id="cadastro">
+  <div class="lead-dots"></div>
+  <div class="lead-glow"></div>
+  <div class="lead-inner">
+    <img src="logo.png" alt="Pérola Pratas" class="lead-logo" />
+    <span class="section-label" style="display:block;color:rgba(16,185,129,0.9);margin-bottom:0.5rem;">Aplicação</span>
+    <h2 class="lead-h2 reveal">
+      Aplique para ser um<br>
+      <em>Revendedor Exclusivo</em>
+    </h2>
+    <p class="lead-p reveal reveal-delay-1">
+      Preencha as condições de parceiro revendedor e faça parte de uma rede
+      exclusiva de distribuidores da alta joalheria em prata 925.
+    </p>
+    <a
+      href="https://wa.me/5511999999999?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20P%C3%A9rola%20Pratas%20e%20gostaria%20de%20aplicar%20para%20ser%20um%20Revendedor%20Exclusivo."
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-teal reveal reveal-delay-2"
+      style="font-size:0.78rem;letter-spacing:0.18em;padding:1.15rem 3rem;background:var(--teal);color:#fff;"
+    >
+      Iniciar Conversa no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <img src="logo.png" alt="Pérola Pratas" class="footer-logo logo-img" />
+
+    <div class="footer-divider">
+      <div class="footer-divider-line"></div>
+      <span class="footer-divider-gem">◆</span>
+      <div class="footer-divider-line"></div>
+    </div>
+
+    <h2 class="footer-h2">
+      Eleve seu negócio ao patamar<br>
+      <em>da alta joalheria.</em>
+    </h2>
+
+    <p class="footer-p">
+      Junte-se a uma rede estruturada de revendedores e leve mais do que luxo.
+    </p>
+
+    <a href="#cadastro" class="btn-outline" style="font-size:0.72rem;">
+      Solicitar Acesso ao Atacado
+    </a>
+
+    <p class="footer-copy">
+      © <span id="year"></span> Pérola Pratas B2B — Todos os Direitos Reservados
+    </p>
+  </div>
+</footer>
+
+<script>
+// ─── Year ───
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ─── Scroll reveal ───
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+reveals.forEach(el => io.observe(el));
+
+// ─── Counter animation ───
+function animateCounter(el, target, suffix, duration) {
+  const start = performance.now();
+  function update(ts) {
+    const progress = Math.min((ts - start) / (duration * 1000), 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(ease * target) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(document.getElementById('counter925'), 925, '', 2.2);
+      animateCounter(document.getElementById('counter100'), 100, '', 1.8);
+      counterObserver.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+counterObserver.observe(document.getElementById('counter925'));
+</script>
+
+<!-- ═══ TWEAKS PANEL ═══ -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<div id="tweaks-root"></div>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "#34d399",
+  "bgLight": "#236e46",
+  "bgMid": "#1b6b42",
+  "bgDeep": "#0f4d2e",
+  "forestColor": "#f0fdf4",
+  "cardOpacity": 50
+}/*EDITMODE-END*/;
+
+function applyTweaks(t) {
+  const r = document.documentElement.style;
+  r.setProperty('--teal', t.accentColor);
+  r.setProperty('--teal-dark', t.accentColor);
+  r.setProperty('--bg-c', t.bgLight);
+  r.setProperty('--bg-a', t.bgMid);
+  r.setProperty('--bg-b', t.bgDeep);
+  r.setProperty('--forest', t.forestColor);
+  r.setProperty('--forest-mid', t.forestColor);
+  r.setProperty('--card', 'rgba(0,0,0,' + (t.cardOpacity / 100) + ')');
+}
+
+const ACCENT_PRESETS = [
+  { label: 'Emerald',     value: '#10b981' },
+  { label: 'Jade',        value: '#059669' },
+  { label: 'Forest',      value: '#15803d' },
+  { label: 'Mint',        value: '#34d399' },
+  { label: 'Sage',        value: '#4ade80' },
+  { label: 'Olive',       value: '#65a30d' },
+];
+
+const BG_PRESETS = [
+  { label: 'Menta Clara',    light: '#ecfdf5', mid: '#d1fae5', deep: '#a7f3d0' },
+  { label: 'Jade Suave',     light: '#f0fdf4', mid: '#dcfce7', deep: '#bbf7d0' },
+  { label: 'Floresta',       light: '#e8f5e9', mid: '#c8e6c9', deep: '#a5d6a7' },
+  { label: 'Esmeralda Viva', light: '#d4edda', mid: '#b8dfc8', deep: '#8fc8a8' },
+];
+
+const TEXT_PRESETS = [
+  { label: 'Floresta Profunda', value: '#064e3b' },
+  { label: 'Preto Esmeralda',   value: '#022c22' },
+  { label: 'Verde Medio',       value: '#134e2a' },
+];
+
+function PresetBtn({ active, onClick, children }) {
+  return (
+    <button onClick={onClick} style={{
+      display: 'flex', alignItems: 'center', gap: '0.5rem',
+      width: '100%', padding: '0.5rem 0.6rem',
+      background: active ? 'rgba(16,185,129,0.12)' : 'transparent',
+      border: active ? '1px solid rgba(16,185,129,0.4)' : '1px solid transparent',
+      borderRadius: '4px', cursor: 'pointer', color: '#111',
+      fontFamily: 'Jost,sans-serif', fontSize: '0.78rem', letterSpacing: '0.04em',
+    }}>
+      {children}
+    </button>
+  );
+}
+
+function Swatch({ color }) {
+  return <span style={{ width: 16, height: 16, borderRadius: '50%', background: color, flexShrink: 0, border: '2px solid rgba(0,0,0,0.1)' }} />;
+}
+
+function TweaksApp() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyTweaks(tweaks); }, [tweaks]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection label="Cor de Destaque">
+        {ACCENT_PRESETS.map(p => (
+          <PresetBtn key={p.value} active={tweaks.accentColor === p.value} onClick={() => setTweak('accentColor', p.value)}>
+            <Swatch color={p.value} />{p.label}
+          </PresetBtn>
+        ))}
+        <div style={{ marginTop: '0.5rem' }}>
+          <TweakColor label="Personalizar" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
+        </div>
+      </TweakSection>
+
+      <TweakSection label="Paleta de Fundo">
+        {BG_PRESETS.map(p => (
+          <PresetBtn key={p.label} active={tweaks.bgLight === p.light}
+            onClick={() => { setTweak('bgLight', p.light); setTweak('bgMid', p.mid); setTweak('bgDeep', p.deep); }}>
+            <span style={{ display: 'flex', gap: 3 }}>
+              {[p.light, p.mid, p.deep].map((c, i) => (
+                <span key={i} style={{ width: 12, height: 16, background: c, borderRadius: 2 }} />
+              ))}
+            </span>
+            {p.label}
+          </PresetBtn>
+        ))}
+      </TweakSection>
+
+      <TweakSection label="Cor do Texto">
+        {TEXT_PRESETS.map(p => (
+          <PresetBtn key={p.value} active={tweaks.forestColor === p.value} onClick={() => setTweak('forestColor', p.value)}>
+            <Swatch color={p.value} />{p.label}
+          </PresetBtn>
+        ))}
+      </TweakSection>
+
+      <TweakSection label="Opacidade dos Cards">
+        <TweakSlider label="Transparencia" value={tweaks.cardOpacity} min={40} max={95} step={5} unit="%" onChange={v => setTweak('cardOpacity', v)} />
+      </TweakSection>
+    </TweaksPanel>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(React.createElement(TweaksApp));
+</script>
+
+</body>
+</html>
