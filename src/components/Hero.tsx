@@ -42,30 +42,31 @@ export default function Hero() {
         925
       </div>
 
-      {/* ─── MOBILE: cena SVG como background atrás do texto ───
-          Em telas <md, a cena fica posicionada absolutamente, centralizada,
-          com opacidade reduzida e um overlay vinheta para garantir legibilidade.
-          Em md+ ela é escondida aqui (renderizada novamente no grid à direita). */}
+      {/* ─── PHONES (<640px): cena SVG como background atrás do texto ───
+          Em telas <sm a cena fica posicionada absolutamente, deslocada para
+          cima e mais discreta, com overlay vertical forte para garantir
+          legibilidade do headline, CTAs e estatísticas. */}
       <div
-        className="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none z-0"
+        className="sm:hidden absolute inset-0 flex items-start justify-center pointer-events-none z-0 pt-[80px]"
         aria-hidden="true"
       >
-        <div className="w-[115%] max-w-none opacity-[0.22] blur-[0.5px] translate-y-4">
+        <div className="w-[90%] max-w-none opacity-[0.14] blur-[0.5px] -translate-y-6">
           <HeroScene />
         </div>
-        {/* Overlay para reforçar contraste do texto sobre a animação */}
+        {/* Overlay vertical: mantém o texto crisp em cima e embaixo,
+            deixando apenas uma janela suave no centro para a animação respirar. */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 80% 70% at 50% 55%, hsl(var(--background) / 0.78) 0%, hsl(var(--background) / 0.55) 50%, hsl(var(--background) / 0.85) 100%)',
+              'linear-gradient(180deg, hsl(var(--background) / 0.92) 0%, hsl(var(--background) / 0.55) 35%, hsl(var(--background) / 0.55) 55%, hsl(var(--background) / 0.94) 90%)',
           }}
         />
       </div>
 
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full grid grid-cols-1 md:grid-cols-[5fr_4fr] items-center gap-12 md:gap-8 relative z-10">
         {/* ═══════════════════ CONTEÚDO ═══════════════════ */}
-        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 md:order-1 text-center md:text-left items-center md:items-start relative z-10">
+        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 md:order-1 text-center md:text-left items-center md:items-start relative z-10 sm:backdrop-blur-0 backdrop-blur-[2px]">
           <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
             <div className="w-7 h-[2px] bg-accent" aria-hidden="true" />
             <span className="section-label">Parceiros B2B Exclusivos</span>
@@ -96,7 +97,9 @@ export default function Hero() {
             <a href="#colecoes" className="btn-outline">Explorar Coleções</a>
           </div>
 
-          <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12 pt-8 border-t border-border-strong w-full">
+          {/* Stat row — em mobile, limitamos a largura para a régua superior
+              acompanhar o conteúdo (em vez de cruzar a coluna inteira). */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12 pt-8 border-t border-border-strong w-full max-w-sm md:max-w-none mx-auto md:mx-0">
             {[
               { value: '925', label: 'Prata Pura' },
               { value: 'B2B', label: 'Exclusivo' },
@@ -114,10 +117,14 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ═══════════════════ CENA SVG (somente desktop) ═══════════════════
-            Em mobile a cena foi movida para o background acima. */}
-        <div className="hidden md:flex order-2 justify-end items-center w-full">
-          <HeroScene />
+        {/* ═══════════════════ CENA SVG ═══════════════════
+            • <sm: escondida (renderizada como background acima)
+            • sm–md: stack abaixo do texto, tamanho reduzido, sem sobreposição
+            • md+: coluna direita do grid 5fr/4fr */}
+        <div className="hidden sm:flex order-2 justify-center md:justify-end items-center w-full">
+          <div className="w-full max-w-[360px] md:max-w-[520px]">
+            <HeroScene />
+          </div>
         </div>
       </div>
 
