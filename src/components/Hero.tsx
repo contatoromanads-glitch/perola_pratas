@@ -79,7 +79,7 @@ export default function Hero() {
             <span className="section-label">Parceiros B2B Exclusivos</span>
           </div>
 
-          <h1 className="font-serif text-[clamp(3rem,7vw,7rem)] leading-[0.95] text-primary font-normal tracking-[-0.025em] mb-7">
+          <h1 className="font-serif leading-[0.95] text-primary font-normal tracking-[-0.025em] mb-7 text-8xl">
             O<br />
             <em
               className="italic text-transparent bg-clip-text"
