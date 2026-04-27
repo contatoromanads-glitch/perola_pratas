@@ -132,13 +132,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ─── Indicador de scroll ─── */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-3 animate-[fadeIn_1.5s_1.2s_ease_both]">
-        <span className="font-sans text-[0.68rem] tracking-[0.3em] uppercase text-tertiary">
-          Scroll
-        </span>
-        <div className="w-px h-10 bg-border-strong" aria-hidden="true" />
-      </div>
     </section>
   )
 }
