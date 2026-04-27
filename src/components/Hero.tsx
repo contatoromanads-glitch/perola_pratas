@@ -42,9 +42,30 @@ export default function Hero() {
         925
       </div>
 
+      {/* ─── MOBILE: cena SVG como background atrás do texto ───
+          Em telas <md, a cena fica posicionada absolutamente, centralizada,
+          com opacidade reduzida e um overlay vinheta para garantir legibilidade.
+          Em md+ ela é escondida aqui (renderizada novamente no grid à direita). */}
+      <div
+        className="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none z-0"
+        aria-hidden="true"
+      >
+        <div className="w-[115%] max-w-none opacity-[0.22] blur-[0.5px] translate-y-4">
+          <HeroScene />
+        </div>
+        {/* Overlay para reforçar contraste do texto sobre a animação */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 70% at 50% 55%, hsl(var(--background) / 0.78) 0%, hsl(var(--background) / 0.55) 50%, hsl(var(--background) / 0.85) 100%)',
+          }}
+        />
+      </div>
+
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full grid grid-cols-1 md:grid-cols-[5fr_4fr] items-center gap-12 md:gap-8 relative z-10">
         {/* ═══════════════════ CONTEÚDO ═══════════════════ */}
-        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-2 md:order-1">
+        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 md:order-1 text-center md:text-left items-center md:items-start relative z-10">
           <div className="flex items-center gap-4 mb-6">
             <div className="w-7 h-[2px] bg-accent" aria-hidden="true" />
             <span className="section-label">Parceiros B2B Exclusivos</span>
