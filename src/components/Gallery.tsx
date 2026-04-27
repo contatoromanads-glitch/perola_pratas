@@ -13,7 +13,7 @@ interface GalleryImage {
 
 const IMAGES: GalleryImage[] = [
   {
-    src: 'https://images.unsplash.com/photo-1515362778563-6a8d0e44bc0b?w=600&q=80',
+    src: '/gallery-1.png',
     alt: 'Conjunto de anéis de prata 925',
     label: 'Anéis',
     title: 'Conjunto Obsidian Band',
@@ -22,7 +22,7 @@ const IMAGES: GalleryImage[] = [
     delay: 0,
   },
   {
-    src: 'https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800&q=80',
+    src: '/gallery-2.png',
     alt: 'Corrente de prata Lumina Anchor',
     label: 'Correntes Assinatura',
     title: 'Corrente Lumina Anchor',
@@ -32,7 +32,7 @@ const IMAGES: GalleryImage[] = [
     delay: 1,
   },
   {
-    src: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&q=80',
+    src: '/gallery-3.png',
     alt: 'Braceletes arquitetônicos de prata',
     label: 'Pulseiras',
     title: 'Braceletes Arquitetônicos',
