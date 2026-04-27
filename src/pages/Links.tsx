@@ -34,8 +34,8 @@ const LINKS: LinkItem[] = [
   },
   {
     icon: Sparkles,
-    label: 'Catálogo de Coleções',
-    description: 'Explore nossas peças em prata 925',
+    label: 'CATÁLOGO ATACADO',
+    description: 'Explore o site oficial',
     href: '/#colecoes',
   },
   {
