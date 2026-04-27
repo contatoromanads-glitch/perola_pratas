@@ -1,115 +1,71 @@
-# Diagnóstico — Auditoria UI/UX & WCAG AA
+# Hero redesign — Cena SVG vanguardista
 
-## Falhas críticas de contraste (texto desaparecendo)
+## O que será feito
 
-1. **Marquee invisível** — `<div className="bg-forest …">` usa `--forest: #f0fdf4` (quase branco) com filhos `text-white/55`. **Texto branco sobre fundo branco** (contraste ~1.05:1). Falha total WCAG.
-2. **Token `--cream` enganoso** — definido como `#022c22` (verde quase preto). Qualquer componente que usar `text-cream` sobre o fundo escuro vai sumir. Nome semântico não condiz com a cor.
-3. **`btn-teal` com cor sólida escura** — fundo `#022c22` sobre seção principal escura `#0f4d2e`/`#1b6b42` resulta em contraste insuficiente (~1.6:1) entre o botão e o fundo da página: o CTA primário se confunde com o entorno.
-4. **Body padrão `var(--forest)` (#f0fdf4) sobre gradiente verde escuro** — OK para títulos, mas todo `text-forest-soft` (#a7f3d0) em parágrafos pequenos fica abaixo de 4.5:1 contra `#1b6b42` (~3.8:1). Falha AA para texto normal.
-5. **`text-muted` (#6ee7b7) e `text-white/55`** usados em labels e legendas pequenas — frequentemente abaixo de AA.
-6. **Bordas e separadores quase invisíveis** — `border-border` definido como `rgba(255,255,255,0.1)`; combinado com cards `rgba(0,0,0,0.18)` no fundo verde gera hierarquia visual fraca.
-7. **Hero stat divider** usa `border-[rgba(6,78,59,0.12)]` (verde escuro com 12% alpha) sobre fundo verde escuro — invisível.
-8. **Ghost numbers com `text-white/5` e `text-forest opacity-[0.04]`** sobre fundo escuro: ok decorativo, mas alguns viram ruído sem propósito.
-9. **Texto do botão Hero "Analisar Ser de Atração"** — string parece corrompida (provável "Aplicar Agora" ou similar). Mantemos texto conforme restrição mas o destacamos.
-10. **Footer em `#0a3a1e`** com `text-muted` (#6ee7b7) em parágrafo: contraste limítrofe, e `text-white/25` no copyright fica abaixo de 3:1.
+Substituir completamente o `<video>` lateral e o logo watermark do Hero por uma **cena SVG animada** construída em código puro: silhueta feminina em line-art editorial sendo adornada por um colar de prata com pingente diamantino, brincos cintilantes, partículas orbitando e ondas concêntricas saindo do pingente.
 
-## Problemas de layout e coesão
+Tudo é **SVG inline + CSS keyframes** (sem GSAP/Framer Motion) — zero dependências novas, totalmente performático.
 
-- **Hero**: grid fixo `5fr_4fr` com `px-10` quebra em telas <900px (não responsivo). Vídeo lateral pode não carregar — sem fallback visível.
-- **Differential**: grid `5rem_1fr_2px_2.5fr` com `gap-12` colapsa horrivelmente no mobile.
-- **Gallery**: grid `4fr_5fr_3fr` sempre 3 colunas, sem breakpoint mobile.
-- **Argument**: padding clamp gigante (`9vw 5.5vw`) em telas pequenas espreme conteúdo.
-- **Tipografia inconsistente**: clamp values muito agressivos (`8.5vw` no h1) viram tamanhos desproporcionais em viewport médio.
-- **Hierarquia de CTAs fraca**: botão primário e outline têm peso visual quase idêntico.
-- **Cards do Advantage** dependem de blur sobre fundo já escuro com baixa diferenciação — parecem flutuar sem âncora.
-- **Falta foco visível** (`:focus-visible`) em links/botões — falha WCAG 2.4.7.
-- **Nav links em `text-white/50`** — abaixo de AA mesmo no fundo escuro do nav.
+## Arquivos alterados
 
----
+- **`src/components/Hero.tsx`** — reescrito com a nova cena SVG (componente `<HeroScene/>` interno).
+- **`src/index.css`** — novos keyframes adicionados ao final do bloco "ANIMATIONS".
 
-# Solução proposta
-
-Refatorar o **design system** e os **componentes**, mantendo 100% do conteúdo textual e a estética verde-esmeralda. Estratégia:
-
-## 1. Sistema de tokens redesenhado (`src/index.css`)
-
-Tokens semânticos coerentes, todos em HSL, validados para WCAG AA:
+## Camadas da cena (do fundo para o primeiro plano)
 
 ```text
-Surfaces (escuro)
-  --surface-0   hsl(160 60% 6%)    base mais escura
-  --surface-1   hsl(160 50% 10%)   seções
-  --surface-2   hsl(160 45% 14%)   cards
-  --surface-3   hsl(160 40% 18%)   elevadas
-Surfaces (claro p/ marquee/footer)
-  --surface-light hsl(160 40% 12%) (NÃO mais branco — corrige marquee)
-
-Texto
-  --text-primary    hsl(150 40% 96%)  AA contra surface-0..3
-  --text-secondary  hsl(150 25% 82%)  AA p/ corpo
-  --text-tertiary   hsl(150 20% 68%)  AA p/ labels grandes
-  --text-muted      hsl(150 15% 58%)  apenas decorativo
-
-Brand
-  --accent          hsl(160 70% 45%)  verde esmeralda vivo
-  --accent-hover    hsl(160 75% 38%)
-  --accent-soft     hsl(160 60% 70%)  para itálicos/destaques
-
-Borders
-  --border-subtle   hsl(150 30% 100% / 0.10)
-  --border-strong   hsl(150 30% 100% / 0.22)
+┌─ aura: 3 anéis concêntricos pulsantes
+├─ partículas: 14 pontos de prata orbitando em loop lento
+├─ silhueta: traços contínuos (cabelo → rosto → pescoço → ombros)
+│            efeito "draw-on" via stroke-dasharray
+├─ colar:    arco passando pelo pescoço + pingente diamantino
+│            ondas concêntricas (signal) saindo do pingente
+├─ brincos:  ponto + gota de prata, brilho pulsante
+└─ sparkles: 7 estrelas diamantinas cintilando fora de fase
 ```
 
-Contrastes-alvo verificados:
-- text-primary sobre surface-0 = ~15:1 (AAA)
-- text-secondary sobre surface-1 = ~9:1 (AAA)
-- text-tertiary sobre surface-1 = ~5.2:1 (AA)
-- accent sobre surface-0 = ~5.8:1 (AA)
+## Animações (keyframes a adicionar em `index.css`)
 
-## 2. Tailwind config (`tailwind.config.ts`)
+- `drawLine` — desenha cada path da silhueta/colar progressivamente (3s sequenciados).
+- `auraPulse` — anéis concêntricos respiram (escala + opacidade), 6s.
+- `particleDrift` — partículas oscilam em ciclos de 10–15s, fora de fase.
+- `pendantGlow` — halo do pingente pulsa (4s).
+- `signalWave` — ondas radiais expandem do pingente (4s loop).
+- `earringTwinkle` — brincos brilham (3s).
+- `sparkleTwinkle` — estrelas surgem/somem com rotação (5s).
+- `fadeInDelayed` — utilitário para revelações sequenciadas.
 
-Mapear novos tokens para classes utilitárias semânticas: `bg-surface-1`, `text-primary`, `text-secondary`, `border-subtle`, etc. Manter compat com nomes atuais via aliases onde possível.
+A `floating` global existente (`@keyframes float`) embala o container inteiro suavemente.
 
-## 3. Componentes ajustados
+## Sequência temporal (storytelling)
 
-- **Marquee**: trocar `bg-forest` → `bg-surface-light` com `text-secondary` (corrige contraste 1:1).
-- **Nav**: links em `text-secondary` (não `white/50`); estado ativo/hover em `text-primary`. Mobile menu hambúrguer com `<details>` nativo (sem JS extra).
-- **Hero**: grid responsivo `grid-cols-1 md:grid-cols-[5fr_4fr]`, padding `px-6 md:px-10`, divider em `border-subtle`, parágrafo em `text-secondary`. Botão primário sólido com accent + foco visível.
-- **Differential**: grid responsivo (lista vertical no mobile), descrição em `text-secondary`.
-- **Argument**: padding reduzido em mobile, texto em `text-secondary`, label do accent corrigida.
-- **Advantage**: cards com `bg-surface-2`, borda `border-subtle` mais visível, hover com borda accent.
-- **Gallery**: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-[4fr_5fr_3fr]`; legenda em `text-secondary`.
-- **Heritage**: parágrafos em `text-secondary`; counters em `text-primary`.
-- **LeadCapture**: parágrafo em `text-secondary`; botão WhatsApp em accent sólido com foco.
-- **Footer**: trocar `bg-[#0a3a1e]` por `bg-surface-0`; parágrafo em `text-secondary`; copyright em `text-tertiary` (≥4.5:1).
-- **Botões globais** (`.btn-teal`, `.btn-outline`): redesign com hierarquia clara — primário accent sólido, outline com borda forte e label `text-primary`. Ambos com `:focus-visible` ring (`outline: 2px solid accent; outline-offset: 3px`).
+```text
+0.0s ──► silhueta começa a se desenhar (cabeça)
+0.6s ──► linha do rosto
+1.2s ──► pescoço aparece
+1.4s ──► ombros / decote
+2.4s ──► detalhes do rosto (olhos, V do decote)
+2.6s ──► colar se desenha em arco
+3.4s ──► brincos surgem
+4.4s ──► pingente aparece e começa a brilhar
+4.8s+ ──► ondas radiais e partículas em loop perpétuo
+```
 
-## 4. Acessibilidade adicional
+## Aspectos técnicos
 
-- `:focus-visible` global com anel verde accent.
-- `prefers-reduced-motion` desliga marquee, float e reveal.
-- `aria-hidden` em watermarks/ghost texts decorativos (já parcial).
-- Tamanho mínimo de toque 44×44 nos links do nav e botões.
+- **`viewBox="0 0 400 500"`** com `preserveAspectRatio` → escala perfeita sem distorção.
+- **Gradientes definidos uma vez em `<defs>`**: silhueta verde, prata polida, glow radial.
+- **`<filter id="softGlow">`** com `feGaussianBlur` → brilho real nos brincos e pingente.
+- **`<symbol id="sparkle">`** reutilizado via `<use>` → 7 estrelas com 1 definição.
+- **Acessibilidade**: container com `role="img"` + `aria-label` descritivo; elementos decorativos com `aria-hidden`.
+- **`prefers-reduced-motion`** já tratado globalmente em `index.css` → desliga todas animações para usuários sensíveis.
+- **Responsivo**: container `aspect-[4/5] max-w-[520px]`; em mobile a cena vai para o topo (`order-1`) e o conteúdo abaixo (`order-2`); no desktop volta ao layout original.
 
----
+## Layout responsivo
 
-## Arquivos a alterar
+- **Mobile (<768px)**: cena empilhada acima, conteúdo abaixo, padding reduzido.
+- **Tablet/Desktop**: grid `5fr_4fr`, cena à direita ocupando até 520px.
 
-- `src/index.css` — tokens, base, botões, foco, motion safety
-- `tailwind.config.ts` — novos nomes semânticos
-- `src/components/Nav.tsx`
-- `src/components/Hero.tsx`
-- `src/components/Marquee.tsx`
-- `src/components/Differential.tsx`
-- `src/components/Argument.tsx`
-- `src/components/Advantage.tsx`
-- `src/components/Gallery.tsx`
-- `src/components/Heritage.tsx`
-- `src/components/LeadCapture.tsx`
-- `src/components/Footer.tsx`
+## Conteúdo preservado
 
-Nenhum texto de conteúdo será alterado. Apenas estrutura visual, classes e tokens.
-
-## Verificação final
-
-Após aplicar, rodar `vite build` e inspecionar visualmente em viewports 360, 768 e 1280 para confirmar legibilidade e responsividade.
+Headline, parágrafo, CTAs e stats permanecem idênticos — apenas a metade visual direita foi reinventada.
