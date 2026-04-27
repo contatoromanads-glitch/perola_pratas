@@ -114,8 +114,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ═══════════════════ CENA SVG ═══════════════════ */}
-        <div className="order-1 md:order-2 flex justify-center md:justify-end items-center w-full">
+        {/* ═══════════════════ CENA SVG (somente desktop) ═══════════════════
+            Em mobile a cena foi movida para o background acima. */}
+        <div className="hidden md:flex order-2 justify-end items-center w-full">
           <HeroScene />
         </div>
       </div>
