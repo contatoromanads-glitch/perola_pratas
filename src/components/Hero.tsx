@@ -158,7 +158,7 @@ function HeroScene() {
   return (
     // Wrapper sem animação contínua — cena estabiliza após o pouso das joias
     <div
-      className="relative w-full max-w-[520px] aspect-[4/5]"
+      className="relative w-full aspect-[4/5]"
       role="img"
       aria-label="Silhueta feminina com cabelos fluidos adornada por joias de prata"
     >
