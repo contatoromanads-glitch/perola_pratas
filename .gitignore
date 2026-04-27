@@ -1,9 +1,28 @@
+# Dependencies
 node_modules
+.pnp
+.pnp.js
+
+# Build
 dist
-dist-ssr
-*.local
+dist-types
+*.tsbuildinfo
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Env
 .env
-.env.*
-!.env.example
+.env.local
+.env.*.local
+
+# OS
 .DS_Store
-.claude/
+Thumbs.db
+
+# Lock files (let Lovable manage)
+bun.lock
+bun.lockb

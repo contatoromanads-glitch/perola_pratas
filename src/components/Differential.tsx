@@ -1,4 +1,4 @@
-import { useReveal } from '../hooks/useReveal'
+import { useReveal } from '@/hooks/useReveal'
 
 const ROWS = [
   {
@@ -27,38 +27,24 @@ function DiffRow({ num, title, desc, icon, delay = 0 }: {
   const { ref, visible } = useReveal()
   return (
     <div ref={ref as React.RefObject<HTMLDivElement>}
-      className={`reveal${visible ? ' visible' : ''}${delay ? ` reveal-delay-${delay}` : ''}`}
-      style={{
-        display: 'grid', gridTemplateColumns: '5rem 1fr 2px 2.5fr',
-        alignItems: 'center', gap: '3rem', padding: '2.75rem 0',
-        borderBottom: '1px solid var(--border)', cursor: 'default', transition: 'background 0.3s',
-      }}
-      onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
-      onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+      className={`reveal${visible ? ' visible' : ''}${delay ? ` reveal-delay-${delay}` : ''} grid grid-cols-[5rem_1fr_2px_2.5fr] items-center gap-12 py-11 border-b border-border cursor-default transition-colors duration-300 hover:bg-white/5`}
     >
-      <span style={{
-        fontFamily: "'Cormorant Garamond', serif", fontSize: '3.5rem',
-        color: 'rgba(255,255,255,0.08)', fontWeight: 300, letterSpacing: '-0.02em',
-        lineHeight: 1, userSelect: 'none',
-      }}>{num}</span>
+      <span className="font-serif text-[3.5rem] text-white/5 font-light tracking-[-0.02em] leading-none select-none">
+        {num}
+      </span>
       <div>
-        <div style={{
-          width: 44, height: 44, border: '1.5px solid rgba(16,185,129,0.4)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem',
-        }}>
+        <div className="w-11 h-11 border-[1.5px] border-[#10b981]/40 flex items-center justify-center mb-4">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981"
             strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{icon}</svg>
         </div>
-        <div style={{
-          fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(1.6rem, 2.2vw, 2.2rem)',
-          color: 'var(--forest)', fontWeight: 400, letterSpacing: '-0.01em', lineHeight: 1.1,
-        }}>{title}</div>
+        <div className="font-serif text-[clamp(1.6rem,2.2vw,2.2rem)] text-forest font-normal tracking-[-0.01em] leading-[1.1]">
+          {title}
+        </div>
       </div>
-      <div style={{ height: 60, background: 'var(--border)', width: 1 }} />
-      <p style={{
-        fontFamily: "'Jost', sans-serif", fontSize: '1rem', lineHeight: 1.9,
-        color: 'var(--forest-soft)', fontWeight: 300, maxWidth: 420,
-      }}>{desc}</p>
+      <div className="h-[60px] bg-border w-px" />
+      <p className="font-sans text-base leading-[1.9] text-forest-soft font-light max-w-[420px]">
+        {desc}
+      </p>
     </div>
   )
 }
@@ -67,21 +53,18 @@ export default function Differential() {
   const { ref: headerRef, visible: headerVisible } = useReveal()
 
   return (
-    <section id="colecoes" style={{ padding: '8rem 2.5rem', position: 'relative', zIndex: 1 }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto' }}>
+    <section id="colecoes" className="py-32 px-10 relative z-10">
+      <div className="max-w-[1320px] mx-auto">
         <div ref={headerRef as React.RefObject<HTMLDivElement>}
-          className={`reveal${headerVisible ? ' visible' : ''}`}
-          style={{ display: 'flex', alignItems: 'center', gap: '2rem', marginBottom: '4rem' }}>
+          className={`reveal${headerVisible ? ' visible' : ''} flex items-center gap-8 mb-16`}>
           <span className="section-label">Diferencial</span>
-          <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
-          <h2 style={{
-            fontFamily: "'Cormorant Garamond', serif",
-            fontSize: 'clamp(1.7rem, 2.6vw, 2.5rem)', color: 'var(--forest)',
-            fontWeight: 400, letterSpacing: '-0.01em',
-          }}>O Diferencial Pérola Pratas</h2>
+          <div className="flex-1 h-px bg-border" />
+          <h2 className="font-serif text-[clamp(1.7rem,2.6vw,2.5rem)] text-forest font-normal tracking-[-0.01em]">
+            O Diferencial Pérola Pratas
+          </h2>
         </div>
 
-        <div style={{ borderTop: '1px solid var(--border)' }}>
+        <div className="border-t border-border">
           {ROWS.map((row, i) => (
             <DiffRow key={row.num} {...row} delay={i} />
           ))}

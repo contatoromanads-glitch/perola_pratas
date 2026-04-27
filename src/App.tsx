@@ -1,27 +1,15 @@
-import Nav from './components/Nav'
-import Hero from './components/Hero'
-import Marquee from './components/Marquee'
-import Differential from './components/Differential'
-import Argument from './components/Argument'
-import Advantage from './components/Advantage'
-import Gallery from './components/Gallery'
-import Heritage from './components/Heritage'
-import LeadCapture from './components/LeadCapture'
-import Footer from './components/Footer'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Index from '@/pages/Index'
+import NotFound from '@/pages/NotFound'
 
 export default function App() {
   return (
-    <>
-      <Nav />
-      <Hero />
-      <Marquee />
-      <Differential />
-      <Argument />
-      <Advantage />
-      <Gallery />
-      <Heritage />
-      <LeadCapture />
-      <Footer />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   )
 }

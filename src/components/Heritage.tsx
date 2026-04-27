@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useReveal } from '../hooks/useReveal'
+import { useReveal } from '@/hooks/useReveal'
 
 function animateCounter(
   el: HTMLSpanElement,
@@ -31,48 +31,32 @@ export default function Heritage() {
   }, [textVisible, counted])
 
   return (
-    <section id="artesanal" style={{
-      padding: '8rem 2.5rem', position: 'relative', zIndex: 1,
-      borderTop: '1px solid var(--border)',
-    }}>
-      <div style={{ maxWidth: 1320, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'center' }}>
+    <section id="artesanal" className="py-32 px-10 relative z-10 border-t border-border">
+      <div className="max-w-[1320px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
           <div ref={textRef as React.RefObject<HTMLDivElement>}
             className={`reveal${textVisible ? ' visible' : ''}`}>
             <span className="section-label">Nossa Herança</span>
-            <h2 style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: 'clamp(2.75rem, 5.5vw, 5rem)', lineHeight: 0.95,
-              color: 'var(--forest)', fontWeight: 400, letterSpacing: '-0.03em',
-              margin: '1.5rem 0 2rem',
-            }}>
+            <h2 className="font-serif text-[clamp(2.75rem,5.5vw,5rem)] leading-[0.95] text-forest font-normal tracking-[-0.03em] my-6">
               Forjado na<br />
-              <em style={{ fontStyle: 'italic', color: 'var(--teal)' }}>Tradição.</em>
+              <em className="italic text-teal">Tradição.</em>
             </h2>
             {[
               'Dedicamos o propósito da Pérola Pratas à ciência artesanal, à elevação da prata 925 e ao estímulo da excelência em cada peça produzida.',
               'Nossas instalações combinam métodos centenários com fundição de precisão moderna, garantindo que cada peça entregue aos nossos parceiros possua integridade estrutural e acabamento inigualável.',
             ].map((p, i) => (
-              <p key={i} style={{
-                fontFamily: "'Jost', sans-serif", fontSize: '1rem', lineHeight: 2,
-                color: 'var(--forest-soft)', fontWeight: 300, marginBottom: '1rem',
-              }}>{p}</p>
+              <p key={i} className="font-sans text-base leading-[2] text-forest-soft font-light mb-4">
+                {p}
+              </p>
             ))}
 
-            <div style={{
-              display: 'flex', gap: '3.5rem', paddingTop: '2rem',
-              borderTop: '1.5px solid var(--border)', marginTop: '1rem',
-            }}>
+            <div className="flex gap-14 pt-8 border-t-[1.5px] border-border mt-4">
               {[
                 { ref: counter925Ref, label: 'Prata 925' },
                 { ref: counter100Ref, label: 'Produção Própria', suffix: '%' },
               ].map(({ ref, label, suffix }) => (
                 <div key={label}>
-                  <div style={{
-                    fontFamily: "'Cormorant Garamond', serif",
-                    fontSize: 'clamp(2.75rem, 4.5vw, 4rem)', color: 'var(--forest)',
-                    fontWeight: 500, lineHeight: 1, letterSpacing: '-0.03em', marginBottom: '0.6rem',
-                  }}>
+                  <div className="font-serif text-[clamp(2.75rem,4.5vw,4rem)] text-forest font-medium leading-none tracking-[-0.03em] mb-[0.6rem]">
                     <span ref={ref}>0</span>{suffix}
                   </div>
                   <span className="section-label">{label}</span>
@@ -82,35 +66,13 @@ export default function Heritage() {
           </div>
 
           <div ref={imgRef as React.RefObject<HTMLDivElement>}
-            className={`reveal reveal-delay-1${imgVisible ? ' visible' : ''}`}
-            style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden' }}
-            onMouseEnter={e => {
-              const img = e.currentTarget.querySelector('img') as HTMLImageElement
-              if (img) { img.style.filter = 'brightness(0.9) saturate(1)'; img.style.transform = 'scale(1.03)'; }
-            }}
-            onMouseLeave={e => {
-              const img = e.currentTarget.querySelector('img') as HTMLImageElement
-              if (img) { img.style.filter = 'brightness(0.85) saturate(0.7)'; img.style.transform = ''; }
-            }}
+            className={`reveal reveal-delay-1${imgVisible ? ' visible' : ''} relative aspect-[4/5] overflow-hidden group`}
           >
-            <img src="/hero.png" alt="Pérola Pratas — tradição artesanal" style={{
-              width: '100%', height: '100%', objectFit: 'cover',
-              filter: 'brightness(0.85) saturate(0.7)', transition: 'filter 0.9s, transform 0.9s',
-            }} />
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(6,78,59,0.5) 0%, transparent 55%)',
-              pointerEvents: 'none',
-            }} />
+            <img src="/hero.png" alt="Pérola Pratas — tradição artesanal" className="w-full h-full object-cover brightness-[0.85] saturate-[0.7] transition-all duration-[0.9s] group-hover:brightness-[0.9] group-hover:saturate-100 group-hover:scale-[1.03]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#064e3b]/50 to-transparent pointer-events-none" />
             {/* Corners */}
-            {[
-              { style: { top: '1.5rem', right: '1.5rem', borderTop: '1.5px solid rgba(16,185,129,0.5)', borderRight: '1.5px solid rgba(16,185,129,0.5)' } },
-              { style: { bottom: '1.5rem', left: '1.5rem', borderBottom: '1.5px solid rgba(16,185,129,0.5)', borderLeft: '1.5px solid rgba(16,185,129,0.5)' } },
-            ].map((corner, i) => (
-              <div key={i} style={{
-                position: 'absolute', width: 36, height: 36, pointerEvents: 'none', ...corner.style,
-              }} />
-            ))}
+            <div className="absolute w-9 h-9 pointer-events-none top-6 right-6 border-t-[1.5px] border-r-[1.5px] border-[#10b981]/50" />
+            <div className="absolute w-9 h-9 pointer-events-none bottom-6 left-6 border-b-[1.5px] border-l-[1.5px] border-[#10b981]/50" />
           </div>
         </div>
       </div>

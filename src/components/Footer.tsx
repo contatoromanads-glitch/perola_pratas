@@ -1,44 +1,29 @@
 export default function Footer() {
   return (
-    <footer style={{
-      background: '#0a3a1e', borderTop: '1px solid rgba(255,255,255,0.08)',
-      padding: '5rem 2.5rem 3rem', textAlign: 'center', position: 'relative', zIndex: 1,
-    }}>
-      <div style={{ maxWidth: 560, margin: '0 auto' }}>
-        <img src="/logo.png" alt="Pérola Pratas" className="logo-img"
-          style={{ height: 44, marginBottom: '2rem' }} />
+    <footer className="bg-[#0a3a1e] border-t border-white/10 pt-20 px-10 pb-12 text-center relative z-10">
+      <div className="max-w-[560px] mx-auto flex flex-col items-center">
+        <img src="/logo.png" alt="Pérola Pratas" className="logo-img h-11 mb-8" />
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', margin: '2.5rem 0' }}>
-          <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
-          <span style={{ color: 'var(--teal)', fontSize: '0.5rem' }}>◆</span>
-          <div style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+        <div className="flex items-center gap-6 my-10 w-full">
+          <div className="flex-1 h-px bg-border" />
+          <span className="text-teal text-[0.5rem]">◆</span>
+          <div className="flex-1 h-px bg-border" />
         </div>
 
-        <h2 style={{
-          fontFamily: "'Cormorant Garamond', serif",
-          fontSize: 'clamp(1.75rem, 4vw, 3rem)', lineHeight: 1.15,
-          color: 'var(--forest)', fontWeight: 400, letterSpacing: '-0.02em', marginBottom: '1.25rem',
-        }}>
+        <h2 className="font-serif text-[clamp(1.75rem,4vw,3rem)] leading-[1.15] text-forest font-normal tracking-[-0.02em] mb-5">
           Eleve seu negócio ao patamar<br />
-          <em style={{ fontStyle: 'italic', color: 'var(--teal)' }}>da alta joalheria.</em>
+          <em className="italic text-teal">da alta joalheria.</em>
         </h2>
 
-        <p style={{
-          fontFamily: "'Jost', sans-serif", fontSize: '1rem', lineHeight: 1.9,
-          color: 'var(--muted)', fontWeight: 300, marginBottom: '2.5rem',
-        }}>
+        <p className="font-sans text-base leading-[1.9] text-muted font-light mb-10">
           Junte-se a uma rede estruturada de revendedores e leve mais do que luxo.
         </p>
 
-        <a href="#cadastro" className="btn-outline" style={{ fontSize: '0.72rem' }}>
+        <a href="#cadastro" className="btn-outline text-[0.72rem]">
           Solicitar Acesso ao Atacado
         </a>
 
-        <p style={{
-          fontFamily: "'Jost', sans-serif", fontSize: '0.7rem',
-          letterSpacing: '0.2em', textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.25)', marginTop: '4rem',
-        }}>
+        <p className="font-sans text-[0.7rem] tracking-[0.2em] uppercase text-white/25 mt-16">
           © {new Date().getFullYear()} Pérola Pratas B2B — Todos os Direitos Reservados
         </p>
       </div>
