@@ -1,5 +1,5 @@
 import { useReveal } from '@/hooks/useReveal'
-import { MessageCircle, Camera, MapPin, Sparkles, Globe, ArrowUpRight } from 'lucide-react'
+import { MessageCircle, Camera, Sparkles, ArrowUpRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 /**
