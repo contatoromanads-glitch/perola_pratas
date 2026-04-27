@@ -126,7 +126,7 @@ export default function Hero() {
             Em mobile/tablet a cena foi movida para o background acima.
             Garantimos largura mínima para que o SVG sempre seja bem visível. */}
         <div className="hidden lg:flex order-2 justify-center items-center min-h-[620px] overflow-visible">
-          <div className="flex-shrink-0 w-[min(48vw,640px)] max-w-full">
+          <div className="flex-shrink-0 w-[min(42vw,calc((100vh-120px)*0.8),560px)] max-w-full">
             <HeroScene idPrefix="hero-desktop" />
           </div>
         </div>
@@ -281,7 +281,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
                L 268 200
                C 270 185, 268 170, 263 160"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.6"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -297,7 +297,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
                C 124 285, 132 315, 142 345
                C 148 365, 155 380, 165 390"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeDasharray="500"
@@ -311,7 +311,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
                C 142 195, 140 230, 145 265
                C 150 295, 158 320, 165 335"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="0.9"
             strokeLinecap="round"
             opacity="0.55"
@@ -327,7 +327,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
                C 298 295, 285 325, 268 355
                C 258 375, 248 390, 240 400"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeDasharray="520"
@@ -341,7 +341,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
                C 295 195, 298 230, 292 265
                C 286 295, 276 320, 265 340"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="0.9"
             strokeLinecap="round"
             opacity="0.55"
@@ -357,7 +357,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
                M 235 90
                C 228 102, 222 115, 218 128"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="0.8"
             strokeLinecap="round"
             opacity="0.7"
@@ -370,7 +370,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           <path
             d="M 200 38 C 198 55, 200 72, 202 88"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="0.7"
             strokeLinecap="round"
             opacity="0.5"
@@ -383,7 +383,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           <path
             d="M 152 138 C 145 170, 155 205, 178 222 C 192 232, 212 234, 226 226 C 248 214, 262 188, 262 152"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.4"
             strokeLinecap="round"
             strokeDasharray="500"
@@ -395,7 +395,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           <path
             d="M 178 232 C 178 252, 175 270, 170 290 M 222 228 C 224 250, 230 270, 235 290"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.3"
             strokeLinecap="round"
             strokeDasharray="200"
@@ -407,7 +407,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           <path
             d="M 60 380 C 90 340, 130 305, 168 295 C 178 292, 195 290, 205 290 C 215 290, 230 292, 240 296 C 280 310, 320 345, 345 385"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.6"
             strokeLinecap="round"
             strokeDasharray="700"
@@ -419,7 +419,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           <path
             d="M 178 290 C 195 320, 210 320, 230 290"
             fill="none"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1"
             strokeLinecap="round"
             opacity="0.55"
@@ -431,7 +431,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           {/* Marcação minimalista dos olhos */}
           <line
             x1="172" y1="160" x2="188" y2="160"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.4"
             strokeLinecap="round"
             opacity="0"
@@ -439,7 +439,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           />
           <line
             x1="212" y1="160" x2="228" y2="160"
-            stroke="url(#{silhouetteGradId})"
+            stroke={`url(#${silhouetteGradId})`}
             strokeWidth="1.4"
             strokeLinecap="round"
             opacity="0"
@@ -453,7 +453,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           <path
             d="M 168 295 Q 200 360, 232 295"
             fill="none"
-            stroke="url(#{silverGradId})"
+            stroke={`url(#${silverGradId})`}
             strokeWidth="1.6"
             strokeLinecap="round"
             strokeDasharray="180"
@@ -478,7 +478,7 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           */}
           <circle
             cx="200" cy="350" r="22"
-            fill="url(#{pendantGlowId})"
+            fill={`url(#${pendantGlowId})`}
             opacity="0"
             style={{
               animation: 'pendantSettle 1.4s ease-out 4.4s forwards',
@@ -490,11 +490,11 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
           <g
             opacity="0"
             style={{ animation: 'fadeInDelayed 0.8s ease-out 4.4s forwards' }}
-            filter="url(#{softGlowId})"
+            filter={`url(#${softGlowId})`}
           >
             <path
               d="M 200 338 L 207 350 L 200 365 L 193 350 Z"
-              fill="url(#{silverGradId})"
+              fill={`url(#${silverGradId})`}
               stroke="hsl(150 40% 95%)"
               strokeWidth="0.6"
             />
@@ -523,16 +523,16 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
         </g>
 
         {/* ─── 5. BRINCOS — assentam com UM brilho final e param ─── */}
-        <g filter="url(#{softGlowId})">
+        <g filter={`url(#${softGlowId})`}>
           {/* Brinco esquerdo */}
           <g
             opacity="0"
             style={{ animation: 'fadeInDelayed 1s ease-out 3.4s forwards' }}
           >
-            <line x1="148" y1="178" x2="148" y2="195" stroke="url(#{silverGradId})" strokeWidth="0.8" />
+            <line x1="148" y1="178" x2="148" y2="195" stroke={`url(#${silverGradId})`} strokeWidth="0.8" />
             <ellipse
               cx="148" cy="200" rx="2.5" ry="3.5"
-              fill="url(#{silverGradId})"
+              fill={`url(#${silverGradId})`}
               opacity="0"
               style={{
                 animation: 'earringSettle 1.2s ease-out 4s forwards',
@@ -545,10 +545,10 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
             opacity="0"
             style={{ animation: 'fadeInDelayed 1s ease-out 3.6s forwards' }}
           >
-            <line x1="252" y1="178" x2="252" y2="195" stroke="url(#{silverGradId})" strokeWidth="0.8" />
+            <line x1="252" y1="178" x2="252" y2="195" stroke={`url(#${silverGradId})`} strokeWidth="0.8" />
             <ellipse
               cx="252" cy="200" rx="2.5" ry="3.5"
-              fill="url(#{silverGradId})"
+              fill={`url(#${silverGradId})`}
               opacity="0"
               style={{
                 animation: 'earringSettle 1.2s ease-out 4.15s forwards',
