@@ -80,7 +80,7 @@ export default function Hero() {
           </div>
 
           <h1 className="font-serif leading-[0.95] text-primary font-normal tracking-[-0.025em] mb-7 text-8xl">
-            O<br />
+            Prata<br />
             <em
               className="italic text-transparent bg-clip-text"
               style={{
@@ -88,10 +88,10 @@ export default function Hero() {
                   'linear-gradient(130deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 60%, hsl(150 70% 88%) 100%)',
               }}
             >
-              Reflexo
+              Soberana.
             </em>
             <br />
-            Curado.
+            Inigualável.
           </h1>
 
           <p className="font-sans text-[1.1rem] leading-[1.85] text-secondary max-w-[440px] mx-auto lg:mx-0 font-light mb-9">
