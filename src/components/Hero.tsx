@@ -433,15 +433,21 @@ function HeroScene() {
             style={{ animation: 'fadeInDelayed 1s ease-out 4.2s forwards' }}
           />
 
-          {/* Halo do pingente */}
+          {/*
+            Halo do pingente — pulsa UMA vez no impacto e estabiliza.
+            forwards + sem 'infinite' garante que pare no estado final.
+          */}
           <circle
             cx="200" cy="350" r="22"
             fill="url(#pendantGlow)"
             opacity="0"
-            style={{ animation: 'pendantGlow 4s ease-in-out 4.4s infinite' }}
+            style={{
+              animation: 'pendantSettle 1.4s ease-out 4.4s forwards',
+              transformOrigin: '200px 350px',
+            }}
           />
 
-          {/* Pingente diamantino */}
+          {/* Pingente diamantino — assenta no lugar e fica estático */}
           <g
             opacity="0"
             style={{ animation: 'fadeInDelayed 0.8s ease-out 4.4s forwards' }}
@@ -457,7 +463,10 @@ function HeroScene() {
             <line x1="193" y1="350" x2="207" y2="350" stroke="hsl(150 30% 60%)" strokeWidth="0.4" opacity="0.6" />
           </g>
 
-          {/* Ondas concêntricas saindo do pingente (signal) */}
+          {/*
+            Ondas de impacto — emitidas UMA vez no momento do pouso.
+            Sem 'infinite': cada onda toca a animação e desaparece, sem ciclo.
+          */}
           {[0, 1, 2].map((i) => (
             <circle
               key={i}
@@ -467,7 +476,7 @@ function HeroScene() {
               strokeWidth="0.5"
               opacity="0"
               style={{
-                animation: `signalWave 4s ease-out ${4.8 + i * 1.2}s infinite`,
+                animation: `signalImpact 1.4s ease-out ${4.6 + i * 0.25}s forwards`,
                 transformOrigin: '200px 350px',
               }}
             />
