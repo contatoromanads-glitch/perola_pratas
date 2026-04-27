@@ -11,6 +11,7 @@ interface GalleryImage {
   delay: number
 }
 
+const IMAGES: GalleryImage[] = [
   {
     src: '/gallery-1.png',
     alt: 'Conjunto de anéis de prata 925',
