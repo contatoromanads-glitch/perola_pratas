@@ -1,5 +1,5 @@
 import { useReveal } from '@/hooks/useReveal'
-import { MessageCircle, Camera, MapPin, Sparkles, Globe, ArrowUpRight } from 'lucide-react'
+import { MessageCircle, Camera, Sparkles, ArrowUpRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 /**
@@ -36,26 +36,14 @@ const LINKS: LinkItem[] = [
     icon: Sparkles,
     label: 'Catálogo de Coleções',
     description: 'Explore nossas peças em prata 925',
-    href: '/#colecoes',
+    href: 'https://atacado.perolapratas.com.br/',
+    external: true,
   },
   {
     icon: Camera,
     label: 'Instagram',
-    description: '@perolapratas',
-    href: 'https://instagram.com/perolapratas',
-    external: true,
-  },
-  {
-    icon: Globe,
-    label: 'Site Oficial',
-    description: 'Conheça a marca',
-    href: '/',
-  },
-  {
-    icon: MapPin,
-    label: 'Showroom',
-    description: 'Visite nosso espaço físico',
-    href: 'https://maps.google.com',
+    description: '@perolapratas__',
+    href: 'https://www.instagram.com/perolapratas__/',
     external: true,
   },
 ]
