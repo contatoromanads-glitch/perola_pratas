@@ -1,36 +1,82 @@
-## Problem
+# Página "Link na Bio" — Pérola Pratas
 
-After the mobile-first refactor, the Hero SVG animation is not appearing reliably on tablet (768–1024px) and may feel missing on desktop. Root causes in `src/components/Hero.tsx`:
+Criar uma nova rota `/links` no estilo Linktree, reaproveitando integralmente a identidade visual da landing page (paleta esmeralda escura, tipografia Cormorant Garamond + Jost, gradientes, glow accent, animações reveal).
 
-1. The desktop scene is wrapped in `<div className="hidden md:flex order-2 justify-end items-center w-full">` inside a `md:grid-cols-[5fr_4fr]` grid. At tablet widths the right column collapses to a narrow strip and the SVG (with `aspect-[4/5]` + `w-full`) becomes very small and visually disappears next to the large headline.
-2. `justify-end` on a `w-full` child has no effect, so layout intent is unclear.
-3. The mobile background scene is gated by `md:hidden`, so between 768px and ~1024px (tablet) we get the desktop layout but with too little room for the scene.
+## Estrutura visual
 
-## Fix
+```text
+┌─────────────────────────────────┐
+│   ✦ glow accent radial fundo    │
+│   pattern de pontos decorativo  │
+│                                 │
+│         [logo branco]           │
+│      ── ◆ divisor ◆ ──          │
+│                                 │
+│    Pérola Pratas                │  ← Cormorant serif
+│    Soberana em Prata 925        │  ← itálico accent
+│                                 │
+│  Joalheria de atacado para      │  ← Jost light
+│  revendedores exclusivos.       │
+│                                 │
+│  ┌───────────────────────────┐  │
+│  │ ▶  WhatsApp Atacado    →  │  │  ← card link
+│  └───────────────────────────┘  │
+│  ┌───────────────────────────┐  │
+│  │ ✦  Catálogo Coleções   →  │  │
+│  └───────────────────────────┘  │
+│  ┌───────────────────────────┐  │
+│  │ ◆  Instagram           →  │  │
+│  └───────────────────────────┘  │
+│  ┌───────────────────────────┐  │
+│  │ ◇  Site Oficial        →  │  │
+│  └───────────────────────────┘  │
+│  ┌───────────────────────────┐  │
+│  │ ⬢  Showroom / Localização→ │  │
+│  └───────────────────────────┘  │
+│                                 │
+│  © 2026 Pérola Pratas B2B       │
+└─────────────────────────────────┘
+```
 
-Make the animation visibly present on every breakpoint by adjusting the Hero layout in `src/components/Hero.tsx` only (no CSS keyframe changes needed — the animation itself works).
+Layout single-column centralizado, max-width ~480px, padding generoso. Sem `<Nav>` nem `<Footer>` da landing — página standalone full-screen.
 
-### Changes in `src/components/Hero.tsx`
+## Links propostos (placeholders editáveis)
 
-1. **Use `lg` as the split breakpoint instead of `md`.** Below `lg` (1024px) keep the immersive background-scene treatment used on mobile so the animation stays prominent behind the text on phones AND tablets. At `lg+` switch to the side-by-side grid.
-   - Change `md:hidden` background wrapper → `lg:hidden`.
-   - Change `hidden md:flex` desktop wrapper → `hidden lg:flex`.
-   - Change grid `md:grid-cols-[5fr_4fr]` → `lg:grid-cols-[5fr_4fr]`.
-   - Update text-align and items helpers from `md:` → `lg:` accordingly.
+1. **WhatsApp Atacado** → `https://wa.me/5511999999999`
+2. **Catálogo de Coleções** → `/#colecoes` (volta pra landing)
+3. **Instagram** → `https://instagram.com/perolapratas`
+4. **Site Oficial** → `/` (landing)
+5. **Showroom** → link Google Maps placeholder
 
-2. **Give the desktop scene real room.** Replace `w-full max-w-[520px]` on the inner wrapper with a min-width guarantee and remove the redundant `justify-end` + `w-full` combo. Use `min-w-[380px] w-[clamp(380px,38vw,560px)]` so the SVG always renders at a visible size on `lg` and up.
+(URLs ficam fáceis de editar num array no topo do componente.)
 
-3. **Slightly stronger background scene on tablet.** Raise opacity from `0.22` to `0.32` and remove the blur for tablet so it reads as an intentional hero visual, not a faint texture. Achieve this with responsive classes: `opacity-[0.28] md:opacity-[0.4] blur-0` and tone the radial overlay down on `md` so the scene is more visible.
+## Estilo dos cards de link
 
-4. **Sanity guard.** Ensure the `<HeroScene />` wrapper uses `aspect-[4/5]` and is not constrained by parent flex `items-center` collapsing height — wrap it in a block container with explicit `flex-shrink-0`.
+Reaproveitar a classe `.card` existente (surface-2, blur, hover lift accent) com padding interno generoso, ícone à esquerda (lucide-react ou símbolo decorativo ◆), label em Jost uppercase tracking, seta `→` à direita aparecendo no hover. Min-height 64px (alvo de toque AA).
 
-No changes are needed to `src/index.css`, the SVG markup, or any other component.
+Hover: translateY(-2px) + borda accent + glow accent suave (já no `.card`).
 
-## Files to edit
+## Detalhes técnicos
 
-- `src/components/Hero.tsx`
+**Arquivos novos:**
+- `src/pages/Links.tsx` — página completa (header + lista de links + footer minimal)
 
-## Verification
+**Arquivos editados:**
+- `src/App.tsx` — adicionar `<Route path="/links" element={<Links />} />` antes do catch-all
 
-- Build with `bunx vite build`.
-- Visually confirm at three widths: 390px (mobile — animation as background), 820px (tablet — animation as background, more visible), 1280px (desktop — animation as side panel, ~480–520px wide).
+**Reuso do design system:**
+- Fundo: herda do `body` (gradiente esmeralda já global)
+- Glow accent radial absoluto (mesmo padrão do `LeadCapture`)
+- Pattern de pontos decorativo (mesmo do `LeadCapture`)
+- Tipografia: `font-serif` para nome da marca, `font-sans` para descrição/links
+- Logo: `<img src="/logo.png" className="h-14 brightness-0 invert opacity-90" />`
+- Animação de entrada: hook `useReveal` com delays escalonados nos cards
+- Ícones: `lucide-react` já presumivelmente disponível (MessageCircle, Instagram, MapPin, Sparkles, ExternalLink)
+
+**Responsividade:** padding lateral `px-6` no mobile, `px-8` desktop. Tudo centralizado, funciona sem ajustes de breakpoint além do que o Tailwind já dá.
+
+**Acessibilidade:** links externos com `target="_blank" rel="noopener noreferrer"`, `aria-label` descritivos, foco visível herdado do CSS global.
+
+## Como acessar
+
+Após implementação: `/links` (ex: `https://...lovable.app/links`). Pronto para colar na bio do Instagram/WhatsApp.
