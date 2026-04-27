@@ -42,31 +42,39 @@ export default function Hero() {
         925
       </div>
 
-      {/* ─── MOBILE: cena SVG como background atrás do texto ───
-          Em telas <md, a cena fica posicionada absolutamente, centralizada,
-          com opacidade reduzida e um overlay vinheta para garantir legibilidade.
-          Em md+ ela é escondida aqui (renderizada novamente no grid à direita). */}
+      {/* ─── MOBILE + TABLET: cena SVG como background atrás do texto ───
+          Em telas <lg (até 1023px), a cena fica posicionada absolutamente,
+          centralizada, com um overlay vinheta para garantir legibilidade.
+          Em lg+ é escondida aqui (renderizada no grid à direita). */}
       <div
-        className="md:hidden absolute inset-0 flex items-center justify-center pointer-events-none z-0"
+        className="lg:hidden absolute inset-0 flex items-center justify-center pointer-events-none z-0"
         aria-hidden="true"
       >
-        <div className="w-[115%] max-w-none opacity-[0.22] blur-[0.5px] translate-y-4">
+        {/* Mais visível em tablet (md+) que em mobile */}
+        <div className="w-[115%] max-w-none opacity-[0.28] md:opacity-[0.4] md:w-[80%] translate-y-4">
           <HeroScene />
         </div>
-        {/* Overlay para reforçar contraste do texto sobre a animação */}
+        {/* Overlay para reforçar contraste do texto sobre a animação — mais leve em tablet */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 md:hidden"
           style={{
             background:
               'radial-gradient(ellipse 80% 70% at 50% 55%, hsl(var(--background) / 0.78) 0%, hsl(var(--background) / 0.55) 50%, hsl(var(--background) / 0.85) 100%)',
           }}
         />
+        <div
+          className="absolute inset-0 hidden md:block lg:hidden"
+          style={{
+            background:
+              'radial-gradient(ellipse 65% 80% at 30% 50%, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.55) 45%, hsl(var(--background) / 0.25) 100%)',
+          }}
+        />
       </div>
 
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full grid grid-cols-1 md:grid-cols-[5fr_4fr] items-center gap-12 md:gap-8 relative z-10">
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full grid grid-cols-1 lg:grid-cols-[5fr_4fr] items-center gap-12 lg:gap-8 relative z-10">
         {/* ═══════════════════ CONTEÚDO ═══════════════════ */}
-        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 md:order-1 text-center md:text-left items-center md:items-start relative z-10">
-          <div className="flex items-center justify-center md:justify-start gap-4 mb-6">
+        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 lg:order-1 text-center lg:text-left items-center lg:items-start relative z-10">
+          <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
             <div className="w-7 h-[2px] bg-accent" aria-hidden="true" />
             <span className="section-label">Parceiros B2B Exclusivos</span>
           </div>
@@ -86,17 +94,17 @@ export default function Hero() {
             Curado.
           </h1>
 
-          <p className="font-sans text-[1.1rem] leading-[1.85] text-secondary max-w-[440px] mx-auto md:mx-0 font-light mb-9">
+          <p className="font-sans text-[1.1rem] leading-[1.85] text-secondary max-w-[440px] mx-auto lg:mx-0 font-light mb-9">
             Eleve seu portfólio com prata de atacado de qualidade editorial.
             Feito para visionários, desenhado para distinção.
           </p>
 
-          <div className="flex gap-4 flex-wrap justify-center md:justify-start mb-12">
+          <div className="flex gap-4 flex-wrap justify-center lg:justify-start mb-12">
             <a href="#cadastro" className="btn-primary">Analisar Ser de Atração</a>
             <a href="#colecoes" className="btn-outline">Explorar Coleções</a>
           </div>
 
-          <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12 pt-8 border-t border-border-strong w-full">
+          <div className="flex flex-wrap justify-center lg:justify-start gap-8 md:gap-12 pt-8 border-t border-border-strong w-full">
             {[
               { value: '925', label: 'Prata Pura' },
               { value: 'B2B', label: 'Exclusivo' },
@@ -114,10 +122,13 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ═══════════════════ CENA SVG (somente desktop) ═══════════════════
-            Em mobile a cena foi movida para o background acima. */}
-        <div className="hidden md:flex order-2 justify-end items-center w-full">
-          <HeroScene />
+        {/* ═══════════════════ CENA SVG (somente desktop ≥ lg) ═══════════════════
+            Em mobile/tablet a cena foi movida para o background acima.
+            Garantimos largura mínima para que o SVG sempre seja bem visível. */}
+        <div className="hidden lg:flex order-2 justify-end items-center">
+          <div className="flex-shrink-0 w-[clamp(380px,38vw,560px)]">
+            <HeroScene />
+          </div>
         </div>
       </div>
 
