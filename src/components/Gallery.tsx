@@ -108,7 +108,9 @@ export default function Gallery() {
         >
           <div className="flex-1 h-px bg-border-strong" aria-hidden="true" />
           <a
-            href="#lookbook"
+            href="https://atacado.perolapratas.com.br/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-sans text-[0.75rem] font-semibold tracking-[0.22em] uppercase text-accent no-underline transition-opacity duration-200 hover:opacity-75 min-h-[44px]"
           >
             Ver Lookbook Completo

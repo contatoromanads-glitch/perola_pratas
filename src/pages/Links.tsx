@@ -1,5 +1,5 @@
 import { useReveal } from '@/hooks/useReveal'
-import { MessageCircle, Camera, Sparkles, BookOpen, ArrowUpRight } from 'lucide-react'
+import { MessageCircle, Camera, Sparkles, ArrowUpRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 /**
@@ -37,13 +37,6 @@ const LINKS: LinkItem[] = [
     label: 'Catálogo de Coleções',
     description: 'Explore nossas peças em prata 925',
     href: '/#colecoes',
-  },
-  {
-    icon: BookOpen,
-    label: 'Ver Lookbook Completo',
-    description: 'Acesse o portal de atacado',
-    href: 'https://atacado.perolapratas.com.br/',
-    external: true,
   },
   {
     icon: Camera,
