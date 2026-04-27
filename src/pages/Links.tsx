@@ -1,5 +1,5 @@
 import { useReveal } from '@/hooks/useReveal'
-import { MessageCircle, Instagram, MapPin, Sparkles, Globe, ArrowUpRight } from 'lucide-react'
+import { MessageCircle, Camera, MapPin, Sparkles, Globe, ArrowUpRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 /**
@@ -39,7 +39,7 @@ const LINKS: LinkItem[] = [
     href: '/#colecoes',
   },
   {
-    icon: Instagram,
+    icon: Camera,
     label: 'Instagram',
     description: '@perolapratas',
     href: 'https://instagram.com/perolapratas',
