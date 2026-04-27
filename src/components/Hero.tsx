@@ -52,7 +52,7 @@ export default function Hero() {
       >
         {/* Mais visível em tablet (md+) que em mobile */}
         <div className="w-[115%] max-w-none opacity-[0.28] md:opacity-[0.4] md:w-[80%] translate-y-4">
-          <HeroScene />
+          <HeroScene idPrefix="hero-mobile" />
         </div>
         {/* Overlay para reforçar contraste do texto sobre a animação — mais leve em tablet */}
         <div
@@ -125,9 +125,9 @@ export default function Hero() {
         {/* ═══════════════════ CENA SVG (somente desktop ≥ lg) ═══════════════════
             Em mobile/tablet a cena foi movida para o background acima.
             Garantimos largura mínima para que o SVG sempre seja bem visível. */}
-        <div className="hidden lg:flex order-2 justify-end items-center">
-          <div className="flex-shrink-0 w-[clamp(380px,38vw,560px)]">
-            <HeroScene />
+        <div className="hidden lg:flex order-2 justify-center items-center min-h-[620px] overflow-visible">
+          <div className="flex-shrink-0 w-[min(48vw,640px)] max-w-full">
+            <HeroScene idPrefix="hero-desktop" />
           </div>
         </div>
       </div>
@@ -154,7 +154,13 @@ export default function Hero() {
      5. Brincos com brilho pulsante
      6. Reflexos diamantinos (sparkles) cintilando
    ══════════════════════════════════════════════════════════════ */
-function HeroScene() {
+function HeroScene({ idPrefix }: { idPrefix: string }) {
+  const silhouetteGradId = `${idPrefix}-silhouetteGrad`
+  const silverGradId = `${idPrefix}-silverGrad`
+  const pendantGlowId = `${idPrefix}-pendantGlow`
+  const softGlowId = `${idPrefix}-softGlow`
+  const sparkleId = `${idPrefix}-sparkle`
+
   return (
     // Wrapper sem animação contínua — cena estabiliza após o pouso das joias
     <div
