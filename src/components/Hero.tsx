@@ -76,7 +76,7 @@ export default function Hero() {
         <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 lg:order-1 text-center lg:text-left items-center lg:items-start relative z-10">
           <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
             <div className="w-7 h-[2px] bg-accent" aria-hidden="true" />
-            <span className="section-label">Parceiros B2B Exclusivos</span>
+            <span className="section-label">Atacado e Varejo</span>
           </div>
 
           <h1 className="font-serif leading-[0.95] text-primary font-normal tracking-[-0.025em] mb-7 text-8xl">
@@ -100,14 +100,14 @@ export default function Hero() {
           </p>
 
           <div className="flex gap-4 flex-wrap justify-center lg:justify-start mb-12">
-            <a href="#cadastro" className="btn-primary">Analisar Ser de Atração</a>
-            <a href="#colecoes" className="btn-outline">Explorar Coleções</a>
+            <a href="https://wa.me/5543991312661" target="_blank" rel="noopener noreferrer" className="btn-primary">Fale Conosco</a>
+            <a href="https://atacado.perolapratas.com.br/" target="_blank" rel="noopener noreferrer" className="btn-outline">Compre no Site</a>
           </div>
 
           <div className="flex flex-wrap justify-center lg:justify-start gap-8 md:gap-12 pt-8 border-t border-border-strong w-full">
             {[
               { value: '925', label: 'Prata Pura' },
-              { value: 'B2B', label: 'Exclusivo' },
+              { value: 'Todos', label: 'CPF & CNPJ' },
               { value: '100%', label: 'Fab. Própria' },
             ].map(({ value, label }) => (
               <div key={label}>
@@ -133,11 +133,11 @@ export default function Hero() {
       </div>
 
       {/* ─── Indicador de scroll ─── */}
-      <div className="absolute bottom-6 left-6 md:bottom-10 md:left-10 hidden sm:flex items-center gap-4 animate-[fadeIn_1.5s_1.2s_ease_both]">
-        <div className="w-7 h-px bg-border-strong" aria-hidden="true" />
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-3 animate-[fadeIn_1.5s_1.2s_ease_both]">
         <span className="font-sans text-[0.68rem] tracking-[0.3em] uppercase text-tertiary">
           Scroll
         </span>
+        <div className="w-px h-10 bg-border-strong" aria-hidden="true" />
       </div>
     </section>
   )

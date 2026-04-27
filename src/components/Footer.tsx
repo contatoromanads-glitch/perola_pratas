@@ -27,7 +27,7 @@ export default function Footer() {
 
         {/* Copyright em tertiary → ≥4.5:1 (antes era white/25 = invisível) */}
         <p className="font-sans text-[0.7rem] tracking-[0.2em] uppercase text-tertiary mt-16">
-          © {new Date().getFullYear()} Pérola Pratas B2B — Todos os Direitos Reservados
+          © {new Date().getFullYear()} Pérola Pratas — Todos os Direitos Reservados
         </p>
       </div>
     </footer>

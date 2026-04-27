@@ -27,8 +27,8 @@ type LinkItem = {
 const LINKS: LinkItem[] = [
   {
     icon: MessageCircle,
-    label: 'WhatsApp Atacado',
-    description: 'Fale com nosso time B2B',
+    label: 'WhatsApp Atendimento',
+    description: 'Fale com nosso time',
     href: 'https://wa.me/5543991312661?text=Ol%C3%A1%21%20Vim%20pelo%20link%20da%20bio%20da%20P%C3%A9rola%20Pratas.',
     external: true,
   },
@@ -123,7 +123,7 @@ function Header() {
         ref={subRef as React.RefObject<HTMLParagraphElement>}
         className={`reveal reveal-delay-1${subVisible ? ' visible' : ''} font-sans text-[0.95rem] leading-[1.7] text-secondary font-light max-w-[360px]`}
       >
-        Joalheria de atacado em prata 925 para revendedores exclusivos.
+        Joalheria em prata 925 para atacado e varejo.
       </p>
     </div>
   )
@@ -182,7 +182,7 @@ function LinkRow({ item, index }: { item: LinkItem; index: number }) {
 function FooterMini() {
   return (
     <p className="font-sans text-[0.65rem] tracking-[0.24em] uppercase text-tertiary mt-16 text-center">
-      © {new Date().getFullYear()} Pérola Pratas B2B
+      © {new Date().getFullYear()} Pérola Pratas
     </p>
   )
 }
