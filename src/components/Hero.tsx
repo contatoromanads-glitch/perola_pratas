@@ -483,7 +483,7 @@ function HeroScene() {
           ))}
         </g>
 
-        {/* ─── 5. BRINCOS ─── */}
+        {/* ─── 5. BRINCOS — assentam com UM brilho final e param ─── */}
         <g filter="url(#softGlow)">
           {/* Brinco esquerdo */}
           <g
@@ -494,7 +494,11 @@ function HeroScene() {
             <ellipse
               cx="148" cy="200" rx="2.5" ry="3.5"
               fill="url(#silverGrad)"
-              style={{ animation: 'earringTwinkle 3s ease-in-out 4s infinite' }}
+              opacity="0"
+              style={{
+                animation: 'earringSettle 1.2s ease-out 4s forwards',
+                transformOrigin: '148px 200px',
+              }}
             />
           </g>
           {/* Brinco direito */}
@@ -506,7 +510,11 @@ function HeroScene() {
             <ellipse
               cx="252" cy="200" rx="2.5" ry="3.5"
               fill="url(#silverGrad)"
-              style={{ animation: 'earringTwinkle 3s ease-in-out 4.3s infinite' }}
+              opacity="0"
+              style={{
+                animation: 'earringSettle 1.2s ease-out 4.15s forwards',
+                transformOrigin: '252px 200px',
+              }}
             />
           </g>
         </g>
