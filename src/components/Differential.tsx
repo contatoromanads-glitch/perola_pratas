@@ -17,32 +17,53 @@ const ROWS = [
     num: '03',
     title: 'Margem de Lucro',
     desc: 'Preços de atacado otimizados para maximizar o seu faturamento e escalar o seu negócio.',
-    icon: <><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></>,
+    icon: (
+      <>
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+        <polyline points="17 6 23 6 23 12" />
+      </>
+    ),
   },
 ]
 
-function DiffRow({ num, title, desc, icon, delay = 0 }: {
+function DiffRow({
+  num, title, desc, icon, delay = 0,
+}: {
   num: string; title: string; desc: string; icon: React.ReactNode; delay?: number
 }) {
   const { ref, visible } = useReveal()
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>}
-      className={`reveal${visible ? ' visible' : ''}${delay ? ` reveal-delay-${delay}` : ''} grid grid-cols-[5rem_1fr_2px_2.5fr] items-center gap-12 py-11 border-b border-border cursor-default transition-colors duration-300 hover:bg-white/5`}
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={`reveal${visible ? ' visible' : ''}${delay ? ` reveal-delay-${delay}` : ''}
+        grid grid-cols-1 md:grid-cols-[4rem_1fr_2.5fr] items-start md:items-center
+        gap-6 md:gap-12 py-10 md:py-11 border-b border-border-subtle
+        cursor-default transition-colors duration-300 hover:bg-surface-2/40 px-2 md:px-0`}
     >
-      <span className="font-serif text-[3.5rem] text-white/5 font-light tracking-[-0.02em] leading-none select-none">
+      {/* Numeração decorativa — agora ligeiramente mais visível */}
+      <span
+        aria-hidden="true"
+        className="font-serif text-[3.5rem] text-accent/15 font-light tracking-[-0.02em] leading-none select-none"
+      >
         {num}
       </span>
+
       <div>
-        <div className="w-11 h-11 border-[1.5px] border-[#10b981]/40 flex items-center justify-center mb-4">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981"
-            strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{icon}</svg>
+        <div className="w-11 h-11 border-[1.5px] border-accent/50 flex items-center justify-center mb-4 rounded-sm">
+          <svg
+            width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            className="text-accent" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
+          >
+            {icon}
+          </svg>
         </div>
-        <div className="font-serif text-[clamp(1.6rem,2.2vw,2.2rem)] text-forest font-normal tracking-[-0.01em] leading-[1.1]">
+        <div className="font-serif text-[clamp(1.5rem,2.2vw,2.2rem)] text-primary font-normal tracking-[-0.01em] leading-[1.15]">
           {title}
         </div>
       </div>
-      <div className="h-[60px] bg-border w-px" />
-      <p className="font-sans text-base leading-[1.9] text-forest-soft font-light max-w-[420px]">
+
+      {/* Descrição em secondary → AA */}
+      <p className="font-sans text-base leading-[1.85] text-secondary font-light max-w-[460px]">
         {desc}
       </p>
     </div>
@@ -53,18 +74,20 @@ export default function Differential() {
   const { ref: headerRef, visible: headerVisible } = useReveal()
 
   return (
-    <section id="colecoes" className="py-32 px-10 relative z-10">
+    <section id="colecoes" className="py-24 md:py-32 px-6 md:px-10 relative z-10">
       <div className="max-w-[1320px] mx-auto">
-        <div ref={headerRef as React.RefObject<HTMLDivElement>}
-          className={`reveal${headerVisible ? ' visible' : ''} flex items-center gap-8 mb-16`}>
+        <div
+          ref={headerRef as React.RefObject<HTMLDivElement>}
+          className={`reveal${headerVisible ? ' visible' : ''} flex flex-col md:flex-row md:items-center gap-4 md:gap-8 mb-12 md:mb-16`}
+        >
           <span className="section-label">Diferencial</span>
-          <div className="flex-1 h-px bg-border" />
-          <h2 className="font-serif text-[clamp(1.7rem,2.6vw,2.5rem)] text-forest font-normal tracking-[-0.01em]">
+          <div className="hidden md:block flex-1 h-px bg-border-strong" aria-hidden="true" />
+          <h2 className="font-serif text-[clamp(1.7rem,2.6vw,2.5rem)] text-primary font-normal tracking-[-0.01em]">
             O Diferencial Pérola Pratas
           </h2>
         </div>
 
-        <div className="border-t border-border">
+        <div className="border-t border-border-subtle">
           {ROWS.map((row, i) => (
             <DiffRow key={row.num} {...row} delay={i} />
           ))}

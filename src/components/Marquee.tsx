@@ -7,11 +7,13 @@ export default function Marquee() {
   const doubled = [...ITEMS, ...ITEMS]
 
   return (
-    <div className="bg-forest py-[1.1rem] overflow-hidden relative z-[2]">
-      <div className="flex whitespace-nowrap animate-[marquee_28s_linear_infinite]">
+    // FIX CRÍTICO: bg trocado de near-white para surface-light → contraste real com o texto
+    <div className="bg-surface-light border-y border-border-subtle py-[1.1rem] overflow-hidden relative z-[2]">
+      <div className="flex whitespace-nowrap animate-[marquee_28s_linear_infinite]" aria-hidden="true">
         {doubled.map((text, i) => (
-          <span key={i} className="font-sans text-[0.72rem] font-medium tracking-[0.3em] uppercase text-white/55 px-10">
-            <span className="text-teal mr-10">◆</span>
+          // texto secondary → AA garantido sobre surface-light
+          <span key={i} className="font-sans text-[0.72rem] font-medium tracking-[0.3em] uppercase text-secondary px-10">
+            <span className="text-accent mr-10" aria-hidden="true">◆</span>
             {text}
           </span>
         ))}
