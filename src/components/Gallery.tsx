@@ -11,14 +11,13 @@ interface GalleryImage {
   delay: number
 }
 
-const IMAGES: GalleryImage[] = [
   {
     src: '/gallery-1.png',
     alt: 'Conjunto de anéis de prata 925',
     label: 'Anéis',
     title: 'Conjunto Obsidian Band',
     sub: 'Atacado Nível 1',
-    className: 'lg:mt-20 aspect-[3/4]',
+    className: 'aspect-[4/5]',
     delay: 0,
   },
   {
@@ -37,7 +36,7 @@ const IMAGES: GalleryImage[] = [
     label: 'Pulseiras',
     title: 'Braceletes Arquitetônicos',
     sub: 'Atacado Nível 1',
-    className: 'lg:-mt-8 aspect-square',
+    className: 'aspect-[4/5]',
     delay: 2,
   },
 ]
@@ -96,7 +95,7 @@ export default function Gallery() {
         </div>
 
         {/* Grid totalmente responsivo */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[4fr_5fr_3fr] gap-6 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
           {IMAGES.map((img) => (
             <GalleryCard key={img.alt} img={img} />
           ))}
