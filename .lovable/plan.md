@@ -1,33 +1,71 @@
-## Diagnosis
+# Hero redesign — Cena SVG vanguardista
 
-The screenshot is the **mobile/tablet layout** rendering (preview frame is under the 768px `md` breakpoint, where the SVG-as-background variant kicks in). The desktop two-column grid is intact in code (`hidden md:flex` on the scene, `md:hidden` on the background layer) — but the mobile background is so visually dominant that it reads as "broken" even on tablet widths.
+## O que será feito
 
-Specific problems visible:
-- The aura rings + orbiting particles sit at the same vertical center as the headline → competing focal points.
-- Opacity 0.22 + only a soft radial overlay isn't enough contrast in the corners (CTAs and stats float over moving particles).
-- The scene is scaled to 115% width, pushing rings into the safe text area on the sides.
-- On true tablet widths (≈700–767px) the single-column layout wastes horizontal space — text is centered in a narrow column while the background fills the full width.
+Substituir completamente o `<video>` lateral e o logo watermark do Hero por uma **cena SVG animada** construída em código puro: silhueta feminina em line-art editorial sendo adornada por um colar de prata com pingente diamantino, brincos cintilantes, partículas orbitando e ondas concêntricas saindo do pingente.
 
-## Fix
+Tudo é **SVG inline + CSS keyframes** (sem GSAP/Framer Motion) — zero dependências novas, totalmente performático.
 
-### 1. Restrict the SVG-as-background to phones only
-Change the gate from `md:hidden` (<768px) to `sm:hidden` (<640px). Tablets (640–767px) will use a compact two-column-style stacked layout instead of the background overlay.
+## Arquivos alterados
 
-### 2. Add a real tablet/desktop layout at `sm` and `md`
-- `sm` (≥640px, <768px): keep stacked, but show the SVG scene **below** the text at reduced size (max-w 360px) — clean separation, no overlap.
-- `md+` (≥768px): unchanged 5fr/4fr grid (already working).
+- **`src/components/Hero.tsx`** — reescrito com a nova cena SVG (componente `<HeroScene/>` interno).
+- **`src/index.css`** — novos keyframes adicionados ao final do bloco "ANIMATIONS".
 
-### 3. Tame the mobile background (phones only)
-- Drop scene scale from `115%` → `90%` and shift it up (`-translate-y-6`) so rings sit behind the headline area, not the CTAs.
-- Lower opacity from `0.22` → `0.14`.
-- Strengthen the overlay: replace the soft radial with a near-opaque vertical gradient that keeps text crisp top-to-bottom, fading to ~40% only near the headline center where a hint of the animation is welcome.
-- Add a subtle `backdrop-blur-[2px]` on the text column so any visible particles are softened behind glyphs.
+## Camadas da cena (do fundo para o primeiro plano)
 
-### 4. Re-center mobile text alignment
-Currently text is `text-center` on mobile but the stat row uses `justify-center` with three items + a top border that spans full width — looks awkward. Constrain the stat row to `max-w-sm mx-auto` on mobile so the divider line matches the content width.
+```text
+┌─ aura: 3 anéis concêntricos pulsantes
+├─ partículas: 14 pontos de prata orbitando em loop lento
+├─ silhueta: traços contínuos (cabelo → rosto → pescoço → ombros)
+│            efeito "draw-on" via stroke-dasharray
+├─ colar:    arco passando pelo pescoço + pingente diamantino
+│            ondas concêntricas (signal) saindo do pingente
+├─ brincos:  ponto + gota de prata, brilho pulsante
+└─ sparkles: 7 estrelas diamantinas cintilando fora de fase
+```
 
-### Files
-- `src/components/Hero.tsx` — adjust breakpoint gates, scene wrapper sizing, stat row max-width, add tablet stacked variant.
+## Animações (keyframes a adicionar em `index.css`)
 
-### Out of scope
-No changes to `HeroScene` internals, animations, or other components. The desktop (≥768px) layout remains exactly as it is today.
+- `drawLine` — desenha cada path da silhueta/colar progressivamente (3s sequenciados).
+- `auraPulse` — anéis concêntricos respiram (escala + opacidade), 6s.
+- `particleDrift` — partículas oscilam em ciclos de 10–15s, fora de fase.
+- `pendantGlow` — halo do pingente pulsa (4s).
+- `signalWave` — ondas radiais expandem do pingente (4s loop).
+- `earringTwinkle` — brincos brilham (3s).
+- `sparkleTwinkle` — estrelas surgem/somem com rotação (5s).
+- `fadeInDelayed` — utilitário para revelações sequenciadas.
+
+A `floating` global existente (`@keyframes float`) embala o container inteiro suavemente.
+
+## Sequência temporal (storytelling)
+
+```text
+0.0s ──► silhueta começa a se desenhar (cabeça)
+0.6s ──► linha do rosto
+1.2s ──► pescoço aparece
+1.4s ──► ombros / decote
+2.4s ──► detalhes do rosto (olhos, V do decote)
+2.6s ──► colar se desenha em arco
+3.4s ──► brincos surgem
+4.4s ──► pingente aparece e começa a brilhar
+4.8s+ ──► ondas radiais e partículas em loop perpétuo
+```
+
+## Aspectos técnicos
+
+- **`viewBox="0 0 400 500"`** com `preserveAspectRatio` → escala perfeita sem distorção.
+- **Gradientes definidos uma vez em `<defs>`**: silhueta verde, prata polida, glow radial.
+- **`<filter id="softGlow">`** com `feGaussianBlur` → brilho real nos brincos e pingente.
+- **`<symbol id="sparkle">`** reutilizado via `<use>` → 7 estrelas com 1 definição.
+- **Acessibilidade**: container com `role="img"` + `aria-label` descritivo; elementos decorativos com `aria-hidden`.
+- **`prefers-reduced-motion`** já tratado globalmente em `index.css` → desliga todas animações para usuários sensíveis.
+- **Responsivo**: container `aspect-[4/5] max-w-[520px]`; em mobile a cena vai para o topo (`order-1`) e o conteúdo abaixo (`order-2`); no desktop volta ao layout original.
+
+## Layout responsivo
+
+- **Mobile (<768px)**: cena empilhada acima, conteúdo abaixo, padding reduzido.
+- **Tablet/Desktop**: grid `5fr_4fr`, cena à direita ocupando até 520px.
+
+## Conteúdo preservado
+
+Headline, parágrafo, CTAs e stats permanecem idênticos — apenas a metade visual direita foi reinventada.
