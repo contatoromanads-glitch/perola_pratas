@@ -157,22 +157,24 @@ p {
   75%      { transform: translate(-6px, 4px) scale(1.2); opacity: 0.9; }
 }
 
-/* Halo do pingente pulsando suavemente */
-@keyframes pendantGlow {
-  0%, 100% { opacity: 0.55; transform: scale(1); }
-  50%      { opacity: 0.95; transform: scale(1.18); }
+/* Halo do pingente — pulsa UMA vez e estabiliza no estado de pouso */
+@keyframes pendantSettle {
+  0%   { opacity: 0;    transform: scale(0.4); }
+  60%  { opacity: 0.95; transform: scale(1.25); }
+  100% { opacity: 0.7;  transform: scale(1); }
 }
 
-/* Onda concêntrica saindo do pingente (signal) */
-@keyframes signalWave {
-  0%   { transform: scale(0.6); opacity: 0.7; stroke-width: 0.7; }
-  100% { transform: scale(3.2); opacity: 0;   stroke-width: 0.2; }
+/* Onda do pouso do pingente — emite UMA vez e some (efeito impacto) */
+@keyframes signalImpact {
+  0%   { transform: scale(0.5); opacity: 0.85; stroke-width: 0.8; }
+  100% { transform: scale(2.8); opacity: 0;    stroke-width: 0.2; }
 }
 
-/* Brilho dos brincos */
-@keyframes earringTwinkle {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50%      { opacity: 1;   transform: scale(1.4); }
+/* Cintilar dos brincos — assenta em UM brilho final e para */
+@keyframes earringSettle {
+  0%   { opacity: 0; transform: scale(0.4); }
+  60%  { opacity: 1; transform: scale(1.5); }
+  100% { opacity: 0.85; transform: scale(1); }
 }
 
 /* Estrela diamantina cintilando + girando */
