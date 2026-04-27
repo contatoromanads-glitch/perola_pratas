@@ -123,10 +123,11 @@ export default function Hero() {
    ══════════════════════════════════════════════════════════════ */
 function HeroScene() {
   return (
+    // Wrapper sem animação contínua — cena estabiliza após o pouso das joias
     <div
-      className="relative w-full max-w-[520px] aspect-[4/5] animate-[float_8s_ease-in-out_infinite]"
+      className="relative w-full max-w-[520px] aspect-[4/5]"
       role="img"
-      aria-label="Silhueta feminina adornada por joias de prata em movimento"
+      aria-label="Silhueta feminina com cabelos fluidos adornada por joias de prata"
     >
       <svg
         viewBox="0 0 400 500"
