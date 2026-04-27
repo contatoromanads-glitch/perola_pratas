@@ -123,10 +123,11 @@ export default function Hero() {
    ══════════════════════════════════════════════════════════════ */
 function HeroScene() {
   return (
+    // Wrapper sem animação contínua — cena estabiliza após o pouso das joias
     <div
-      className="relative w-full max-w-[520px] aspect-[4/5] animate-[float_8s_ease-in-out_infinite]"
+      className="relative w-full max-w-[520px] aspect-[4/5]"
       role="img"
-      aria-label="Silhueta feminina adornada por joias de prata em movimento"
+      aria-label="Silhueta feminina com cabelos fluidos adornada por joias de prata"
     >
       <svg
         viewBox="0 0 400 500"
@@ -221,28 +222,134 @@ function HeroScene() {
 
         {/* ─── 3. SILHUETA feminina em line-art (efeito "draw-on") ─── */}
         <g>
-          {/* Cabelo / topo da cabeça */}
+          {/*
+            CABELO REALISTA — silhueta feminina com cabelos fluidos.
+            Construído em 4 camadas para dar volume e movimento natural:
+              a) Massa principal (volume superior + topo da cabeça)
+              b) Mecha lateral esquerda caindo sobre o ombro
+              c) Mecha lateral direita ondulada (mais longa)
+              d) Fios soltos / wisps na frente do rosto
+          */}
+
+          {/* (a) Volume principal do cabelo — coroa, laterais e nuca */}
           <path
-            d="M 130 90 C 120 60, 160 30, 200 32 C 240 30, 285 55, 280 100 C 295 110, 300 140, 285 165 C 280 175, 268 178, 260 175"
+            d="M 138 145
+               C 118 130, 108 95, 128 65
+               C 148 38, 195 28, 230 38
+               C 272 50, 295 80, 290 120
+               C 298 140, 302 165, 295 190
+               C 290 205, 280 215, 270 218
+               L 268 200
+               C 270 185, 268 170, 263 160"
             fill="none"
             stroke="url(#silhouetteGrad)"
-            strokeWidth="1.4"
+            strokeWidth="1.6"
             strokeLinecap="round"
-            strokeDasharray="600"
-            strokeDashoffset="600"
-            style={{ animation: 'drawLine 2.4s ease-out 0.2s forwards' }}
+            strokeLinejoin="round"
+            strokeDasharray="900"
+            strokeDashoffset="900"
+            style={{ animation: 'drawLine 2.6s ease-out 0.2s forwards' }}
+          />
+
+          {/* (b) Mecha lateral esquerda — caindo sobre o ombro com curvatura natural */}
+          <path
+            d="M 138 145
+               C 125 175, 118 215, 122 255
+               C 124 285, 132 315, 142 345
+               C 148 365, 155 380, 165 390"
+            fill="none"
+            stroke="url(#silhouetteGrad)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeDasharray="500"
+            strokeDashoffset="500"
+            style={{ animation: 'drawLine 2.4s ease-out 0.8s forwards' }}
+          />
+
+          {/* (b.2) Mecha interna esquerda — paralela, dando profundidade ao volume */}
+          <path
+            d="M 148 160
+               C 142 195, 140 230, 145 265
+               C 150 295, 158 320, 165 335"
+            fill="none"
+            stroke="url(#silhouetteGrad)"
+            strokeWidth="0.9"
+            strokeLinecap="round"
+            opacity="0.55"
+            strokeDasharray="350"
+            strokeDashoffset="350"
+            style={{ animation: 'drawLine 2.2s ease-out 1.1s forwards' }}
+          />
+
+          {/* (c) Mecha lateral direita — mais longa, ondulada, passando do ombro */}
+          <path
+            d="M 295 145
+               C 308 178, 312 220, 305 260
+               C 298 295, 285 325, 268 355
+               C 258 375, 248 390, 240 400"
+            fill="none"
+            stroke="url(#silhouetteGrad)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeDasharray="520"
+            strokeDashoffset="520"
+            style={{ animation: 'drawLine 2.4s ease-out 0.8s forwards' }}
+          />
+
+          {/* (c.2) Mecha interna direita — fio paralelo dando textura */}
+          <path
+            d="M 285 160
+               C 295 195, 298 230, 292 265
+               C 286 295, 276 320, 265 340"
+            fill="none"
+            stroke="url(#silhouetteGrad)"
+            strokeWidth="0.9"
+            strokeLinecap="round"
+            opacity="0.55"
+            strokeDasharray="380"
+            strokeDashoffset="380"
+            style={{ animation: 'drawLine 2.2s ease-out 1.1s forwards' }}
+          />
+
+          {/* (d) Fios soltos sobre a testa — wisps suaves de franja lateral */}
+          <path
+            d="M 165 90
+               C 175 100, 183 110, 188 122
+               M 235 90
+               C 228 102, 222 115, 218 128"
+            fill="none"
+            stroke="url(#silhouetteGrad)"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+            opacity="0.7"
+            strokeDasharray="120"
+            strokeDashoffset="120"
+            style={{ animation: 'drawLine 1.6s ease-out 1.6s forwards' }}
+          />
+
+          {/* (d.2) Risca / repartido sutil no topo da cabeça */}
+          <path
+            d="M 200 38 C 198 55, 200 72, 202 88"
+            fill="none"
+            stroke="url(#silhouetteGrad)"
+            strokeWidth="0.7"
+            strokeLinecap="round"
+            opacity="0.5"
+            strokeDasharray="60"
+            strokeDashoffset="60"
+            style={{ animation: 'drawLine 1.4s ease-out 1.8s forwards' }}
           />
 
           {/* Linha do queixo / mandíbula */}
           <path
-            d="M 145 130 C 140 165, 152 200, 175 220 C 188 230, 210 232, 225 225 C 248 213, 262 188, 265 155"
+            d="M 152 138 C 145 170, 155 205, 178 222 C 192 232, 212 234, 226 226 C 248 214, 262 188, 262 152"
             fill="none"
             stroke="url(#silhouetteGrad)"
             strokeWidth="1.4"
             strokeLinecap="round"
             strokeDasharray="500"
             strokeDashoffset="500"
-            style={{ animation: 'drawLine 2.4s ease-out 0.6s forwards' }}
+            style={{ animation: 'drawLine 2.2s ease-out 0.6s forwards' }}
           />
 
           {/* Pescoço */}
@@ -326,15 +433,21 @@ function HeroScene() {
             style={{ animation: 'fadeInDelayed 1s ease-out 4.2s forwards' }}
           />
 
-          {/* Halo do pingente */}
+          {/*
+            Halo do pingente — pulsa UMA vez no impacto e estabiliza.
+            forwards + sem 'infinite' garante que pare no estado final.
+          */}
           <circle
             cx="200" cy="350" r="22"
             fill="url(#pendantGlow)"
             opacity="0"
-            style={{ animation: 'pendantGlow 4s ease-in-out 4.4s infinite' }}
+            style={{
+              animation: 'pendantSettle 1.4s ease-out 4.4s forwards',
+              transformOrigin: '200px 350px',
+            }}
           />
 
-          {/* Pingente diamantino */}
+          {/* Pingente diamantino — assenta no lugar e fica estático */}
           <g
             opacity="0"
             style={{ animation: 'fadeInDelayed 0.8s ease-out 4.4s forwards' }}
@@ -350,7 +463,10 @@ function HeroScene() {
             <line x1="193" y1="350" x2="207" y2="350" stroke="hsl(150 30% 60%)" strokeWidth="0.4" opacity="0.6" />
           </g>
 
-          {/* Ondas concêntricas saindo do pingente (signal) */}
+          {/*
+            Ondas de impacto — emitidas UMA vez no momento do pouso.
+            Sem 'infinite': cada onda toca a animação e desaparece, sem ciclo.
+          */}
           {[0, 1, 2].map((i) => (
             <circle
               key={i}
@@ -360,14 +476,14 @@ function HeroScene() {
               strokeWidth="0.5"
               opacity="0"
               style={{
-                animation: `signalWave 4s ease-out ${4.8 + i * 1.2}s infinite`,
+                animation: `signalImpact 1.4s ease-out ${4.6 + i * 0.25}s forwards`,
                 transformOrigin: '200px 350px',
               }}
             />
           ))}
         </g>
 
-        {/* ─── 5. BRINCOS ─── */}
+        {/* ─── 5. BRINCOS — assentam com UM brilho final e param ─── */}
         <g filter="url(#softGlow)">
           {/* Brinco esquerdo */}
           <g
@@ -378,7 +494,11 @@ function HeroScene() {
             <ellipse
               cx="148" cy="200" rx="2.5" ry="3.5"
               fill="url(#silverGrad)"
-              style={{ animation: 'earringTwinkle 3s ease-in-out 4s infinite' }}
+              opacity="0"
+              style={{
+                animation: 'earringSettle 1.2s ease-out 4s forwards',
+                transformOrigin: '148px 200px',
+              }}
             />
           </g>
           {/* Brinco direito */}
@@ -390,7 +510,11 @@ function HeroScene() {
             <ellipse
               cx="252" cy="200" rx="2.5" ry="3.5"
               fill="url(#silverGrad)"
-              style={{ animation: 'earringTwinkle 3s ease-in-out 4.3s infinite' }}
+              opacity="0"
+              style={{
+                animation: 'earringSettle 1.2s ease-out 4.15s forwards',
+                transformOrigin: '252px 200px',
+              }}
             />
           </g>
         </g>
