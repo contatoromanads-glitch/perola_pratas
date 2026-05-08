@@ -108,12 +108,10 @@ export default function Gallery() {
         >
           <div className="flex-1 h-px bg-border-strong" aria-hidden="true" />
           <a
-            href="https://atacado.perolapratas.com.br/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#cadastro"
             className="inline-flex items-center gap-2 font-sans text-[0.75rem] font-semibold tracking-[0.22em] uppercase text-accent no-underline transition-opacity duration-200 hover:opacity-75 min-h-[44px]"
           >
-            Ver Lookbook Completo
+            Solicitar Curadoria
             <svg
               width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"

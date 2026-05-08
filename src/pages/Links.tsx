@@ -34,8 +34,8 @@ const LINKS: LinkItem[] = [
   },
   {
     icon: Sparkles,
-    label: 'CATÁLOGO ATACADO',
-    description: 'Explore o site oficial',
+    label: 'Curadoria Institucional',
+    description: 'Conheça a seleção da marca',
     href: '/#colecoes',
   },
   {

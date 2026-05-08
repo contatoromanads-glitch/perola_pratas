@@ -49,11 +49,11 @@ export default function LeadCapture() {
         <a
           ref={btnRef as React.RefObject<HTMLAnchorElement>}
           className={`reveal reveal-delay-2${btnVisible ? ' visible' : ''} btn-primary`}
-          href="https://wa.me/5511999999999?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20P%C3%A9rola%20Pratas%20e%20gostaria%20de%20aplicar%20para%20ser%20um%20Revendedor%20Exclusivo."
+          href="https://wa.me/554396784294?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20P%C3%A9rola%20Pratas%20e%20gostaria%20de%20aplicar%20para%20ser%20um%20Revendedor%20Exclusivo."
           target="_blank"
           rel="noopener noreferrer"
         >
-          Iniciar Conversa no WhatsApp
+          Iniciar conversa no WhatsApp
         </a>
       </div>
     </section>

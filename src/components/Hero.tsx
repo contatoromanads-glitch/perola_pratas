@@ -1,92 +1,46 @@
-/**
- * Hero — Pérola Pratas
- *
- * Substituição completa do layout anterior (sem vídeo, sem logo watermark).
- * A peça central é uma cena SVG construída inteiramente em código:
- *   • Silhueta feminina abstrata em traços contínuos (linha-arte editorial)
- *   • Colar de prata 925 que se "desenha" e assenta no pescoço
- *   • Brincos com brilho pulsante
- *   • Partículas de prata orbitando em ritmo lento e contínuo
- *   • Ondas concêntricas suaves emanando do pingente
- *
- * Toda animação é CSS (keyframes em index.css) + atributos SVG nativos
- * (stroke-dasharray para o efeito "draw-on" do colar e da silhueta).
- *
- * Responsivo: empilha em mobile (cena acima, conteúdo abaixo) e
- * usa grid 5fr/4fr no desktop. Respeita prefers-reduced-motion via
- * regra global em index.css.
- */
-import React, { useState, useRef, useEffect } from 'react';
+const HIGHLIGHTS = [
+  { value: '925', label: 'Prata 925' },
+  { value: 'Alto', label: 'Padrão' },
+  { value: 'Direto', label: 'Atendimento' },
+]
+
+const QUALITY_POINTS = [
+  'Acabamento refinado para vitrines premium',
+  'Curadoria para atacado, varejo e revenda',
+  'Contato consultivo antes do acesso às condições comerciais',
+]
+
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center pt-[80px] pb-16 md:pb-0 relative overflow-hidden">
-      {/* ─── Fundo: malha de pontos com máscara radial ─── */}
+    <section className="min-h-screen flex items-center pt-[92px] pb-16 md:pb-20 relative overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            'radial-gradient(circle, hsl(var(--accent) / 0.10) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
+            'linear-gradient(120deg, hsl(var(--accent) / 0.08), transparent 34%), radial-gradient(circle, hsl(var(--text-primary) / 0.045) 1px, transparent 1px)',
+          backgroundSize: '100% 100%, 34px 34px',
           maskImage:
-            'radial-gradient(ellipse 70% 90% at 30% 50%, black, transparent)',
+            'linear-gradient(90deg, black 0%, black 68%, transparent 100%)',
           WebkitMaskImage:
-            'radial-gradient(ellipse 70% 90% at 30% 50%, black, transparent)',
+            'linear-gradient(90deg, black 0%, black 68%, transparent 100%)',
         }}
         aria-hidden="true"
       />
 
-      {/* ─── Texto fantasma "925" decorativo ─── */}
-      <div
-        aria-hidden="true"
-        className="hidden md:block absolute right-[-4%] bottom-[-12%] font-serif text-[clamp(18rem,36vw,55rem)] leading-[0.8] text-primary font-semibold opacity-[0.04] tracking-[-0.06em] pointer-events-none select-none italic"
-      >
-        925
-      </div>
-
-      {/* ─── MOBILE + TABLET: cena SVG como background atrás do texto ───
-          Em telas <lg (até 1023px), a cena fica posicionada absolutamente,
-          centralizada, com um overlay vinheta para garantir legibilidade.
-          Em lg+ é escondida aqui (renderizada no grid à direita). */}
-      <div
-        className="lg:hidden absolute inset-0 flex items-center justify-center pointer-events-none z-0"
-        aria-hidden="true"
-      >
-        {/* Mais visível em tablet (md+) que em mobile */}
-        <div className="w-[115%] max-w-none opacity-[0.28] md:opacity-[0.4] md:w-[80%] translate-y-4">
-          <HeroScene idPrefix="hero-mobile" />
-        </div>
-        {/* Overlay para reforçar contraste do texto sobre a animação — mais leve em tablet */}
-        <div
-          className="absolute inset-0 md:hidden"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 70% at 50% 55%, hsl(var(--background) / 0.78) 0%, hsl(var(--background) / 0.55) 50%, hsl(var(--background) / 0.85) 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 hidden md:block lg:hidden"
-          style={{
-            background:
-              'radial-gradient(ellipse 65% 80% at 30% 50%, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.55) 45%, hsl(var(--background) / 0.25) 100%)',
-          }}
-        />
-      </div>
-
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full grid grid-cols-1 lg:grid-cols-[5fr_4fr] items-center gap-12 lg:gap-8 relative z-10">
-        {/* ═══════════════════ CONTEÚDO ═══════════════════ */}
-        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 lg:order-1 text-center lg:text-left items-center lg:items-start relative z-10">
+      <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full min-w-0 grid grid-cols-1 lg:grid-cols-[minmax(0,1.03fr)_minmax(360px,0.86fr)] items-center gap-12 lg:gap-16 relative z-10">
+        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] text-center lg:text-left items-center lg:items-start w-full min-w-0">
           <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
             <div className="w-7 h-[2px] bg-accent" aria-hidden="true" />
             <span className="section-label">Atacado e Varejo</span>
           </div>
 
-          <h1 className="font-serif leading-[0.95] text-primary font-normal tracking-[-0.025em] mb-7 text-8xl">
+          <h1 className="font-serif leading-[0.95] text-primary font-normal mb-7 text-[clamp(2.95rem,12.5vw,3.55rem)] md:text-[clamp(4.4rem,10vw,6.5rem)] lg:text-[clamp(5.4rem,8vw,8.5rem)]">
             Prata<br />
             <em
               className="italic text-transparent bg-clip-text"
               style={{
                 backgroundImage:
-                  'linear-gradient(130deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 60%, hsl(150 70% 88%) 100%)',
+                  'linear-gradient(130deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 66%, hsl(150 70% 88%) 100%)',
               }}
             >
               Soberana.
@@ -95,27 +49,29 @@ export default function Hero() {
             Inigualável.
           </h1>
 
-          <p className="font-sans text-[1.1rem] leading-[1.85] text-secondary max-w-[440px] mx-auto lg:mx-0 font-light mb-9">
-            Eleve seu portfólio com prata de atacado de qualidade editorial.
-            Feito para visionários, desenhado para distinção.
+          <p className="font-sans text-[1.05rem] md:text-[1.1rem] leading-[1.85] text-secondary max-w-[500px] mx-auto lg:mx-0 font-light mb-9">
+            Eleve seu portfólio com prata de atacado de alto padrão. Feito para
+            visionários, desenhado para distinção.
           </p>
 
           <div className="flex gap-4 flex-wrap justify-center lg:justify-start mb-12">
-            <a href="https://wa.me/5543991312661" target="_blank" rel="noopener noreferrer" className="btn-primary">Fale Conosco</a>
-            <a href="https://atacado.perolapratas.com.br/" target="_blank" rel="noopener noreferrer" className="btn-outline">Compre no Site</a>
+            <a
+              href="https://wa.me/5543991312661"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+            >
+              Fale Conosco
+            </a>
           </div>
 
-          <div className="flex flex-wrap justify-center lg:justify-start gap-8 md:gap-12 pt-8 border-t border-border-strong w-full">
-            {[
-              { value: '925', label: 'Prata Pura' },
-              { value: 'Todos', label: 'CPF & CNPJ' },
-              { value: '100%', label: 'Fab. Própria' },
-            ].map(({ value, label }) => (
-              <div key={label}>
-                <div className="font-serif text-[2rem] text-primary font-medium tracking-[-0.02em] leading-none mb-[0.4rem]">
+          <div className="grid grid-cols-3 gap-3 md:gap-8 pt-8 border-t border-border-strong w-full max-w-[560px]">
+            {HIGHLIGHTS.map(({ value, label }) => (
+              <div key={label} className="min-w-0">
+                <div className="font-serif text-[1.45rem] md:text-[2rem] text-primary font-medium leading-none mb-[0.45rem]">
                   {value}
                 </div>
-                <div className="font-sans text-[0.72rem] font-semibold tracking-[0.24em] uppercase text-accent">
+                <div className="font-sans text-[0.58rem] sm:text-[0.66rem] md:text-[0.72rem] font-semibold tracking-[0.16em] sm:tracking-[0.22em] uppercase text-accent leading-relaxed">
                   {label}
                 </div>
               </div>
@@ -123,231 +79,44 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ═══════════════════ CENA SVG (somente desktop ≥ lg) ═══════════════════
-            Em mobile/tablet a cena foi movida para o background acima.
-            Garantimos largura mínima para que o SVG sempre seja bem visível. */}
-        <div className="hidden lg:flex order-2 justify-center items-center min-h-[620px] overflow-visible">
-          <div className="flex-shrink-0 w-[min(42vw,calc((100vh-120px)*0.8),560px)] max-w-full">
-            <HeroScene idPrefix="hero-desktop" />
+        <div className="relative w-full max-w-[min(100%,540px)] min-w-0 mx-auto lg:mx-0 animate-[fadeUp_1s_ease_0.12s_forwards] opacity-0">
+          <div className="relative border border-border-strong bg-surface-2/45 p-3 md:p-4 rounded-sm overflow-hidden">
+            <figure className="relative aspect-[4/5] overflow-hidden rounded-sm bg-surface-0">
+              <img
+                src="/gallery-1.png"
+                alt="Colar de prata 925 sobre veludo verde"
+                className="h-full w-full object-cover object-center opacity-95"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-surface-0/72 via-transparent to-surface-0/10"
+              />
+              <figcaption className="absolute left-5 right-5 bottom-5 border-t border-border-strong pt-4">
+                <span className="block font-sans text-[0.66rem] md:text-[0.72rem] font-semibold tracking-[0.24em] uppercase text-accent mb-2">
+                  Peças em prata 925
+                </span>
+                <span className="block font-serif text-[1.65rem] md:text-[2rem] leading-tight text-primary">
+                  Presença premium, acabamento claro, venda com intenção.
+                </span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="mt-5 grid gap-3 min-w-0">
+            {QUALITY_POINTS.map((point) => (
+              <div
+                key={point}
+                className="flex items-center gap-3 border border-border-subtle bg-surface-0/45 px-4 py-3 rounded-sm"
+              >
+                <span className="h-px w-7 bg-accent flex-shrink-0" aria-hidden="true" />
+                <span className="min-w-0 font-sans text-[0.82rem] md:text-[0.88rem] text-secondary leading-relaxed">
+                  {point}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-
     </section>
   )
-}
-
-/* ══════════════════════════════════════════════════════════════
-   HeroScene — animação SVG vanguardista
-   ──────────────────────────────────────────────────────────────
-   Estrutura em camadas (do fundo para o primeiro plano):
-     1. Anéis concêntricos pulsantes (aura)
-     2. Partículas de prata orbitando
-     3. Silhueta feminina em line-art (draw-on)
-     4. Colar com pingente (draw-on, depois flutuação sutil)
-     5. Brincos com brilho pulsante
-     6. Reflexos diamantinos (sparkles) cintilando
-   ══════════════════════════════════════════════════════════════ */
-function HeroScene({ idPrefix }: { idPrefix: string }) {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5; 
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMousePos({ x, y });
-  };
-
-  useEffect(() => {
-    if (isHovered) return;
-    let time = 0;
-    const interval = setInterval(() => {
-      time += 0.05;
-      setMousePos({
-        x: Math.sin(time) * 0.1,
-        y: Math.cos(time * 0.8) * 0.1,
-      });
-    }, 50);
-    return () => clearInterval(interval);
-  }, [isHovered]);
-
-  const pX = mousePos.x * 30;
-  const pY = mousePos.y * 20;
-  
-  const hatTilt = mousePos.x * -10;
-  const headTurnX = mousePos.x * 12;
-  const headTurnY = mousePos.y * 5;
-  const chainControlY = 285 + pY;
-
-  return (
-    <div 
-      ref={containerRef}
-      className="relative w-full aspect-[4/5] cursor-pointer"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      role="img"
-      aria-label="Ilustração interativa de uma mulher elegante com chapéu e joias de prata"
-    >
-      <style>
-        {`
-          @keyframes sway {
-            0% { transform: rotate(-5deg); }
-            100% { transform: rotate(5deg); }
-          }
-          @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-          }
-          @keyframes floatUp {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes drawChain {
-            0% { stroke-dashoffset: 200; }
-            100% { stroke-dashoffset: 0; }
-          }
-        `}
-      </style>
-      
-      <svg
-        viewBox="0 0 400 500"
-        className="w-full h-full overflow-visible"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <defs>
-          <linearGradient id={`${idPrefix}-skin`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="hsl(150, 30%, 95%)" />
-            <stop offset="100%" stopColor="hsl(150, 20%, 80%)" />
-          </linearGradient>
-          <linearGradient id={`${idPrefix}-dress`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="hsl(160, 70%, 15%)" />
-            <stop offset="100%" stopColor="hsl(160, 80%, 5%)" />
-          </linearGradient>
-          <linearGradient id={`${idPrefix}-silver`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="50%" stopColor="hsl(150, 30%, 90%)" />
-            <stop offset="100%" stopColor="#e0e0e0" />
-          </linearGradient>
-          <filter id={`${idPrefix}-glow`} x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        {/* BACKGROUND ARCH */}
-        <g style={{ animation: 'floatUp 1s ease-out forwards' }}>
-          <path d="M 60 450 L 60 200 A 140 140 0 0 1 340 200 L 340 450 Z" fill="hsl(160, 40%, 10%)" />
-          <path d="M 70 450 L 70 200 A 130 130 0 0 1 330 200 L 330 450 Z" fill="none" stroke="hsl(150, 30%, 20%)" strokeWidth="2" />
-        </g>
-
-        {/* BOTANICAL ELEMENTS */}
-        <g style={{ animation: 'floatUp 1.2s ease-out forwards', transformOrigin: '200px 400px' }}>
-          <g transform="translate(90, 350) rotate(-30)" style={{ animation: 'sway 5s ease-in-out infinite alternate', transformOrigin: 'bottom center' }}>
-            <path d="M 0 0 C -20 -40, -40 -80, 0 -120 C 40 -80, 20 -40, 0 0 Z" fill="hsl(160, 50%, 15%)" opacity="0.8" />
-          </g>
-          <g transform="translate(310, 380) rotate(20)" style={{ animation: 'sway 4s ease-in-out 1s infinite alternate', transformOrigin: 'bottom center' }}>
-            <path d="M 0 0 C -15 -30, -30 -60, 0 -90 C 30 -60, 15 -30, 0 0 Z" fill="hsl(160, 60%, 12%)" opacity="0.8" />
-          </g>
-        </g>
-
-        {/* CHARACTER BASE */}
-        <g style={{ animation: 'floatUp 1.4s ease-out forwards' }}>
-          {/* Dress */}
-          <path d="M 90 450 C 100 350, 150 330, 200 330 C 250 330, 300 350, 310 450 Z" fill={`url(#${idPrefix}-dress)`} />
-          
-          {/* Neck and Chest */}
-          <path d="M 175 220 L 175 300 C 175 340, 130 350, 100 380 C 130 380, 170 360, 200 360 C 230 360, 270 380, 300 380 C 270 350, 225 340, 225 300 L 225 220 Z" fill={`url(#${idPrefix}-skin)`} />
-          
-          {/* Face Lower Half */}
-          <path d="M 155 150 L 155 220 C 155 260, 245 260, 245 220 L 245 150 Z" fill={`url(#${idPrefix}-skin)`} />
-          
-          {/* Lips */}
-          <g style={{ transform: `translate(${headTurnX}px, ${headTurnY}px)`, transition: 'transform 0.1s' }}>
-            <path d="M 190 225 Q 200 230 210 225 Q 200 235 190 225 Z" fill="hsl(340, 50%, 45%)" opacity="0.9" />
-          </g>
-        </g>
-
-        {/* JEWELRY */}
-        <g style={{ animation: 'floatUp 1.6s ease-out forwards' }}>
-          {/* Left Earring */}
-          <g style={{ transform: `translate(${pX * 0.4}px, ${pY * 0.4}px)`, transition: 'transform 0.1s' }}>
-            <line x1="165" y1="200" x2="160" y2="245" stroke="hsl(150, 40%, 90%)" strokeWidth="1.5" />
-            <circle cx="160" cy="250" r="4" fill="#fff" filter={`url(#${idPrefix}-glow)`} />
-            <path d="M 160 245 L 163 255 L 160 265 L 157 255 Z" fill={`url(#${idPrefix}-silver)`} />
-          </g>
-          
-          {/* Right Earring */}
-          <g style={{ transform: `translate(${pX * 0.4}px, ${pY * 0.4}px)`, transition: 'transform 0.1s' }}>
-            <line x1="235" y1="200" x2="240" y2="245" stroke="hsl(150, 40%, 90%)" strokeWidth="1.5" />
-            <circle cx="240" cy="250" r="4" fill="#fff" filter={`url(#${idPrefix}-glow)`} />
-            <path d="M 240 245 L 243 255 L 240 265 L 237 255 Z" fill={`url(#${idPrefix}-silver)`} />
-          </g>
-
-          {/* Necklace Chain */}
-          <path 
-            d={`M 175 285 Q 200 ${chainControlY} 225 285`} 
-            fill="none" 
-            stroke="hsl(150, 40%, 90%)" 
-            strokeWidth="1.5" 
-            strokeDasharray="4 2"
-            style={{ transition: 'd 0.1s' }} 
-          />
-
-          {/* Pendant */}
-          <g style={{ transform: `translate(${pX}px, ${pY}px)`, transition: 'transform 0.1s' }}>
-            <circle cx="200" cy="295" r="18" fill="hsl(150, 80%, 80%)" opacity="0.3" filter={`url(#${idPrefix}-glow)`} />
-            <path d="M 200 280 L 210 295 L 200 315 L 190 295 Z" fill={`url(#${idPrefix}-silver)`} />
-            <path d="M 200 280 L 205 295 L 200 315 L 195 295 Z" fill="hsl(150, 10%, 70%)" />
-            
-            <g style={{ animation: 'twinkle 2s infinite', transformOrigin: '200px 295px' }}>
-              <path d="M 200 285 L 202 293 L 210 295 L 202 297 L 200 305 L 198 297 L 190 295 L 198 293 Z" fill="#fff" />
-            </g>
-          </g>
-        </g>
-
-        {/* HAT */}
-        <g 
-          style={{ 
-            transform: `rotate(${hatTilt}deg)`, 
-            transformOrigin: '200px 140px', 
-            transition: 'transform 0.2s ease-out',
-            animation: 'floatUp 1.2s ease-out forwards'
-          }}
-        >
-          <path d="M 130 140 C 130 20, 270 20, 270 140 Z" fill="hsl(160, 70%, 12%)" />
-          <ellipse cx="200" cy="135" rx="135" ry="25" fill="hsl(160, 40%, 8%)" />
-          <ellipse cx="200" cy="140" rx="180" ry="40" fill="hsl(160, 80%, 15%)" />
-          <ellipse cx="200" cy="138" rx="178" ry="38" fill="none" stroke="hsl(150, 20%, 30%)" strokeWidth="1" opacity="0.5" />
-        </g>
-
-        {/* FOREGROUND SPARKLES */}
-        {[
-          { x: 80, y: 220, s: 0.6, d: 0 },
-          { x: 320, y: 180, s: 0.8, d: 1 },
-          { x: 120, y: 380, s: 0.5, d: 0.5 },
-          { x: 300, y: 400, s: 0.7, d: 1.5 },
-        ].map((sp, i) => (
-          <g key={i} transform={`translate(${sp.x}, ${sp.y}) scale(${sp.s})`} style={{ animation: `twinkle ${3 + i}s infinite ${sp.d}s` }}>
-            <path d="M 0 -10 L 2 -2 L 10 0 L 2 2 L 0 10 L -2 2 L -10 0 L -2 -2 Z" fill="hsl(150, 40%, 90%)" />
-          </g>
-        ))}
-        
-        {/* TEXT */}
-        <line x1="40" y1="475" x2="360" y2="475" stroke="hsl(160 70% 45%)" strokeWidth="0.4" opacity="0.3" strokeDasharray="2 6" />
-        <text x="50" y="492" fill="hsl(160 70% 45%)" fontFamily="Jost, sans-serif" fontSize="7" letterSpacing="3" opacity="0.55">
-          PÉROLA · PRATAS · 925
-        </text>
-        <text x="350" y="492" textAnchor="end" fill="hsl(150 20% 70%)" fontFamily="Jost, sans-serif" fontSize="7" letterSpacing="3" opacity="0.55">
-          ATELIÊ · BR
-        </text>
-      </svg>
-    </div>
-  );
 }
