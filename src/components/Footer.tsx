@@ -59,7 +59,7 @@ export default function Footer() {
         >
           {[
             { k: '925', l: 'Prata legítima certificada' },
-            { k: 'B2B', l: 'Operação exclusiva para revenda' },
+            { k: 'Atacado', l: 'Operação exclusiva para revenda' },
             { k: '∞', l: 'Curadoria contínua de coleção' },
           ].map((p) => (
             <div key={p.k} className="flex flex-col">
