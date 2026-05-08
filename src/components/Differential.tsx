@@ -38,18 +38,18 @@ function DiffRow({
       className={`reveal${visible ? ' visible' : ''}${delay ? ` reveal-delay-${delay}` : ''}
         grid grid-cols-1 md:grid-cols-[4rem_1fr_2.5fr] items-start md:items-center
         gap-6 md:gap-12 py-10 md:py-11 border-b border-border-subtle
-        cursor-default transition-colors duration-300 hover:bg-surface-2/40 px-2 md:px-0`}
+        motion-surface group cursor-default hover:bg-surface-2/40 px-2 md:px-0`}
     >
       {/* Numeração decorativa — agora ligeiramente mais visível */}
       <span
         aria-hidden="true"
-        className="font-serif text-[3.5rem] text-accent/15 font-light tracking-[-0.02em] leading-none select-none"
+        className="font-serif text-[3.5rem] text-accent/15 font-light tracking-[-0.02em] leading-none select-none transition-colors duration-700 group-hover:text-accent/25"
       >
         {num}
       </span>
 
       <div>
-        <div className="w-11 h-11 border-[1.5px] border-accent/50 flex items-center justify-center mb-4 rounded-sm">
+        <div className="w-11 h-11 border-[1.5px] border-accent/50 flex items-center justify-center mb-4 rounded-sm transition-transform duration-700 group-hover:scale-105">
           <svg
             width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             className="text-accent" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"

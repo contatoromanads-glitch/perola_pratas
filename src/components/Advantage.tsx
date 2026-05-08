@@ -48,9 +48,8 @@ function AdvCard({
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`reveal${visible ? ' visible' : ''}${delay ? ` reveal-delay-${delay}` : ''}
-        bg-surface-2/85 border border-border-strong/30 backdrop-blur-[12px]
+        motion-surface group bg-surface-2/85 border border-border-strong/30 backdrop-blur-[12px]
         py-10 md:py-12 px-8 md:px-10 flex flex-col gap-6 relative overflow-hidden rounded-sm
-        transition-all duration-300 hover:-translate-y-[6px]
         hover:shadow-[0_24px_64px_hsl(var(--accent)/0.18)] hover:border-accent/60`}
     >
       {/* Ghost number levemente mais visível para hierarquia */}
@@ -61,7 +60,7 @@ function AdvCard({
         {num}
       </span>
 
-      <div className="w-[46px] h-[46px] flex items-center justify-center border-[1.5px] border-accent/40 bg-accent/10 rounded-sm">
+      <div className="w-[46px] h-[46px] flex items-center justify-center border-[1.5px] border-accent/40 bg-accent/10 rounded-sm transition-transform duration-700 group-hover:scale-105">
         <svg
           width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           className="text-accent" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"

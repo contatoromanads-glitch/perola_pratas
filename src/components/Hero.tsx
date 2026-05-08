@@ -30,7 +30,7 @@ export default function Hero() {
       <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full min-w-0 grid grid-cols-1 lg:grid-cols-[minmax(0,1.03fr)_minmax(360px,0.86fr)] items-center gap-12 lg:gap-16 relative z-10">
         <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] text-center lg:text-left items-center lg:items-start w-full min-w-0">
           <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-            <div className="w-7 h-[2px] bg-accent" aria-hidden="true" />
+            <div className="fine-line w-7 h-[2px] bg-accent" aria-hidden="true" />
             <span className="section-label">Atacado e Varejo</span>
           </div>
 
@@ -79,13 +79,13 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="relative w-full max-w-[min(100%,540px)] min-w-0 mx-auto lg:mx-0 animate-[fadeUp_1s_ease_0.12s_forwards] opacity-0">
-          <div className="relative border border-border-strong bg-surface-2/45 p-3 md:p-4 rounded-sm overflow-hidden">
+        <div className="hero-media-enter relative w-full max-w-[min(100%,540px)] min-w-0 mx-auto lg:mx-0">
+          <div className="motion-surface relative border border-border-strong bg-surface-2/45 p-3 md:p-4 rounded-sm overflow-hidden">
             <figure className="relative aspect-[4/5] overflow-hidden rounded-sm bg-surface-0">
               <img
                 src="/gallery-1.png"
                 alt="Colar de prata 925 sobre veludo verde"
-                className="h-full w-full object-cover object-center opacity-95"
+                className="motion-image h-full w-full object-cover object-center opacity-95"
               />
               <div
                 aria-hidden="true"
@@ -106,9 +106,9 @@ export default function Hero() {
             {QUALITY_POINTS.map((point) => (
               <div
                 key={point}
-                className="flex items-center gap-3 border border-border-subtle bg-surface-0/45 px-4 py-3 rounded-sm"
+                className="motion-surface flex items-center gap-3 border border-border-subtle bg-surface-0/45 px-4 py-3 rounded-sm"
               >
-                <span className="h-px w-7 bg-accent flex-shrink-0" aria-hidden="true" />
+                <span className="quiet-pulse h-px w-7 bg-accent flex-shrink-0" aria-hidden="true" />
                 <span className="min-w-0 font-sans text-[0.82rem] md:text-[0.88rem] text-secondary leading-relaxed">
                   {point}
                 </span>

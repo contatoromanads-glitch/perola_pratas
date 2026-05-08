@@ -49,12 +49,12 @@ function GalleryCard({ img }: { img: GalleryImage }) {
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`reveal${visible ? ' visible' : ''}${img.delay ? ` reveal-delay-${img.delay}` : ''} ${img.className}`}
     >
-      <div className="relative overflow-hidden bg-surface-2 cursor-pointer group h-full rounded-sm">
+      <div className="motion-surface relative overflow-hidden bg-surface-2 cursor-pointer group h-full rounded-sm">
         <img
           src={img.src}
           alt={img.alt}
           loading="lazy"
-          className="w-full h-full object-cover opacity-85 transition-all duration-[0.8s] group-hover:opacity-100 group-hover:scale-105 block"
+          className="motion-image w-full h-full object-cover opacity-85 group-hover:opacity-100 block"
         />
         {/* Overlay com gradiente forte → texto branco AAA garantido */}
         <div className="absolute bottom-0 left-0 right-0 p-7 bg-gradient-to-t from-surface-0/95 via-surface-0/70 to-transparent">
@@ -109,7 +109,7 @@ export default function Gallery() {
           <div className="flex-1 h-px bg-border-strong" aria-hidden="true" />
           <a
             href="#cadastro"
-            className="inline-flex items-center gap-2 font-sans text-[0.75rem] font-semibold tracking-[0.22em] uppercase text-accent no-underline transition-opacity duration-200 hover:opacity-75 min-h-[44px]"
+            className="motion-link inline-flex items-center gap-2 font-sans text-[0.75rem] font-semibold tracking-[0.22em] uppercase text-accent no-underline hover:opacity-75 min-h-[44px]"
           >
             Solicitar Curadoria
             <svg

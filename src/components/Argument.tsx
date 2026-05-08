@@ -23,7 +23,7 @@ export default function Argument() {
       />
 
       {/* Padding controlado em mobile (clamp era exagerado em telas pequenas) */}
-      <div className="max-w-[1320px] mx-auto grid grid-cols-1 md:grid-cols-2 relative z-10 border border-border-subtle rounded-sm overflow-hidden">
+      <div className="motion-surface max-w-[1320px] mx-auto grid grid-cols-1 md:grid-cols-2 relative z-10 border border-border-subtle rounded-sm overflow-hidden">
         <div
           ref={leftRef as React.RefObject<HTMLDivElement>}
           className={`reveal${leftVisible ? ' visible' : ''} px-6 py-12 md:p-[clamp(3rem,7vw,7rem)_clamp(2rem,4.5vw,4.5rem)] flex flex-col justify-center gap-6 border-b md:border-b-0 md:border-r border-border-subtle`}
@@ -56,7 +56,7 @@ export default function Argument() {
             financeira.
           </p>
           <div className="flex items-center gap-4 pt-2">
-            <div className="w-6 h-[1.5px] bg-accent" aria-hidden="true" />
+            <div className="quiet-pulse w-6 h-[1.5px] bg-accent" aria-hidden="true" />
             <span className="font-sans text-[0.85rem] text-tertiary tracking-[0.08em]">
               Retorno comprovado em 90 dias
             </span>

@@ -8,8 +8,8 @@ export default function Marquee() {
 
   return (
     // FIX CRÍTICO: bg trocado de near-white para surface-light → contraste real com o texto
-    <div className="bg-surface-light border-y border-border-subtle py-[1.1rem] overflow-hidden relative z-[2]">
-      <div className="flex whitespace-nowrap animate-[marquee_28s_linear_infinite]" aria-hidden="true">
+    <div className="marquee-shell bg-surface-light border-y border-border-subtle py-[1.1rem] overflow-hidden relative z-[2]">
+      <div className="marquee-track flex whitespace-nowrap animate-[marquee_28s_linear_infinite]" aria-hidden="true">
         {doubled.map((text, i) => (
           // texto secondary → AA garantido sobre surface-light
           <span key={i} className="font-sans text-[0.72rem] font-medium tracking-[0.3em] uppercase text-secondary px-10">

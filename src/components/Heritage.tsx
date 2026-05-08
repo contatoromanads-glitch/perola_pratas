@@ -66,13 +66,13 @@ export default function Heritage() {
 
           <div
             ref={imgRef as React.RefObject<HTMLDivElement>}
-            className={`reveal reveal-delay-1${imgVisible ? ' visible' : ''} relative aspect-[4/5] overflow-hidden group rounded-sm`}
+            className={`reveal reveal-delay-1${imgVisible ? ' visible' : ''} motion-surface relative aspect-[4/5] overflow-hidden group rounded-sm`}
           >
             <img
               src="/hero.png"
               alt="Pérola Pratas — tradição artesanal"
               loading="lazy"
-              className="w-full h-full object-cover brightness-[0.85] saturate-[0.7] transition-all duration-[0.9s] group-hover:brightness-[0.95] group-hover:saturate-100 group-hover:scale-[1.03]"
+              className="motion-image w-full h-full object-cover brightness-[0.85] saturate-[0.7] group-hover:brightness-[0.95] group-hover:saturate-100"
             />
             {/* Overlay para garantir contraste e dar profundidade */}
             <div className="absolute inset-0 bg-gradient-to-t from-surface-0/60 to-transparent pointer-events-none" />

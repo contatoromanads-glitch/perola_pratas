@@ -25,8 +25,8 @@ export default function LeadCapture() {
         }}
       />
 
-      <div className="relative max-w-[640px] mx-auto z-10 flex flex-col items-center">
-        <img src="/logo.png" alt="Pérola Pratas" className="h-12 mb-4 opacity-90 brightness-0 invert" />
+      <div className="motion-surface relative max-w-[640px] mx-auto z-10 flex flex-col items-center">
+        <img src="/logo.png" alt="Pérola Pratas" className="h-12 mb-4 opacity-90 brightness-0 invert transition-transform duration-700 hover:scale-105" />
         <span className="section-label block mb-2">Aplicação</span>
 
         <h2
