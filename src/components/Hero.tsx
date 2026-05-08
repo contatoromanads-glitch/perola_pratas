@@ -43,10 +43,10 @@ export default function Hero() {
                   'linear-gradient(130deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 66%, hsl(150 70% 88%) 100%)',
               }}
             >
-              Soberana.
+              925.
             </em>
             <br />
-            <span className="hero-title-line hero-title-line-last">Inigualável.</span>
+            <span className="hero-title-line hero-title-line-last">Genuína.</span>
           </h1>
 
           <p className="hero-copy font-sans text-[1.05rem] md:text-[1.1rem] leading-[1.85] text-secondary max-w-[500px] mx-auto lg:mx-0 font-light mb-9">
