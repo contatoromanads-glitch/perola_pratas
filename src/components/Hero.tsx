@@ -34,10 +34,10 @@ export default function Hero() {
             <span className="section-label">Atacado e Varejo</span>
           </div>
 
-          <h1 className="font-serif leading-[0.95] text-primary font-normal mb-7 text-[clamp(2.95rem,12.5vw,3.55rem)] md:text-[clamp(4.4rem,10vw,6.5rem)] lg:text-[clamp(5.4rem,8vw,8.5rem)]">
-            Prata<br />
+          <h1 className="hero-title font-serif leading-[0.95] text-primary font-normal mb-7 text-[clamp(2.95rem,12.5vw,3.55rem)] md:text-[clamp(4.4rem,10vw,6.5rem)] lg:text-[clamp(5.4rem,8vw,8.5rem)]">
+            <span className="hero-title-line">Prata</span><br />
             <em
-              className="italic text-transparent bg-clip-text"
+              className="hero-title-line hero-title-line-accent italic text-transparent bg-clip-text"
               style={{
                 backgroundImage:
                   'linear-gradient(130deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 66%, hsl(150 70% 88%) 100%)',
@@ -46,15 +46,15 @@ export default function Hero() {
               Soberana.
             </em>
             <br />
-            Inigualável.
+            <span className="hero-title-line hero-title-line-last">Inigualável.</span>
           </h1>
 
-          <p className="font-sans text-[1.05rem] md:text-[1.1rem] leading-[1.85] text-secondary max-w-[500px] mx-auto lg:mx-0 font-light mb-9">
+          <p className="hero-copy font-sans text-[1.05rem] md:text-[1.1rem] leading-[1.85] text-secondary max-w-[500px] mx-auto lg:mx-0 font-light mb-9">
             Eleve seu portfólio com prata de atacado de alto padrão. Feito para
             visionários, desenhado para distinção.
           </p>
 
-          <div className="flex gap-4 flex-wrap justify-center lg:justify-start mb-12">
+          <div className="hero-cta flex gap-4 flex-wrap justify-center lg:justify-start mb-12">
             <a
               href="https://wa.me/5543991312661"
               target="_blank"
@@ -65,7 +65,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 md:gap-8 pt-8 border-t border-border-strong w-full max-w-[560px]">
+          <div className="hero-stats grid grid-cols-3 gap-3 md:gap-8 pt-8 border-t border-border-strong w-full max-w-[560px]">
             {HIGHLIGHTS.map(({ value, label }) => (
               <div key={label} className="min-w-0">
                 <div className="font-serif text-[1.45rem] md:text-[2rem] text-primary font-medium leading-none mb-[0.45rem]">
@@ -79,7 +79,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero-media-enter relative w-full max-w-[min(100%,540px)] min-w-0 mx-auto lg:mx-0">
+        <div className="hero-media-enter ambient-float relative w-full max-w-[min(100%,540px)] min-w-0 mx-auto lg:mx-0">
           <div className="motion-surface relative border border-border-strong bg-surface-2/45 p-3 md:p-4 rounded-sm overflow-hidden">
             <figure className="relative aspect-[4/5] overflow-hidden rounded-sm bg-surface-0">
               <img
