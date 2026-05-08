@@ -84,7 +84,7 @@ export default function Hero() {
             <figure className="relative aspect-[4/5] overflow-hidden rounded-sm bg-surface-0">
               <img
                 src="/gallery-1.png"
-                alt="Colar de prata 925 sobre veludo verde"
+                alt="Colar Ponto de Luz Gota em prata 925"
                 className="motion-image h-full w-full object-cover object-center opacity-95"
               />
               <div
