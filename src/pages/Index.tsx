@@ -4,6 +4,7 @@ import Marquee from '@/components/Marquee'
 import Differential from '@/components/Differential'
 import Argument from '@/components/Argument'
 import Advantage from '@/components/Advantage'
+import SocialProof from '@/components/SocialProof'
 import Gallery from '@/components/Gallery'
 import Heritage from '@/components/Heritage'
 import LeadCapture from '@/components/LeadCapture'
@@ -18,6 +19,7 @@ export default function Index() {
       <Differential />
       <Argument />
       <Advantage />
+      <SocialProof />
       <Gallery />
       <Heritage />
       <LeadCapture />
