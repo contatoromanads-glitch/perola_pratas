@@ -17,7 +17,7 @@ const IMAGES: GalleryImage[] = [
     alt: 'Conjunto de anéis de prata 925',
     label: 'Anéis',
     title: 'Conjunto Obsidian Band',
-    sub: 'Atacado Nível 1',
+    sub: 'Confira disponibilidade com a nossa equipe.',
     className: 'aspect-[4/5]',
     delay: 0,
   },
@@ -36,7 +36,7 @@ const IMAGES: GalleryImage[] = [
     alt: 'Braceletes arquitetônicos de prata',
     label: 'Pulseiras',
     title: 'Braceletes Arquitetônicos',
-    sub: 'Atacado Nível 1',
+    sub: 'Confira disponibilidade com a nossa equipe.',
     className: 'aspect-[4/5]',
     delay: 2,
   },
@@ -91,7 +91,7 @@ export default function Gallery() {
             </h2>
           </div>
           <p className="font-sans text-base text-secondary leading-[1.8] max-w-[340px] font-light md:text-right">
-            Uma seleção das nossas silhuetas mais cobiçadas, estruturadas para ambientes de varejo premium.
+            Uma seleção de algumas das nossas silhuetas mais únicas, estruturadas para ambientes de varejo premium.
           </p>
         </div>
 
