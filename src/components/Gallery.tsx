@@ -91,7 +91,7 @@ export default function Gallery() {
             </h2>
           </div>
           <p className="font-sans text-base text-secondary leading-[1.8] max-w-[340px] font-light md:text-right">
-            Uma seleção das nossas silhuetas mais cobiçadas, estruturadas para ambientes de varejo premium.
+            Uma seleção de algumas das nossas silhuetas mais únicas, estruturadas para ambientes de varejo premium.
           </p>
         </div>
 
