@@ -1,13 +1,14 @@
 import Nav from '@/components/Nav'
 import Hero from '@/components/Hero'
 import Marquee from '@/components/Marquee'
-import Differential from '@/components/Differential'
-import Argument from '@/components/Argument'
-import Advantage from '@/components/Advantage'
-import Gallery from '@/components/Gallery'
-import Heritage from '@/components/Heritage'
-import LeadCapture from '@/components/LeadCapture'
+import Problems from '@/components/Problems'
+import Solution from '@/components/Solution'
+import HowItWorks from '@/components/HowItWorks'
+import Results from '@/components/Results'
+import ProductPreview from '@/components/ProductPreview'
+import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
+import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 
 export default function Index() {
   return (
@@ -15,13 +16,14 @@ export default function Index() {
       <Nav />
       <Hero />
       <Marquee />
-      <Differential />
-      <Argument />
-      <Advantage />
-      <Gallery />
-      <Heritage />
-      <LeadCapture />
+      <Problems />
+      <Solution />
+      <ProductPreview />
+      <HowItWorks />
+      <Results />
+      <FinalCTA />
       <Footer />
+      <FloatingWhatsApp />
     </>
   )
 }

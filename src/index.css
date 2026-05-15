@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /* ──────────────────────────────────────────────────────────
-   DESIGN TOKENS — Pérola Pratas
-   All colors HSL · WCAG AA verified contrast pairings
+   DESIGN TOKENS — Pérola Pratas · Problem-Solver + Brand Identity
+   Dark emerald premium palette · editorial typography
    ────────────────────────────────────────────────────────── */
 :root {
   /* Surfaces (escuro, base) */
@@ -14,26 +14,30 @@
   --surface-3: 160 40% 18%;    /* elevated / hover */
   --surface-light: 160 40% 12%;/* marquee / contrast band */
 
-  /* Texto — todos validados ≥ 4.5:1 sobre surfaces escuras */
-  --text-primary:   150 40% 96%;  /* corpo & títulos */
-  --text-secondary: 150 25% 82%;  /* parágrafos */
-  --text-tertiary:  150 20% 70%;  /* labels, metadata */
-  --text-muted:     150 15% 60%;  /* decorativo apenas */
+  /* Text */
+  --text-primary:   150 40% 96%;
+  --text-secondary: 150 25% 82%;
+  --text-tertiary:  150 20% 70%;
+  --text-muted:     150 15% 60%;
 
   /* Brand — esmeralda */
   --accent:        160 70% 45%;
   --accent-hover:  160 75% 38%;
   --accent-soft:   160 60% 72%;
-  --accent-on:     160 60%  8%;   /* texto sobre accent sólido */
+  --accent-on:     160 60%  8%;
 
   /* Borders */
-  --border-subtle: 150 30% 100%;  /* usar com /0.10 */
-  --border-strong: 150 30% 100%;  /* usar com /0.22 */
+  --border-subtle: 150 30% 100%;
+  --border-strong: 150 30% 100%;
 
-  /* Aliases legados (mantém compat. de tokens antigos) */
-  --bg-a: 160 50% 14%;
-  --bg-b: 160 55% 8%;
-  --bg-c: 160 50% 12%;
+  /* Semantic */
+  --danger: 0 72% 55%;
+  --success: 145 60% 45%;
+
+  /* Legacy aliases */
+  --bg-a: var(--surface-2);
+  --bg-b: var(--surface-0);
+  --bg-c: var(--surface-1);
   --forest: var(--text-primary);
   --teal: var(--accent);
 }
@@ -71,14 +75,16 @@ h1, h2, h3, h4 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 400;
   color: hsl(var(--text-primary));
+  line-height: 1.1;
 }
 
 p {
   color: hsl(var(--text-secondary));
+  line-height: 1.75;
 }
 
 /* ──────────────────────────────────────────────────────────
-   ACESSIBILIDADE — Foco visível (WCAG 2.4.7)
+   ACCESSIBILITY
    ────────────────────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid hsl(var(--accent));
@@ -86,7 +92,6 @@ p {
   border-radius: 2px;
 }
 
-/* Reduz movimento para usuários sensíveis */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -101,10 +106,10 @@ p {
 /* ──────────────────────────────────────────────────────────
    SCROLLBAR
    ────────────────────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: hsl(var(--surface-0)); }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--accent) / 0.6);
+  background: hsl(var(--accent) / 0.5);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover { background: hsl(var(--accent)); }
@@ -118,71 +123,43 @@ p {
   to   { transform: translateX(-50%); }
 }
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
+  from { opacity: 0; transform: translateY(32px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px hsl(var(--accent) / 0.15); }
+  50%      { box-shadow: 0 0 40px hsl(var(--accent) / 0.35); }
+}
+@keyframes counter-slide {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes blurReveal {
+  0% { opacity: 0; filter: blur(12px); transform: translateY(20px) scale(0.97); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+@keyframes slidePane {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5%, 3%) scale(1.05); }
+  100% { transform: translate(-2%, -4%) scale(0.98); }
+}
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.5; }
+  33% { transform: translate(5%, 5%) scale(1.1) rotate(5deg); opacity: 0.7; }
+  66% { transform: translate(-3%, 8%) scale(0.95) rotate(-3deg); opacity: 0.6; }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.5; }
+}
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-10px); }
-}
-
-/* ─── HERO SVG ANIMATIONS ─── */
-
-/* Desenha um path progressivamente — usado em silhueta + colar */
-@keyframes drawLine {
-  to { stroke-dashoffset: 0; }
-}
-
-/* Aparição com leve subida — para detalhes secundários */
-@keyframes fadeInDelayed {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Aura: anéis concêntricos respirando */
-@keyframes auraPulse {
-  0%, 100% { transform: scale(1);    opacity: 0.10; }
-  50%      { transform: scale(1.08); opacity: 0.28; }
-}
-
-/* Partículas de prata oscilando em loop lento */
-@keyframes particleDrift {
-  0%, 100% { transform: translate(0, 0)      scale(1);   opacity: 0.4; }
-  25%      { transform: translate(4px, -6px) scale(1.3); opacity: 0.85; }
-  50%      { transform: translate(-3px, -10px) scale(0.9); opacity: 0.6; }
-  75%      { transform: translate(-6px, 4px) scale(1.2); opacity: 0.9; }
-}
-
-/* Halo do pingente — pulsa UMA vez e estabiliza no estado de pouso */
-@keyframes pendantSettle {
-  0%   { opacity: 0;    transform: scale(0.4); }
-  60%  { opacity: 0.95; transform: scale(1.25); }
-  100% { opacity: 0.7;  transform: scale(1); }
-}
-
-/* Onda do pouso do pingente — emite UMA vez e some (efeito impacto) */
-@keyframes signalImpact {
-  0%   { transform: scale(0.5); opacity: 0.85; stroke-width: 0.8; }
-  100% { transform: scale(2.8); opacity: 0;    stroke-width: 0.2; }
-}
-
-/* Cintilar dos brincos — assenta em UM brilho final e para */
-@keyframes earringSettle {
-  0%   { opacity: 0; transform: scale(0.4); }
-  60%  { opacity: 1; transform: scale(1.5); }
-  100% { opacity: 0.85; transform: scale(1); }
-}
-
-/* Estrela diamantina cintilando + girando */
-@keyframes sparkleTwinkle {
-  0%, 100% { opacity: 0;   transform: scale(0.4) rotate(0deg); }
-  20%      { opacity: 0.9; transform: scale(1)   rotate(45deg); }
-  50%      { opacity: 0.4; transform: scale(0.7) rotate(90deg); }
-  80%      { opacity: 0.9; transform: scale(1)   rotate(135deg); }
+  50% { transform: translateY(-8px); }
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -190,19 +167,20 @@ p {
    ────────────────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateY(32px);
+  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-1 { transition-delay: 0.12s; }
+.reveal-delay-2 { transition-delay: 0.24s; }
+.reveal-delay-3 { transition-delay: 0.36s; }
+.reveal-delay-4 { transition-delay: 0.48s; }
 
 /* ──────────────────────────────────────────────────────────
-   LOGO FILTER (usado em logos colocados sobre fundo escuro)
+   LOGO FILTER
    ────────────────────────────────────────────────────────── */
 .logo-img {
   filter: brightness(0) invert(1);
@@ -210,68 +188,113 @@ p {
 }
 
 /* ──────────────────────────────────────────────────────────
-   SECTION LABEL — eyebrow tipográfico
-   Contraste seguro: accent sobre surfaces escuras ≈ 5.8:1
+   TYPOGRAPHY UTILITIES
    ────────────────────────────────────────────────────────── */
 .section-label {
   font-family: 'Jost', sans-serif;
   font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.32em;
+  font-weight: 700;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: hsl(var(--accent));
 }
 
+.gradient-text {
+  background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 50%, hsl(38 80% 85%) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-strike {
+  position: relative;
+  display: inline-block;
+}
+.text-strike::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  top: 50%;
+  height: 3px;
+  background: hsl(var(--danger));
+  border-radius: 2px;
+  transform: rotate(-2deg);
+}
+
 /* ──────────────────────────────────────────────────────────
-   BOTÕES — hierarquia visual clara
-   Primary: fundo accent sólido + texto escuro (contraste 8.5:1)
-   Outline: borda forte + texto primary
+   BUTTONS
    ────────────────────────────────────────────────────────── */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 52px;
+  background: #25D366;
+  color: #fff;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.9rem 2.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.25);
+}
+.btn-whatsapp:hover {
+  background: #20BA5A;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(37, 211, 102, 0.35);
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;        /* alvo de toque ≥ 44px */
+  gap: 0.5rem;
+  min-height: 50px;
   background: hsl(var(--accent));
   color: hsl(var(--accent-on));
   font-family: 'Jost', sans-serif;
   font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 1rem 2.5rem;
+  padding: 0.9rem 2.4rem;
   border: 1.5px solid hsl(var(--accent));
-  border-radius: 2px;
+  border-radius: 6px;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-  box-shadow: 0 8px 24px hsl(var(--accent) / 0.25);
+  transition: all 0.25s;
+  box-shadow: 0 8px 24px hsl(var(--accent) / 0.2);
 }
 .btn-primary:hover {
   background: hsl(var(--accent-hover));
   border-color: hsl(var(--accent-hover));
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px hsl(var(--accent) / 0.35);
+  box-shadow: 0 12px 32px hsl(var(--accent) / 0.3);
 }
-
-/* Compat: nome legado mantido apontando para o novo estilo */
-.btn-teal { @apply btn-primary; }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 50px;
   background: transparent;
   color: hsl(var(--text-primary));
   font-family: 'Jost', sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 1rem 2.5rem;
-  border: 1.5px solid hsl(var(--border-strong) / 0.4);
-  border-radius: 2px;
+  padding: 0.9rem 2.4rem;
+  border: 1.5px solid hsl(var(--border-strong) / 0.25);
+  border-radius: 6px;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.25s;
@@ -283,20 +306,92 @@ p {
 }
 
 /* ──────────────────────────────────────────────────────────
-   CARD — superfície elevada com contraste mínimo
+   PROBLEM CARD
    ────────────────────────────────────────────────────────── */
-.card {
-  background: hsl(var(--surface-2) / 0.85);
-  border: 1px solid hsl(var(--border-strong) / 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 4px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+.problem-card {
+  background: hsl(var(--surface-2) / 0.7);
+  border: 1px solid hsl(var(--border-strong) / 0.08);
+  border-radius: 12px;
+  padding: 2rem 1.75rem;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
 }
-.card:hover {
+.problem-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: hsl(var(--danger));
+  opacity: 0.6;
+  border-radius: 12px 12px 0 0;
+}
+.problem-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px hsl(var(--accent) / 0.18);
-  border-color: hsl(var(--accent) / 0.55);
+  border-color: hsl(var(--danger) / 0.3);
+  box-shadow: 0 20px 50px hsl(0 0% 0% / 0.3);
+}
+
+.solution-card {
+  background: hsl(var(--surface-2) / 0.7);
+  border: 1px solid hsl(var(--border-strong) / 0.08);
+  border-radius: 12px;
+  padding: 2rem 1.75rem;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+.solution-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: hsl(var(--accent));
+  opacity: 0.7;
+  border-radius: 12px 12px 0 0;
+}
+.solution-card:hover {
+  transform: translateY(-4px);
+  border-color: hsl(var(--accent) / 0.3);
+  box-shadow: 0 20px 50px hsl(var(--accent) / 0.1);
+}
+
+/* ──────────────────────────────────────────────────────────
+   STAT CARD
+   ────────────────────────────────────────────────────────── */
+.stat-card {
+  background: hsl(var(--surface-1));
+  border: 1px solid hsl(var(--border-strong) / 0.1);
+  border-radius: 12px;
+  padding: 1.75rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+.stat-card:hover {
+  border-color: hsl(var(--accent) / 0.3);
+  background: hsl(var(--surface-2));
+}
+
+/* ──────────────────────────────────────────────────────────
+   STEP CONNECTOR
+   ────────────────────────────────────────────────────────── */
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: hsl(var(--accent) / 0.12);
+  color: hsl(var(--accent));
+  border: 2px solid hsl(var(--accent) / 0.3);
+  flex-shrink: 0;
 }
 
 /* ──────────────────────────────────────────────────────────

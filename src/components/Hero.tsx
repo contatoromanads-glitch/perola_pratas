@@ -1,157 +1,10 @@
-/**
- * Hero — Pérola Pratas
- *
- * Substituição completa do layout anterior (sem vídeo, sem logo watermark).
- * A peça central é uma cena SVG construída inteiramente em código:
- *   • Silhueta feminina abstrata em traços contínuos (linha-arte editorial)
- *   • Colar de prata 925 que se "desenha" e assenta no pescoço
- *   • Brincos com brilho pulsante
- *   • Partículas de prata orbitando em ritmo lento e contínuo
- *   • Ondas concêntricas suaves emanando do pingente
- *
- * Toda animação é CSS (keyframes em index.css) + atributos SVG nativos
- * (stroke-dasharray para o efeito "draw-on" do colar e da silhueta).
- *
- * Responsivo: empilha em mobile (cena acima, conteúdo abaixo) e
- * usa grid 5fr/4fr no desktop. Respeita prefers-reduced-motion via
- * regra global em index.css.
- */
 import React, { useState, useRef, useEffect } from 'react';
+
+const WA_LINK = 'https://wa.me/5543991312661?text=Ol%C3%A1!%20Quero%20come%C3%A7ar%20a%20revender%20prata%20925.'
+
 export default function Hero() {
-  return (
-    <section className="min-h-screen flex items-center pt-[80px] pb-16 md:pb-0 relative overflow-hidden">
-      {/* ─── Fundo: malha de pontos com máscara radial ─── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle, hsl(var(--accent) / 0.10) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-          maskImage:
-            'radial-gradient(ellipse 70% 90% at 30% 50%, black, transparent)',
-          WebkitMaskImage:
-            'radial-gradient(ellipse 70% 90% at 30% 50%, black, transparent)',
-        }}
-        aria-hidden="true"
-      />
-
-      {/* ─── Texto fantasma "925" decorativo ─── */}
-      <div
-        aria-hidden="true"
-        className="hidden md:block absolute right-[-4%] bottom-[-12%] font-serif text-[clamp(18rem,36vw,55rem)] leading-[0.8] text-primary font-semibold opacity-[0.04] tracking-[-0.06em] pointer-events-none select-none italic"
-      >
-        925
-      </div>
-
-      {/* ─── MOBILE + TABLET: cena SVG como background atrás do texto ───
-          Em telas <lg (até 1023px), a cena fica posicionada absolutamente,
-          centralizada, com um overlay vinheta para garantir legibilidade.
-          Em lg+ é escondida aqui (renderizada no grid à direita). */}
-      <div
-        className="lg:hidden absolute inset-0 flex items-center justify-center pointer-events-none z-0"
-        aria-hidden="true"
-      >
-        {/* Mais visível em tablet (md+) que em mobile */}
-        <div className="w-[115%] max-w-none opacity-[0.28] md:opacity-[0.4] md:w-[80%] translate-y-4">
-          <HeroScene idPrefix="hero-mobile" />
-        </div>
-        {/* Overlay para reforçar contraste do texto sobre a animação — mais leve em tablet */}
-        <div
-          className="absolute inset-0 md:hidden"
-          style={{
-            background:
-              'radial-gradient(ellipse 80% 70% at 50% 55%, hsl(var(--background) / 0.78) 0%, hsl(var(--background) / 0.55) 50%, hsl(var(--background) / 0.85) 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 hidden md:block lg:hidden"
-          style={{
-            background:
-              'radial-gradient(ellipse 65% 80% at 30% 50%, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.55) 45%, hsl(var(--background) / 0.25) 100%)',
-          }}
-        />
-      </div>
-
-      <div className="max-w-[1320px] mx-auto px-6 md:px-10 w-full grid grid-cols-1 lg:grid-cols-[5fr_4fr] items-center gap-12 lg:gap-8 relative z-10">
-        {/* ═══════════════════ CONTEÚDO ═══════════════════ */}
-        <div className="flex flex-col animate-[fadeUp_1s_ease_forwards] order-1 lg:order-1 text-center lg:text-left items-center lg:items-start relative z-10">
-          <div className="flex items-center justify-center lg:justify-start gap-4 mb-6">
-            <div className="w-7 h-[2px] bg-accent" aria-hidden="true" />
-            <span className="section-label">Atacado e Varejo</span>
-          </div>
-
-          <h1 className="font-serif leading-[0.95] text-primary font-normal tracking-[-0.025em] mb-7 text-8xl">
-            Prata<br />
-            <em
-              className="italic text-transparent bg-clip-text"
-              style={{
-                backgroundImage:
-                  'linear-gradient(130deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 60%, hsl(150 70% 88%) 100%)',
-              }}
-            >
-              Soberana.
-            </em>
-            <br />
-            Inigualável.
-          </h1>
-
-          <p className="font-sans text-[1.1rem] leading-[1.85] text-secondary max-w-[440px] mx-auto lg:mx-0 font-light mb-9">
-            Eleve seu portfólio com prata de atacado de qualidade editorial.
-            Feito para visionários, desenhado para distinção.
-          </p>
-
-          <div className="flex gap-4 flex-wrap justify-center lg:justify-start mb-12">
-            <a href="https://wa.me/5543991312661" target="_blank" rel="noopener noreferrer" className="btn-primary">Fale Conosco</a>
-            <a href="https://atacado.perolapratas.com.br/" target="_blank" rel="noopener noreferrer" className="btn-outline">Compre no Site</a>
-          </div>
-
-          <div className="flex flex-wrap justify-center lg:justify-start gap-8 md:gap-12 pt-8 border-t border-border-strong w-full">
-            {[
-              { value: '925', label: 'Prata Pura' },
-              { value: 'Todos', label: 'CPF & CNPJ' },
-              { value: '100%', label: 'Fab. Própria' },
-            ].map(({ value, label }) => (
-              <div key={label}>
-                <div className="font-serif text-[2rem] text-primary font-medium tracking-[-0.02em] leading-none mb-[0.4rem]">
-                  {value}
-                </div>
-                <div className="font-sans text-[0.72rem] font-semibold tracking-[0.24em] uppercase text-accent">
-                  {label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ═══════════════════ CENA SVG (somente desktop ≥ lg) ═══════════════════
-            Em mobile/tablet a cena foi movida para o background acima.
-            Garantimos largura mínima para que o SVG sempre seja bem visível. */}
-        <div className="hidden lg:flex order-2 justify-center items-center min-h-[620px] overflow-visible">
-          <div className="flex-shrink-0 w-[min(42vw,calc((100vh-120px)*0.8),560px)] max-w-full">
-            <HeroScene idPrefix="hero-desktop" />
-          </div>
-        </div>
-      </div>
-
-    </section>
-  )
-}
-
-/* ══════════════════════════════════════════════════════════════
-   HeroScene — animação SVG vanguardista
-   ──────────────────────────────────────────────────────────────
-   Estrutura em camadas (do fundo para o primeiro plano):
-     1. Anéis concêntricos pulsantes (aura)
-     2. Partículas de prata orbitando
-     3. Silhueta feminina em line-art (draw-on)
-     4. Colar com pingente (draw-on, depois flutuação sutil)
-     5. Brincos com brilho pulsante
-     6. Reflexos diamantinos (sparkles) cintilando
-   ══════════════════════════════════════════════════════════════ */
-function HeroScene({ idPrefix }: { idPrefix: string }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
@@ -161,193 +14,133 @@ function HeroScene({ idPrefix }: { idPrefix: string }) {
     setMousePos({ x, y });
   };
 
-  useEffect(() => {
-    if (isHovered) return;
-    let time = 0;
-    const interval = setInterval(() => {
-      time += 0.05;
-      setMousePos({
-        x: Math.sin(time) * 0.1,
-        y: Math.cos(time * 0.8) * 0.1,
-      });
-    }, 50);
-    return () => clearInterval(interval);
-  }, [isHovered]);
-
-  const pX = mousePos.x * 30;
-  const pY = mousePos.y * 20;
-  
-  const hatTilt = mousePos.x * -10;
-  const headTurnX = mousePos.x * 12;
-  const headTurnY = mousePos.y * 5;
-  const chainControlY = 285 + pY;
+  const parallaxX = mousePos.x * 40;
+  const parallaxY = mousePos.y * 40;
 
   return (
-    <div 
+    <section 
       ref={containerRef}
-      className="relative w-full aspect-[4/5] cursor-pointer"
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      role="img"
-      aria-label="Ilustração interativa de uma mulher elegante com chapéu e joias de prata"
+      className="min-h-[100svh] flex items-center justify-center pt-[100px] pb-24 relative overflow-hidden text-center"
     >
-      <style>
-        {`
-          @keyframes sway {
-            0% { transform: rotate(-5deg); }
-            100% { transform: rotate(5deg); }
-          }
-          @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-          }
-          @keyframes floatUp {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
-          }
-          @keyframes drawChain {
-            0% { stroke-dashoffset: 200; }
-            100% { stroke-dashoffset: 0; }
-          }
-        `}
-      </style>
       
-      <svg
-        viewBox="0 0 400 500"
-        className="w-full h-full overflow-visible"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <defs>
-          <linearGradient id={`${idPrefix}-skin`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="hsl(150, 30%, 95%)" />
-            <stop offset="100%" stopColor="hsl(150, 20%, 80%)" />
-          </linearGradient>
-          <linearGradient id={`${idPrefix}-dress`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="hsl(160, 70%, 15%)" />
-            <stop offset="100%" stopColor="hsl(160, 80%, 5%)" />
-          </linearGradient>
-          <linearGradient id={`${idPrefix}-silver`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="50%" stopColor="hsl(150, 30%, 90%)" />
-            <stop offset="100%" stopColor="#e0e0e0" />
-          </linearGradient>
-          <filter id={`${idPrefix}-glow`} x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
+      {/* ─── Groundbreaking Minimal Background: Frosted Emerald Architecture ─── */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#050D0A]">
+        {/* Soft Noise */}
+        <div 
+          className="absolute inset-0 opacity-[0.04] mix-blend-overlay z-10 pointer-events-none"
+          style={{
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")',
+          }}
+        />
 
-        {/* BACKGROUND ARCH */}
-        <g style={{ animation: 'floatUp 1s ease-out forwards' }}>
-          <path d="M 60 450 L 60 200 A 140 140 0 0 1 340 200 L 340 450 Z" fill="hsl(160, 40%, 10%)" />
-          <path d="M 70 450 L 70 200 A 130 130 0 0 1 330 200 L 330 450 Z" fill="none" stroke="hsl(150, 30%, 20%)" strokeWidth="2" />
-        </g>
+        {/* Deep ambient light sources with parallax */}
+        <div 
+          className="absolute inset-0 z-0 transition-transform duration-700 ease-out"
+          style={{ transform: `translate(${parallaxX * -0.5}px, ${parallaxY * -0.5}px)` }}
+        >
+          <div className="absolute top-[-10%] left-[-5%] w-[60vw] h-[60vw] rounded-full bg-[radial-gradient(circle,hsl(160,80%,18%)_0%,transparent_70%)] animate-[float_20s_ease-in-out_infinite_alternate]" />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[70vw] h-[70vw] rounded-full bg-[radial-gradient(circle,hsl(150,70%,14%)_0%,transparent_70%)] animate-[float_25s_ease-in-out_infinite_alternate-reverse]" />
+          <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[40vw] h-[40vw] rounded-full bg-[radial-gradient(circle,hsl(38,40%,12%)_0%,transparent_60%)] animate-[float_15s_ease-in-out_infinite_alternate]" />
+        </div>
 
-        {/* BOTANICAL ELEMENTS */}
-        <g style={{ animation: 'floatUp 1.2s ease-out forwards', transformOrigin: '200px 400px' }}>
-          <g transform="translate(90, 350) rotate(-30)" style={{ animation: 'sway 5s ease-in-out infinite alternate', transformOrigin: 'bottom center' }}>
-            <path d="M 0 0 C -20 -40, -40 -80, 0 -120 C 40 -80, 20 -40, 0 0 Z" fill="hsl(160, 50%, 15%)" opacity="0.8" />
-          </g>
-          <g transform="translate(310, 380) rotate(20)" style={{ animation: 'sway 4s ease-in-out 1s infinite alternate', transformOrigin: 'bottom center' }}>
-            <path d="M 0 0 C -15 -30, -30 -60, 0 -90 C 30 -60, 15 -30, 0 0 Z" fill="hsl(160, 60%, 12%)" opacity="0.8" />
-          </g>
-        </g>
-
-        {/* CHARACTER BASE */}
-        <g style={{ animation: 'floatUp 1.4s ease-out forwards' }}>
-          {/* Dress */}
-          <path d="M 90 450 C 100 350, 150 330, 200 330 C 250 330, 300 350, 310 450 Z" fill={`url(#${idPrefix}-dress)`} />
-          
-          {/* Neck and Chest */}
-          <path d="M 175 220 L 175 300 C 175 340, 130 350, 100 380 C 130 380, 170 360, 200 360 C 230 360, 270 380, 300 380 C 270 350, 225 340, 225 300 L 225 220 Z" fill={`url(#${idPrefix}-skin)`} />
-          
-          {/* Face Lower Half */}
-          <path d="M 155 150 L 155 220 C 155 260, 245 260, 245 220 L 245 150 Z" fill={`url(#${idPrefix}-skin)`} />
-          
-          {/* Lips */}
-          <g style={{ transform: `translate(${headTurnX}px, ${headTurnY}px)`, transition: 'transform 0.1s' }}>
-            <path d="M 190 225 Q 200 230 210 225 Q 200 235 190 225 Z" fill="hsl(340, 50%, 45%)" opacity="0.9" />
-          </g>
-        </g>
-
-        {/* JEWELRY */}
-        <g style={{ animation: 'floatUp 1.6s ease-out forwards' }}>
-          {/* Left Earring */}
-          <g style={{ transform: `translate(${pX * 0.4}px, ${pY * 0.4}px)`, transition: 'transform 0.1s' }}>
-            <line x1="165" y1="200" x2="160" y2="245" stroke="hsl(150, 40%, 90%)" strokeWidth="1.5" />
-            <circle cx="160" cy="250" r="4" fill="#fff" filter={`url(#${idPrefix}-glow)`} />
-            <path d="M 160 245 L 163 255 L 160 265 L 157 255 Z" fill={`url(#${idPrefix}-silver)`} />
-          </g>
-          
-          {/* Right Earring */}
-          <g style={{ transform: `translate(${pX * 0.4}px, ${pY * 0.4}px)`, transition: 'transform 0.1s' }}>
-            <line x1="235" y1="200" x2="240" y2="245" stroke="hsl(150, 40%, 90%)" strokeWidth="1.5" />
-            <circle cx="240" cy="250" r="4" fill="#fff" filter={`url(#${idPrefix}-glow)`} />
-            <path d="M 240 245 L 243 255 L 240 265 L 237 255 Z" fill={`url(#${idPrefix}-silver)`} />
-          </g>
-
-          {/* Necklace Chain */}
-          <path 
-            d={`M 175 285 Q 200 ${chainControlY} 225 285`} 
-            fill="none" 
-            stroke="hsl(150, 40%, 90%)" 
-            strokeWidth="1.5" 
-            strokeDasharray="4 2"
-            style={{ transition: 'd 0.1s' }} 
-          />
-
-          {/* Pendant */}
-          <g style={{ transform: `translate(${pX}px, ${pY}px)`, transition: 'transform 0.1s' }}>
-            <circle cx="200" cy="295" r="18" fill="hsl(150, 80%, 80%)" opacity="0.3" filter={`url(#${idPrefix}-glow)`} />
-            <path d="M 200 280 L 210 295 L 200 315 L 190 295 Z" fill={`url(#${idPrefix}-silver)`} />
-            <path d="M 200 280 L 205 295 L 200 315 L 195 295 Z" fill="hsl(150, 10%, 70%)" />
-            
-            <g style={{ animation: 'twinkle 2s infinite', transformOrigin: '200px 295px' }}>
-              <path d="M 200 285 L 202 293 L 210 295 L 202 297 L 200 305 L 198 297 L 190 295 L 198 293 Z" fill="#fff" />
-            </g>
-          </g>
-        </g>
-
-        {/* HAT */}
-        <g 
+        {/* Abstract Frosted Glass Panes (Architectural) with 3D parallax */}
+        <div 
+          className="absolute inset-0 z-[5] transition-transform duration-500 ease-out"
           style={{ 
-            transform: `rotate(${hatTilt}deg)`, 
-            transformOrigin: '200px 140px', 
-            transition: 'transform 0.2s ease-out',
-            animation: 'floatUp 1.2s ease-out forwards'
+            perspective: '1000px',
+            transform: `rotateX(${parallaxY * -0.5}deg) rotateY(${parallaxX * 0.5}deg) translateZ(10px)`
           }}
         >
-          <path d="M 130 140 C 130 20, 270 20, 270 140 Z" fill="hsl(160, 70%, 12%)" />
-          <ellipse cx="200" cy="135" rx="135" ry="25" fill="hsl(160, 40%, 8%)" />
-          <ellipse cx="200" cy="140" rx="180" ry="40" fill="hsl(160, 80%, 15%)" />
-          <ellipse cx="200" cy="138" rx="178" ry="38" fill="none" stroke="hsl(150, 20%, 30%)" strokeWidth="1" opacity="0.5" />
-        </g>
+          {/* Pane 1: Giant diagonal slice */}
+          <div className="absolute top-[-20%] left-[-10%] w-[120vw] h-[40vh] -rotate-12 bg-white/[0.015] border-b border-white/[0.04] backdrop-blur-[60px] animate-[slidePane_25s_ease-in-out_infinite_alternate]" />
+          
+          {/* Pane 2: Vertical column catching light */}
+          <div className="absolute top-[-10%] right-[15%] w-[25vw] h-[120vh] rotate-6 bg-white/[0.015] border-l border-white/[0.03] backdrop-blur-[80px] animate-[slidePane_30s_ease-in-out_infinite_alternate-reverse]" />
+          
+          {/* Pane 3: Central subtle overlay */}
+          <div className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[50vh] rotate-[-8deg] bg-white/[0.02] border-t border-white/[0.05] backdrop-blur-[40px] animate-[slidePane_22s_ease-in-out_infinite_alternate]" />
+        </div>
 
-        {/* FOREGROUND SPARKLES */}
-        {[
-          { x: 80, y: 220, s: 0.6, d: 0 },
-          { x: 320, y: 180, s: 0.8, d: 1 },
-          { x: 120, y: 380, s: 0.5, d: 0.5 },
-          { x: 300, y: 400, s: 0.7, d: 1.5 },
-        ].map((sp, i) => (
-          <g key={i} transform={`translate(${sp.x}, ${sp.y}) scale(${sp.s})`} style={{ animation: `twinkle ${3 + i}s infinite ${sp.d}s` }}>
-            <path d="M 0 -10 L 2 -2 L 10 0 L 2 2 L 0 10 L -2 2 L -10 0 L -2 -2 Z" fill="hsl(150, 40%, 90%)" />
-          </g>
-        ))}
+        {/* Vignette fade to blend with next section */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[hsl(160,60%,6%)]/40 to-[hsl(160,60%,6%)] z-10 pointer-events-none" />
+      </div>
+
+      <div 
+        className="max-w-[1000px] mx-auto px-6 md:px-10 w-full relative z-10 flex flex-col items-center pointer-events-none"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
         
-        {/* TEXT */}
-        <line x1="40" y1="475" x2="360" y2="475" stroke="hsl(160 70% 45%)" strokeWidth="0.4" opacity="0.3" strokeDasharray="2 6" />
-        <text x="50" y="492" fill="hsl(160 70% 45%)" fontFamily="Jost, sans-serif" fontSize="7" letterSpacing="3" opacity="0.55">
-          PÉROLA · PRATAS · 925
-        </text>
-        <text x="350" y="492" textAnchor="end" fill="hsl(150 20% 70%)" fontFamily="Jost, sans-serif" fontSize="7" letterSpacing="3" opacity="0.55">
-          ATELIÊ · BR
-        </text>
-      </svg>
-    </div>
-  );
+        <div 
+          className="flex flex-col items-center justify-center transition-transform duration-300 ease-out pointer-events-auto"
+          style={{ transform: `translateZ(40px) translate(${parallaxX * 0.2}px, ${parallaxY * 0.2}px)` }}
+        >
+          <div className="flex items-center justify-center gap-4 mb-8 animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_both]">
+            <div className="w-2 h-2 rounded-full bg-[#25D366] animate-[pulse-glow_2s_infinite]" style={{ boxShadow: '0 0 12px rgba(37,211,102,0.4)' }} />
+            <span className="font-sans text-[0.75rem] font-semibold text-tertiary tracking-[0.3em] uppercase">
+              Vagas abertas para novos revendedores
+            </span>
+          </div>
+
+          <h1 className="font-serif leading-[1.05] text-center mb-10 text-[clamp(2.8rem,7vw,6rem)] animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.2s_both]">
+            <span className="block text-primary font-light tracking-[-0.02em] mb-2">
+              Você quer vender joias,
+            </span>
+            <span 
+              className="block font-normal italic tracking-[-0.04em] opacity-80"
+              style={{ WebkitTextStroke: '1px hsl(150, 20%, 70%)', color: 'transparent' }}
+            >
+              mas não sabe como começar?
+            </span>
+            <span
+              className="block mt-4 italic font-medium text-transparent bg-clip-text animate-[shimmer_8s_linear_infinite]"
+              style={{
+                backgroundImage: 'linear-gradient(90deg, hsl(160, 70%, 45%) 0%, hsl(150, 40%, 85%) 25%, hsl(38, 60%, 62%) 50%, hsl(150, 40%, 85%) 75%, hsl(160, 70%, 45%) 100%)',
+                backgroundSize: '200% auto'
+              }}
+            >
+              Nós resolvemos isso.
+            </span>
+          </h1>
+
+          <p className="font-sans text-[1.15rem] md:text-[1.3rem] leading-[1.8] text-secondary max-w-[640px] mx-auto font-light mb-12 animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.4s_both]">
+            A Pérola Pratas entrega prata 925 direto da fábrica, com margem alta,
+            estoque garantido e suporte para você lucrar sem dor de cabeça —
+            mesmo sem experiência prévia.
+          </p>
+
+          <div className="flex gap-5 flex-col sm:flex-row justify-center items-center w-full mb-16 animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.6s_both]">
+            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="btn-whatsapp !w-full sm:!w-auto !py-4 !px-8 backdrop-blur-md bg-[#25D366]/90 hover:bg-[#25D366]">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.75.75 0 00.917.918l4.458-1.495A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-2.317 0-4.477-.67-6.314-1.822l-.44-.265-3.265 1.094 1.094-3.265-.265-.44A9.959 9.959 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              Começar a Revender
+            </a>
+            <a href="#problemas" className="btn-outline !w-full sm:!w-auto !py-4 !px-8 backdrop-blur-md">
+              Como funciona?
+            </a>
+          </div>
+
+          {/* Trust Badges - Centralized & Elegant */}
+          <div className="flex flex-wrap justify-center gap-10 md:gap-16 pt-10 border-t border-border-strong/10 w-full animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.8s_both]">
+            {[
+              { value: '925', label: 'Prata Pura' },
+              { value: 'Todos', label: 'CPF & CNPJ' },
+              { value: '100%', label: 'Fab. Própria' },
+            ].map(({ value, label }) => (
+              <div key={label} className="text-center group">
+                <div className="font-serif text-[2.2rem] text-primary font-medium tracking-[-0.02em] leading-none mb-[0.6rem] transition-transform duration-500 group-hover:scale-110 group-hover:text-[hsl(var(--accent))]">
+                  {value}
+                </div>
+                <div className="font-sans text-[0.65rem] font-semibold tracking-[0.28em] uppercase text-tertiary">
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
