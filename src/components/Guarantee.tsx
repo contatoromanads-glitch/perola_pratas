@@ -57,8 +57,9 @@ export default function Guarantee() {
           >
             <div className="aspect-[4/5] md:aspect-square rounded-3xl overflow-hidden relative">
               <img 
-                src="https://images.pexels.com/photos/9431535/pexels-photo-9431535.jpeg?auto=compress&cs=tinysrgb&w=800&q=80" 
+                src="/gallery-2.png" 
                 alt="Garantia Prata 925" 
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
