@@ -84,13 +84,13 @@ export default function Hero() {
 
           <h1 className="font-serif leading-[1.05] text-center mb-10 text-[clamp(2.8rem,7vw,6rem)] animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.2s_both]">
             <span className="block text-primary font-light tracking-[-0.02em] mb-2">
-              Você quer vender joias,
+              Você quer revender <strong className="font-normal text-[hsl(var(--accent))]">Prata 925</strong>,
             </span>
             <span 
               className="block font-normal italic tracking-[-0.04em] opacity-80"
               style={{ WebkitTextStroke: '1px hsl(150, 20%, 70%)', color: 'transparent' }}
             >
-              mas não sabe como começar?
+              mas não sabe por onde começar?
             </span>
             <span
               className="block mt-4 italic font-medium text-transparent bg-clip-text animate-[shimmer_8s_linear_infinite]"
@@ -99,13 +99,13 @@ export default function Hero() {
                 backgroundSize: '200% auto'
               }}
             >
-              Nós resolvemos isso.
+              Nós somos a sua fábrica de lucros.
             </span>
           </h1>
 
           <p className="font-sans text-[1.15rem] md:text-[1.3rem] leading-[1.8] text-secondary max-w-[640px] mx-auto font-light mb-12 animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.4s_both]">
-            A Pérola Pratas entrega prata 925 direto da fábrica, com margem alta,
-            estoque garantido e suporte para você lucrar sem dor de cabeça —
+            A Pérola Pratas é o seu fornecedor direto de <strong>Prata 925 no Atacado</strong>. Entregamos joias com alta margem de lucro,
+            estoque garantido e suporte completo para você lucrar sem dor de cabeça —
             mesmo sem experiência prévia.
           </p>
 

@@ -18,10 +18,14 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <p className="text-[0.72rem] text-muted tracking-wide uppercase">
-            © {new Date().getFullYear()} Pérola Pratas — Todos os Direitos Reservados
+            © {new Date().getFullYear()} Pérola Pratas — Todos os Direitos Reservados | CNPJ: XX.XXX.XXX/0001-XX
           </p>
+          <div className="flex gap-4">
+            <a href="#" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Termos de Uso</a>
+            <a href="#" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Política de Privacidade</a>
+          </div>
           <p className="text-[0.72rem] text-muted">
-            Prata 925 · Fabricação Própria · Atacado e Varejo
+            Fornecedor de Prata 925 · Atacado e Varejo
           </p>
         </div>
       </div>

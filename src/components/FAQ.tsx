@@ -21,6 +21,14 @@ const FAQS = [
   {
     q: 'Vocês fornecem material para divulgação?',
     a: 'Com certeza! Ao se tornar nossa revendedora, você recebe acesso ao nosso banco de imagens com fotos profissionais e vídeos em alta resolução para postar no seu Instagram e WhatsApp.'
+  },
+  {
+    q: 'Como sei que a empresa é confiável?',
+    a: 'Somos fornecedores atacadistas com fabricação própria e operação transparente. Nosso CNPJ e todos os termos de uso estão disponíveis, e já transformamos a vida de centenas de revendedoras por todo o Brasil.'
+  },
+  {
+    q: 'E se eu receber uma peça com defeito?',
+    a: 'Nossa garantia e política de trocas cobre 100% de qualquer defeito de fabricação. O processo é simples, rápido e feito diretamente pelo nosso suporte no WhatsApp.'
   }
 ]
 
