@@ -45,7 +45,7 @@ const itemVariants = {
   hidden: { opacity: 0, y: 40, filter: 'blur(10px)', scale: 0.95 },
   show: { 
     opacity: 1, y: 0, filter: 'blur(0px)', scale: 1,
-    transition: { type: 'spring', stiffness: 250, damping: 25 }
+    transition: { type: 'spring' as const, stiffness: 250, damping: 25 }
   }
 }
 
@@ -86,7 +86,7 @@ export default function Problems() {
               whileHover={{ 
                 scale: 1.03, 
                 y: -8, 
-                transition: { type: 'spring', stiffness: 400, damping: 15 } 
+                transition: { type: 'spring' as const, stiffness: 400, damping: 15 } 
               }}
               className="problem-card cursor-default"
             >
@@ -94,7 +94,7 @@ export default function Problems() {
                 className="text-3xl mb-4"
                 initial={{ rotate: -15, scale: 0.8 }}
                 whileInView={{ rotate: 0, scale: 1 }}
-                transition={{ type: 'spring', stiffness: 200, delay: 0.5 }}
+                transition={{ type: 'spring' as const, stiffness: 200, delay: 0.5 }}
               >
                 {p.emoji}
               </motion.div>

@@ -23,7 +23,7 @@ const rowVariants = {
   hidden: { opacity: 0, x: -30, filter: 'blur(10px)' },
   show: { 
     opacity: 1, x: 0, filter: 'blur(0px)',
-    transition: { type: 'spring', stiffness: 200, damping: 20 }
+    transition: { type: 'spring' as const, stiffness: 200, damping: 20 }
   }
 }
 
@@ -60,7 +60,7 @@ export default function Solution() {
               key={s.problem} 
               variants={rowVariants}
               whileHover={{ scale: 1.02, x: 10, backgroundColor: 'hsl(var(--surface-2))' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              transition={{ type: 'spring' as const, stiffness: 300, damping: 20 }}
               className="solution-card grid grid-cols-1 md:grid-cols-[1fr_auto_1.3fr] gap-4 md:gap-6 items-center cursor-default"
             >
               <div>
