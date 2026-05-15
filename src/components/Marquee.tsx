@@ -4,7 +4,7 @@ const ITEMS = [
   'Envio em 48h',
   'Fabricação Própria',
   'Garantia Vitalícia',
-  'Sem Pedido Mínimo',
+  'Atacado a partir de R$ 899',
   'Suporte Completo',
 ]
 

@@ -23,7 +23,7 @@ export default function Termos() {
           <p className="mb-4">Todas as nossas joias acompanham garantia vitalícia sobre a cor do metal (Prata 925). A garantia não cobre quebras, perda de pedras, arranhões, oxidação natural do metal ou danos causados por mau uso, como contato com produtos químicos, perfumes e cosméticos.</p>
 
           <h2 className="font-serif text-2xl text-primary mt-10 mb-4">3. Compras no Atacado e Revenda</h2>
-          <p className="mb-4">Não exigimos valor mínimo ou quantidade mínima para iniciar sua revenda. Ao adquirir nossos produtos, o revendedor assume a responsabilidade pelas suas próprias vendas e margens de lucro, utilizando o material de apoio fornecido pela Pérola Pratas estritamente para divulgação das peças adquiridas.</p>
+          <p className="mb-4">Operamos exclusivamente em regime de atacado, com pedido mínimo de R$ 899 por compra. Ao adquirir nossos produtos, o revendedor assume a responsabilidade pelas suas próprias vendas e margens de lucro, utilizando o material de apoio fornecido pela Pérola Pratas estritamente para divulgação das peças adquiridas.</p>
 
           <h2 className="font-serif text-2xl text-primary mt-10 mb-4">4. Trocas e Devoluções</h2>
           <p className="mb-4">Em respeito ao Código de Defesa do Consumidor, aceitamos devoluções por arrependimento em até 7 (sete) dias corridos após o recebimento do pedido, desde que a peça não tenha sinais de uso. Em caso de defeito de fabricação, o prazo para comunicação é de até 30 dias corridos.</p>

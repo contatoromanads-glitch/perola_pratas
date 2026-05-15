@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 const FAQS = [
   {
     q: 'Qual o valor mínimo para atacado?',
-    a: 'A melhor parte: não temos pedido mínimo em valor! Você pode começar com o que couber no seu bolso e montar seu kit inicial como preferir.'
+    a: 'Operamos exclusivamente no atacado, com pedido mínimo de R$ 899. Esse valor garante condições estruturais de preço, prioridade logística e variedade real de mostruário para começar.'
   },
   {
     q: 'Como funciona o envio?',
