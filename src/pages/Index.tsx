@@ -8,6 +8,7 @@ import Results from '@/components/Results'
 import ProductPreview from '@/components/ProductPreview'
 import ProfitMargin from '@/components/ProfitMargin'
 import Guarantee from '@/components/Guarantee'
+import MinimumOrder from '@/components/MinimumOrder'
 import FAQ from '@/components/FAQ'
 import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
@@ -26,6 +27,7 @@ export default function Index() {
       <Guarantee />
       <HowItWorks />
       <Results />
+      <MinimumOrder />
       <FAQ />
       <FinalCTA />
       <Footer />

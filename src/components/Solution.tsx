@@ -6,7 +6,7 @@ const ITEMS = [
   { problem: 'Prata falsa', solution: 'Prata 925 legítima com certificado e garantia vitalícia.' },
   { problem: 'Margem apertada', solution: 'Preço de fábrica. Margem de 100% a 300% em cada peça.' },
   { problem: 'Sem experiência', solution: 'Suporte completo: fotos profissionais, tabela de preços, dicas de venda.' },
-  { problem: 'Pedido mínimo alto', solution: 'Comece com o quanto quiser. Sem valor mínimo de compra.' },
+  { problem: 'Capital alto pra começar', solution: 'Pedido mínimo acessível de R$ 899 — entrada planejada para o lojista.' },
   { problem: 'Sozinho(a) depois da compra', solution: 'Atendimento humanizado via WhatsApp. Ajuda pra montar vitrine e posts.' },
   { problem: 'Demora na entrega', solution: 'Estoque próprio + envio em até 48h.' },
 ]

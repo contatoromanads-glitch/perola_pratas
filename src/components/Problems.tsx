@@ -17,11 +17,6 @@ const PROBLEMS = [
     desc: 'Quer empreender com joias mas não tem experiência, não conhece fornecedor de confiança e não sabe precificar.',
   },
   {
-    emoji: '📦',
-    title: 'Pedido mínimo absurdo',
-    desc: 'A maioria dos fornecedores exige compras mínimas de R$ 5.000+. Você não tem capital pra isso no começo.',
-  },
-  {
     emoji: '🤷',
     title: 'Zero suporte depois da venda',
     desc: 'Comprou, virou-se. Sem fotos profissionais, sem ajuda pra vender, sem troca facilitada. Você fica sozinho(a).',
@@ -63,7 +58,7 @@ export default function Problems() {
         >
           <span className="section-label block mb-4">Reconhece algum desses?</span>
           <h2 className="font-serif font-normal text-[clamp(2.5rem,4.5vw,3.5rem)] tracking-[-0.02em] mb-5 leading-[1.05]">
-            Os <span className="text-[hsl(var(--danger))]">6 problemas</span> que travam
+            Os <span className="text-[hsl(var(--danger))]">5 problemas</span> que travam
             quem quer revender joias
           </h2>
           <p className="text-secondary text-[1.02rem] leading-[1.75]">
@@ -77,7 +72,7 @@ export default function Problems() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="flex flex-wrap justify-center gap-5"
         >
           {PROBLEMS.map((p) => (
             <motion.div 
@@ -88,7 +83,7 @@ export default function Problems() {
                 y: -8, 
                 transition: { type: 'spring' as const, stiffness: 400, damping: 15 } 
               }}
-              className="problem-card cursor-default"
+              className="problem-card cursor-default w-full sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]"
             >
               <motion.div 
                 className="text-3xl mb-4"
