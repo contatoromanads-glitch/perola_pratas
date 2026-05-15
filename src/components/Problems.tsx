@@ -17,11 +17,6 @@ const PROBLEMS = [
     desc: 'Quer empreender com joias mas não tem experiência, não conhece fornecedor de confiança e não sabe precificar.',
   },
   {
-    emoji: '📦',
-    title: 'Pedido mínimo absurdo',
-    desc: 'A maioria dos fornecedores exige compras mínimas de R$ 5.000+. Você não tem capital pra isso no começo.',
-  },
-  {
     emoji: '🤷',
     title: 'Zero suporte depois da venda',
     desc: 'Comprou, virou-se. Sem fotos profissionais, sem ajuda pra vender, sem troca facilitada. Você fica sozinho(a).',
