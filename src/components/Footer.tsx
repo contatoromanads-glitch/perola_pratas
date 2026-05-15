@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Footer() {
   return (
     <footer className="bg-surface-0 border-t border-border-strong/10 pt-12 px-5 md:px-8 pb-8">
@@ -21,8 +23,8 @@ export default function Footer() {
             © {new Date().getFullYear()} Pérola Pratas — Todos os Direitos Reservados | CNPJ: XX.XXX.XXX/0001-XX
           </p>
           <div className="flex gap-4">
-            <a href="#" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Termos de Uso</a>
-            <a href="#" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Política de Privacidade</a>
+            <Link to="/termos" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Termos de Uso</Link>
+            <Link to="/privacidade" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Política de Privacidade</Link>
           </div>
           <p className="text-[0.72rem] text-muted">
             Fornecedor de Prata 925 · Atacado e Varejo
