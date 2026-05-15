@@ -58,7 +58,7 @@ export default function Problems() {
         >
           <span className="section-label block mb-4">Reconhece algum desses?</span>
           <h2 className="font-serif font-normal text-[clamp(2.5rem,4.5vw,3.5rem)] tracking-[-0.02em] mb-5 leading-[1.05]">
-            Os <span className="text-[hsl(var(--danger))]">6 problemas</span> que travam
+            Os <span className="text-[hsl(var(--danger))]">5 problemas</span> que travam
             quem quer revender joias
           </h2>
           <p className="text-secondary text-[1.02rem] leading-[1.75]">
