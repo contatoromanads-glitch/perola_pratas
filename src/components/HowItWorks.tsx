@@ -41,7 +41,7 @@ const stepVariants = {
   hidden: { opacity: 0, y: 30, scale: 0.9 },
   show: { 
     opacity: 1, y: 0, scale: 1,
-    transition: { type: 'spring', stiffness: 200, damping: 20 }
+    transition: { type: 'spring' as const, stiffness: 200, damping: 20 }
   }
 }
 
@@ -76,7 +76,7 @@ export default function HowItWorks() {
             <motion.div
               key={step.num}
               variants={stepVariants}
-              whileHover={{ y: -5, transition: { type: 'spring', stiffness: 400, damping: 10 } }}
+              whileHover={{ y: -5, transition: { type: 'spring' as const, stiffness: 400, damping: 10 } }}
               className="relative cursor-default group"
             >
               {/* Connector line (desktop only, not on last) */}
@@ -94,7 +94,7 @@ export default function HowItWorks() {
                 <motion.div 
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 200, delay: 0.4 + (i * 0.1) }}
+                  transition={{ type: 'spring' as const, stiffness: 200, delay: 0.4 + (i * 0.1) }}
                   className="text-3xl mb-4"
                 >
                   {step.icon}

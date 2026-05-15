@@ -19,7 +19,7 @@ export default function ProductPreview() {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
     show: { 
       opacity: 1, y: 0, scale: 1,
-      transition: { type: 'spring', stiffness: 200, damping: 20 }
+      transition: { type: 'spring' as const, stiffness: 200, damping: 20 }
     }
   }
 
@@ -53,7 +53,7 @@ export default function ProductPreview() {
             <motion.div
               key={img.alt}
               variants={itemVariants}
-              whileHover={{ y: -10, transition: { type: 'spring', stiffness: 400, damping: 15 } }}
+              whileHover={{ y: -10, transition: { type: 'spring' as const, stiffness: 400, damping: 15 } }}
               className="group relative overflow-hidden rounded-xl aspect-[4/5] cursor-pointer"
             >
               <motion.img
