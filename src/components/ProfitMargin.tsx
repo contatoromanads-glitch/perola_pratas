@@ -17,12 +17,12 @@ export default function ProfitMargin() {
           transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
           className="text-center max-w-[640px] mx-auto mb-14"
         >
-          <span className="section-label block mb-4">Margem de Lucro</span>
+          <span className="section-label block mb-4">Como funciona a Margem de Lucro?</span>
           <h2 className="font-serif font-normal text-[clamp(2.5rem,4.5vw,3.5rem)] tracking-[-0.02em] mb-5 leading-[1.05]">
             Ganhe de <span className="gradient-text">100% a 300%</span> em cada peça
           </h2>
           <p className="text-secondary text-[1.02rem] leading-[1.75]">
-            Trabalhamos com preço de fábrica real. Veja como é fácil triplicar o seu investimento com peças que se vendem sozinhas.
+            Trabalhamos com preço de fábrica real. Veja como é fácil triplicar o seu investimento com peças que se vendem sozinhas. Exemplos:
           </p>
         </motion.div>
 
