@@ -2,9 +2,9 @@ import { motion } from 'framer-motion'
 
 export default function ProductPreview() {
   const images = [
-    { src: '/gallery-1.png', alt: 'Anéis de prata 925', label: 'Anéis' },
-    { src: '/gallery-2.png', alt: 'Correntes de prata 925', label: 'Correntes' },
-    { src: '/gallery-3.png', alt: 'Pulseiras de prata 925', label: 'Pulseiras' },
+    { src: '/gallery-1.png', alt: 'Colar Ponto Luz Redondo Crav G', label: 'Colares' },
+    { src: '/brinco-trio.jpg', alt: 'Brinco Trio Estrela', label: 'Brincos' },
+    { src: '/anel-borboleta.jpg', alt: 'Anel Borboletas Renda Italiana', label: 'Anéis' },
   ]
 
   const containerVariants = {
