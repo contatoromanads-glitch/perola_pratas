@@ -12,7 +12,7 @@ const STEPS = [
   {
     num: '2',
     title: 'Escolha suas peças',
-    desc: 'Nosso time te apresenta o catálogo. Você escolhe o que faz sentido pro seu público — sem pedido mínimo.',
+    desc: 'Nosso time te apresenta o catálogo. Você monta seu mix a partir do pedido mínimo de R$ 899.',
     icon: '💎',
   },
   {
