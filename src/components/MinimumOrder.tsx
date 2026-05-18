@@ -45,7 +45,7 @@ export default function MinimumOrder() {
             {[
               { k: 'R$ 899', l: 'Pedido Mínimo' },
               { k: '925', l: 'Prata Legítima' },
-              { k: '48h', l: 'Despacho' },
+              { k: '24h', l: 'Despacho' },
               { k: '100%', l: 'Produção Própria' },
             ].map((s) => (
               <div
