@@ -8,7 +8,7 @@ const FAQS = [
   },
   {
     q: 'Como funciona o envio?',
-    a: 'Enviamos para todo o Brasil. Os pedidos são despachados em até 48h úteis após a confirmação do pagamento. O frete é calculado de acordo com sua região.'
+    a: 'Enviamos para todo o Brasil. Os pedidos são despachados em até 24h úteis após a confirmação do pagamento. O frete é calculado de acordo com sua região.'
   },
   {
     q: 'A prata tem garantia?',
@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: 'Como sei que a empresa é confiável?',
-    a: 'Somos fornecedores atacadistas com fabricação própria e operação transparente. Nosso CNPJ e todos os termos de uso estão disponíveis, e já transformamos a vida de centenas de revendedoras por todo o Brasil.'
+    a: 'Somos fornecedores atacadistas com fabricação própria e operação transparente. Nosso CNPJ (61271311000180) e todos os termos de uso estão disponíveis, e já transformamos a vida de centenas de revendedoras por todo o Brasil.'
   },
   {
     q: 'E se eu receber uma peça com defeito?',
