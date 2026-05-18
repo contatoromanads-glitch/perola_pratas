@@ -33,7 +33,7 @@ export default function Guarantee() {
               {[
                 'Certificado de garantia para você entregar à sua cliente',
                 'Troca facilitada em caso de defeito de fabricação',
-                'Material hipoalergênico e duradouro',
+                'Joias & Prata 925 Hipoalergênica',
                 'Qualidade de joalheria com preço de fábrica'
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3">
