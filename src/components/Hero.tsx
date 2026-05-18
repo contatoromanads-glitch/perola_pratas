@@ -133,7 +133,7 @@ export default function Hero() {
           <div className="flex flex-wrap justify-center gap-10 md:gap-16 pt-10 border-t border-border-strong/10 w-full animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.8s_both]">
             {[
               { value: "925", label: "Prata Pura" },
-              { value: "Todos", label: "CPF & CNPJ" },
+              { value: "Todos", label: "Joalherias & Acessórios" },
               { value: "100%", label: "Fab. Própria" },
             ].map(({ value, label }) => (
               <div key={label} className="text-center group">
