@@ -19,7 +19,7 @@ const PROBLEMS = [
   {
     emoji: '🤷',
     title: 'Zero suporte depois da venda',
-    desc: 'Comprou, virou-se. Sem fotos profissionais, sem ajuda pra vender, sem troca facilitada. Você fica sozinho(a).',
+    desc: 'Comprou e o produto chegou. Sem fotos profissionais, sem ajuda para entender dos produtos e você fica sozinho(a).',
   },
   {
     emoji: '⏳',
