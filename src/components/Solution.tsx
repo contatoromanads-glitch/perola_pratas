@@ -7,7 +7,7 @@ const ITEMS = [
   { problem: 'Margem apertada', solution: 'Preço de fábrica. Margem de 100% a 300% em cada peça.' },
   { problem: 'Sem experiência', solution: 'Suporte completo: fotos profissionais, tabela de preços, dicas de venda.' },
   { problem: 'Capital alto pra começar', solution: 'Pedido mínimo acessível de R$ 899 — entrada planejada para o lojista.' },
-  { problem: 'Sozinho(a) depois da compra', solution: 'Atendimento humanizado via WhatsApp. Ajuda pra montar vitrine e posts.' },
+  { problem: 'Sozinho(a) depois da compra', solution: 'Atendimento humanizado via WhatsApp. Ajuda pra montar vitrine & coleções.' },
   { problem: 'Demora na entrega', solution: 'Estoque próprio + envio em até 48h.' },
 ]
 
