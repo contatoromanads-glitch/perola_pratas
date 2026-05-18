@@ -18,7 +18,7 @@ const STEPS = [
   {
     num: '3',
     title: 'Receba rápido',
-    desc: 'Enviamos em até 48h com embalagem premium. Tudo pronto pra você revender no mesmo dia.',
+    desc: 'Enviamos em até 24h. Tudo pronto pra você iniciar sua vitrine!',
     icon: '📦',
   },
   {
