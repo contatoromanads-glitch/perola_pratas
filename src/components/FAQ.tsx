@@ -16,7 +16,7 @@ const FAQS = [
   },
   {
     q: 'Quais são as formas de pagamento?',
-    a: 'Aceitamos Pix, cartão de crédito (parcelamos suas compras) e boleto bancário (sujeito a aprovação).'
+    a: 'Aceitamos Pix, cartão de crédito (parcelamos suas compras).'
   },
   {
     q: 'Vocês fornecem material para divulgação?',
