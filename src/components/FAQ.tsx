@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: 'A prata tem garantia?',
-    a: 'Sim! Todas as nossas peças são de Prata 925 legítima e acompanham certificado de garantia vitalícia sobre a cor do metal.'
+    a: 'Sim! Todas as nossas peças são de Prata 925 legítima e acompanham certificado de garantia sobre a cor do metal.'
   },
   {
     q: 'Quais são as formas de pagamento?',
