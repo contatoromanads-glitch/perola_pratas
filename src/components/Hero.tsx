@@ -93,7 +93,7 @@ export default function Hero() {
               mas não sabe por onde começar?
             </span>
             <span
-              className="block mt-4 italic font-medium text-transparent bg-clip-text animate-[shimmer_8s_linear_infinite]"
+              className="block mt-4 italic font-medium text-transparent bg-clip-text animate-[shimmer_8s_linear_infinite] text-5xl"
               style={{
                 backgroundImage: 'linear-gradient(90deg, hsl(160, 70%, 45%) 0%, hsl(150, 40%, 85%) 25%, hsl(38, 60%, 62%) 50%, hsl(150, 40%, 85%) 75%, hsl(160, 70%, 45%) 100%)',
                 backgroundSize: '200% auto'
