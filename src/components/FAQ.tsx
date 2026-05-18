@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: 'Vocês fornecem material para divulgação?',
-    a: 'Com certeza! Ao se tornar nossa revendedora, você recebe acesso ao nosso banco de imagens com fotos profissionais e vídeos em alta resolução para postar no seu Instagram e WhatsApp.'
+    a: 'Claro! Disponibilizamos um drive completo com as fotos de todos os nossos produtos.'
   },
   {
     q: 'Como sei que a empresa é confiável?',
