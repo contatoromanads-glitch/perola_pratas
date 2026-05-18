@@ -99,7 +99,7 @@ export default function Hero() {
                 backgroundSize: '200% auto'
               }}
             >
-              Nós somos a sua fábrica de lucros.
+              Nós somos a sua Fábrica de Prata 925.
             </span>
           </h1>
 
