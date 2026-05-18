@@ -22,11 +22,11 @@ export default function Guarantee() {
             </div>
             
             <h2 className="font-serif font-normal text-[clamp(2.5rem,4.5vw,3.5rem)] tracking-[-0.02em] mb-6 leading-[1.05]">
-              Prata 925 com <span className="gradient-text">Garantia Vitalícia</span>
+              Prata 925 com <span className="gradient-text">Garantia Estendida</span>
             </h2>
             
             <p className="text-secondary text-[1.1rem] leading-[1.75] mb-8">
-              Sua cliente quer segurança ao comprar. Nós entregamos isso a você. Toda joia Pérola Pratas acompanha certificado de autenticidade e garantia eterna na cor da prata.
+              Sua cliente quer segurança ao comprar. Nós entregamos isso a você. Toda joia Pérola Pratas acompanha certificado de autenticidade e garantia estendida na cor da prata.
             </p>
 
             <ul className="space-y-4">

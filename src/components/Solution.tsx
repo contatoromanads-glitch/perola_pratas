@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 const WA = 'https://wa.me/5543991312661?text=Ol%C3%A1!%20Quero%20saber%20como%20resolver%20meus%20problemas%20com%20fornecedores.'
 
 const ITEMS = [
-  { problem: 'Prata falsa', solution: 'Prata 925 legítima com certificado e garantia vitalícia.' },
+  { problem: 'Prata falsa', solution: 'Prata 925 legítima com certificado e garantia estendida.' },
   { problem: 'Margem apertada', solution: 'Preço de fábrica. Margem de 100% a 300% em cada peça.' },
   { problem: 'Sem experiência', solution: 'Suporte completo: fotos profissionais, tabela de preços, dicas de venda.' },
   { problem: 'Capital alto pra começar', solution: 'Pedido mínimo acessível de R$ 899 — entrada planejada para o lojista.' },
