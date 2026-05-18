@@ -28,7 +28,7 @@ const FAQS = [
   },
   {
     q: 'E se eu receber uma peça com defeito?',
-    a: 'Nossa garantia e política de trocas cobre 100% de qualquer defeito de fabricação. O processo é simples, rápido e feito diretamente com seu vendedor no Whatsapp.'
+    a: 'Nossa garantia e política de trocas cobre 100% de qualquer defeito de fabricação. O processo é simples, rápido e feito diretamente com seu vendedor no Whatsapp/Vídeo Chamada.'
   }
 ]
 
