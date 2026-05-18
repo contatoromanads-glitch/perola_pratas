@@ -20,7 +20,7 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <p className="text-[0.72rem] text-muted tracking-wide uppercase">
-            © {new Date().getFullYear()} Pérola Pratas — Todos os Direitos Reservados | CNPJ: XX.XXX.XXX/0001-XX
+            © {new Date().getFullYear()} Pérola Pratas — Todos os Direitos Reservados | CNPJ: 61271311000180
           </p>
           <div className="flex gap-4">
             <Link to="/termos" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Termos de Uso</Link>
