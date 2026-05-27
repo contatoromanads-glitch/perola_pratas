@@ -84,14 +84,14 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="font-serif leading-[1.1] text-center mb-10 text-[clamp(2.6rem,6.5vw,5.5rem)] animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.2s_both]">
-            <span className="block text-primary font-light tracking-[-0.02em] mb-1">
-              Você quer revender <span className="font-normal text-[hsl(var(--accent))]">Prata 925</span>,
+          <h1 className="font-serif leading-[1.2] text-center mb-10 text-[clamp(2.2rem,5vw,4.2rem)] animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.2s_both]">
+            <span className="block text-primary font-light tracking-[-0.02em] mb-2">
+              Você quer revender <span className="inline-block font-normal text-[hsl(var(--accent))]">Prata 925</span>,
             </span>
             <span className="block text-primary font-light italic tracking-[-0.02em]">
               mas não sabe por onde começar?
             </span>
-            <span className="block mt-4 font-light italic text-[hsl(var(--accent-soft))] text-[clamp(1.6rem,3.5vw,2.6rem)] tracking-wide">
+            <span className="block mt-4 font-light italic text-[hsl(var(--accent-soft))] text-[clamp(1.8rem,4.2vw,3.4rem)] tracking-wide">
               Nós somos a sua Fábrica de Prata 925.
             </span>
           </h1>
