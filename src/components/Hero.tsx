@@ -84,24 +84,14 @@ export default function Hero() {
             </span>
           </div>
 
-          <h1 className="font-serif leading-[1.05] text-center mb-10 text-[clamp(2.8rem,7vw,6rem)] animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.2s_both]">
-            <span className="block text-primary font-light tracking-[-0.02em] mb-2 text-5xl">
-              Você quer revender <strong className="font-normal text-[hsl(var(--accent))]">Prata 925</strong>,
+          <h1 className="font-serif leading-[1.1] text-center mb-10 text-[clamp(2.6rem,6.5vw,5.5rem)] animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.2s_both]">
+            <span className="block text-primary font-light tracking-[-0.02em] mb-1">
+              Você quer revender <span className="font-normal text-[hsl(var(--accent))]">Prata 925</span>,
             </span>
-            <span
-              className="block font-normal italic tracking-[-0.04em] opacity-80 text-4xl"
-              style={{ WebkitTextStroke: "1px hsl(150, 20%, 70%)", color: "transparent" }}
-            >
+            <span className="block text-primary font-light italic tracking-[-0.02em]">
               mas não sabe por onde começar?
             </span>
-            <span
-              className="block mt-4 italic font-medium text-transparent bg-clip-text animate-[shimmer_8s_linear_infinite] text-5xl"
-              style={{
-                backgroundImage:
-                  "linear-gradient(90deg, hsl(160, 70%, 45%) 0%, hsl(150, 40%, 85%) 25%, hsl(38, 60%, 62%) 50%, hsl(150, 40%, 85%) 75%, hsl(160, 70%, 45%) 100%)",
-                backgroundSize: "200% auto",
-              }}
-            >
+            <span className="block mt-4 font-light italic text-[hsl(var(--accent-soft))] text-[clamp(1.6rem,3.5vw,2.6rem)] tracking-wide">
               Nós somos a sua Fábrica de Prata 925.
             </span>
           </h1>
