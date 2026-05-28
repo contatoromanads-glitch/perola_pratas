@@ -5,6 +5,7 @@ import LpVip from '@/pages/LpVip'
 import NotFound from '@/pages/NotFound'
 import Termos from '@/pages/Termos'
 import Privacidade from '@/pages/Privacidade'
+import Adminterno from '@/pages/Adminterno'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/links" element={<Links />} />
         <Route path="/termos" element={<Termos />} />
         <Route path="/privacidade" element={<Privacidade />} />
+        <Route path="/adminterno" element={<Adminterno />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
