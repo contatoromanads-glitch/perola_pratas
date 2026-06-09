@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import './adminterno.css'
 
 // Types
@@ -40,6 +41,66 @@ interface Note {
   data: string
 }
 
+// Helpers for Dynamic Months and Working Days
+const getLocalYearMonth = () => {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
+}
+
+const formatMonthName = (monthStr: string) => {
+  if (!monthStr) return ''
+  const [year, month] = monthStr.split('-')
+  const months = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ]
+  const idx = parseInt(month, 10) - 1
+  return `${months[idx]} de ${year}`
+}
+
+const formatMonthNameOnly = (monthStr: string) => {
+  if (!monthStr) return ''
+  const [, month] = monthStr.split('-')
+  const months = [
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+  ]
+  const idx = parseInt(month, 10) - 1
+  return months[idx]
+}
+
+const getMonthDetails = (monthStr: string) => {
+  const [yearPart, monthPart] = monthStr.split('-')
+  const year = parseInt(yearPart, 10)
+  const month = parseInt(monthPart, 10)
+  
+  const firstDay = new Date(year, month - 1, 1)
+  const startingOffset = firstDay.getDay()
+  const totalDays = new Date(year, month, 0).getDate()
+  
+  return { startingOffset, totalDays }
+}
+
+const getWorkingDaysInMonth = (monthStr: string) => {
+  const [yearPart, monthPart] = monthStr.split('-')
+  const year = parseInt(yearPart, 10)
+  const month = parseInt(monthPart, 10)
+  
+  const totalDays = new Date(year, month, 0).getDate()
+  let workingDaysCount = 0
+  
+  for (let d = 1; d <= totalDays; d++) {
+    const date = new Date(year, month - 1, d)
+    const dayOfWeek = date.getDay()
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      workingDaysCount++
+    }
+  }
+  return workingDaysCount
+}
+
+const currentMonthDefault = getLocalYearMonth()
+
 // Mock Data
 const MOCK_COLABORADORES: Colaborador[] = [
   {
@@ -72,20 +133,20 @@ const MOCK_COLABORADORES: Colaborador[] = [
 ];
 
 const MOCK_VALES: Vale[] = [
-  { id: "val-1", colaboradorId: "col-1", valor: 400, data: "2026-05-10", status: "Aprovado" },
-  { id: "val-2", colaboradorId: "col-1", valor: 250, data: "2026-05-18", status: "Aprovado" },
-  { id: "val-3", colaboradorId: "col-2", valor: 300, data: "2026-05-12", status: "Aprovado" }
+  { id: "val-1", colaboradorId: "col-1", valor: 400, data: `${currentMonthDefault}-10`, status: "Aprovado" },
+  { id: "val-2", colaboradorId: "col-1", valor: 250, data: `${currentMonthDefault}-18`, status: "Aprovado" },
+  { id: "val-3", colaboradorId: "col-2", valor: 300, data: `${currentMonthDefault}-12`, status: "Aprovado" }
 ];
 
 const MOCK_FALTAS: Falta[] = [
-  { id: "fal-1", colaboradorId: "col-1", data: "2026-05-08" },
-  { id: "fal-2", colaboradorId: "col-1", data: "2026-05-15" },
-  { id: "fal-3", colaboradorId: "col-3", data: "2026-05-20" }
+  { id: "fal-1", colaboradorId: "col-1", data: `${currentMonthDefault}-08` },
+  { id: "fal-2", colaboradorId: "col-1", data: `${currentMonthDefault}-15` },
+  { id: "fal-3", colaboradorId: "col-3", data: `${currentMonthDefault}-20` }
 ];
 
 const MOCK_COMISSOES: Comissao[] = [
-  { id: "com-1", colaboradorId: "col-1", valor: 850, mes: "2026-05" },
-  { id: "com-2", colaboradorId: "col-2", valor: 300, mes: "2026-05" }
+  { id: "com-1", colaboradorId: "col-1", valor: 850, mes: currentMonthDefault },
+  { id: "com-2", colaboradorId: "col-2", valor: 300, mes: currentMonthDefault }
 ];
 
 export default function Adminterno() {
@@ -95,9 +156,10 @@ export default function Adminterno() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  // Navigation State
-  const [currentView, setCurrentView] = useState<'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes'>('dashboard')
-  const [activeColaboradorId, setActiveColaboradorId] = useState<string | null>(null)
+  // Navigation & Search Params State
+  const [searchParams, setSearchParams] = useSearchParams()
+  const currentView = (searchParams.get('v') || 'dashboard') as 'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes'
+  const activeColaboradorId = searchParams.get('cId')
   const [faltasActiveColaboradorId, setFaltasActiveColaboradorId] = useState<string>('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [isColModalOpen, setIsColModalOpen] = useState(false)
@@ -118,7 +180,7 @@ export default function Adminterno() {
 
   // Search & Forms State
   const [searchQuery, setSearchQuery] = useState('')
-  const [currentMonth] = useState('2026-05')
+  const [currentMonth, setCurrentMonth] = useState(getLocalYearMonth)
 
   // Form: Add Colaborador
   const [formColNome, setFormColNome] = useState('')
@@ -153,6 +215,11 @@ export default function Adminterno() {
   const [toastMsg, setToastMsg] = useState('')
   const [toastIcon, setToastIcon] = useState('check_circle')
   const [toastIsError, setToastIsError] = useState(false)
+
+  // Profile View Inline Form States
+  const [profileValeValor, setProfileValeValor] = useState('')
+  const [profileValeData, setProfileValeData] = useState(new Date().toISOString().split('T')[0])
+  const [profileComissaoValor, setProfileComissaoValor] = useState('')
 
   // Initial Load & Auth Check
   useEffect(() => {
@@ -257,10 +324,11 @@ export default function Adminterno() {
     const mainEl = document.querySelector('.admin-wrapper main')
     if (mainEl) mainEl.scrollTop = 0
 
-    if (viewId === 'perfil' && collaboratorId) {
-      setActiveColaboradorId(collaboratorId)
+    const params: Record<string, string> = { v: viewId }
+    if (collaboratorId) {
+      params.cId = collaboratorId
     }
-    setCurrentView(viewId)
+    setSearchParams(params)
   }
 
   // DB Mutators
@@ -407,6 +475,59 @@ export default function Adminterno() {
     showToast('Vale excluído!', 'delete')
   }
 
+  // Profile View Inline Form Actions
+  const handleAddValeDirect = (colId: string) => {
+    const val = parseFloat(profileValeValor)
+    if (isNaN(val) || val <= 0 || !profileValeData) {
+      showToast('Preencha os campos de vale corretamente.', 'warning', true)
+      return
+    }
+
+    const newVale: Vale = {
+      id: 'val-' + Date.now(),
+      colaboradorId: colId,
+      valor: val,
+      data: profileValeData,
+      status: 'Aprovado'
+    }
+
+    saveVales([...vales, newVale])
+    setProfileValeValor('')
+    showToast('Vale registrado com sucesso!', 'check_circle')
+  }
+
+  const handleAddComissaoDirect = (colId: string) => {
+    const val = parseFloat(profileComissaoValor)
+    if (isNaN(val) || val <= 0) {
+      showToast('Informe o valor da comissão.', 'warning', true)
+      return
+    }
+
+    const matchIdx = comissoes.findIndex(c => c.colaboradorId === colId && c.mes === currentMonth)
+    if (matchIdx !== -1) {
+      const updated = [...comissoes]
+      updated[matchIdx].valor = val
+      saveComissoes(updated)
+    } else {
+      const newCom: Comissao = {
+        id: 'com-' + Date.now(),
+        colaboradorId: colId,
+        valor: val,
+        mes: currentMonth
+      }
+      saveComissoes([...comissoes, newCom])
+    }
+
+    setProfileComissaoValor('')
+    showToast('Comissão lançada com sucesso!', 'check_circle')
+  }
+
+  const handleDeleteComissao = (comissaoId: string) => {
+    const updated = comissoes.filter(c => c.id !== comissaoId)
+    saveComissoes(updated)
+    showToast('Comissão excluída!', 'delete')
+  }
+
   // Notes Actions
   const saveNotes = (newNotes: Note[]) => {
     setNotes(newNotes)
@@ -533,12 +654,14 @@ export default function Adminterno() {
 
   const getCalculation = (colId: string) => {
     const col = colaboradores.find(c => c.id === colId)
-    if (!col) return { base: 0, comissao: 0, faltas: 0, faltasCount: 0, vales: 0, liquido: 0 }
+    if (!col) return { base: 0, comissao: 0, faltas: 0, faltasCount: 0, vales: 0, liquido: 0, workingDays: 0, dailyRate: 0 }
 
     const base = col.valorBase
     const comissao = getComissaoValue(colId)
     const faltasCount = getAbsencesCount(colId)
-    const discountFaltas = Math.round((faltasCount * (base / 30)) * 100) / 100
+    const workingDays = getWorkingDaysInMonth(currentMonth)
+    const dailyRate = workingDays > 0 ? base / workingDays : 0
+    const discountFaltas = Math.round((faltasCount * dailyRate) * 100) / 100
     const valesSum = getValesTotal(colId)
     const liquido = Math.max(0, base + comissao - discountFaltas - valesSum)
 
@@ -548,7 +671,9 @@ export default function Adminterno() {
       faltas: discountFaltas,
       faltasCount,
       vales: valesSum,
-      liquido
+      liquido,
+      workingDays,
+      dailyRate
     }
   }
 
@@ -569,11 +694,9 @@ export default function Adminterno() {
     showToast('Recurso Premium (Fase 2)', 'lock')
   }
 
-  // Render Calendar Helper for May 2026 (Starts on Friday, 31 days)
   const renderCalendarDays = (colId: string) => {
+    const { startingOffset, totalDays } = getMonthDetails(currentMonth)
     const days: React.ReactNode[] = []
-    const startingOffset = 5 // Friday offset
-    const totalDays = 31
 
     // Empty lead cells
     for (let i = 0; i < startingOffset; i++) {
@@ -581,11 +704,13 @@ export default function Adminterno() {
     }
 
     // Days grid
+    const todayStr = new Date().toISOString().split('T')[0]
+
     for (let d = 1; d <= totalDays; d++) {
       const dayStr = d < 10 ? `0${d}` : `${d}`
       const dateStr = `${currentMonth}-${dayStr}`
       const isAbsent = faltas.some(f => f.colaboradorId === colId && f.data === dateStr)
-      const isToday = d === 27 // Mock today: 27th May
+      const isToday = dateStr === todayStr
 
       days.push(
         <div
@@ -713,16 +838,16 @@ export default function Adminterno() {
           
           <ul className="drawer-menu">
             <li className={`menu-item ${currentView === 'dashboard' ? 'active' : ''}`} onClick={() => navigateTo('dashboard')}>
-              <span className="material-symbols-outlined">dashboard</span> Início (Métricas)
+              <span className="material-symbols-outlined">dashboard</span> Início
             </li>
             <li className={`menu-item ${currentView === 'colaboradores' ? 'active' : ''}`} onClick={() => navigateTo('colaboradores')}>
-              <span className="material-symbols-outlined">group</span> Equipe (Colaboradores)
+              <span className="material-symbols-outlined">group</span> Equipe
             </li>
             <li className={`menu-item ${currentView === 'faltas' ? 'active' : ''}`} onClick={() => navigateTo('faltas')}>
               <span className="material-symbols-outlined">calendar_today</span> Lançar Faltas
             </li>
             <li className={`menu-item ${currentView === 'vales' ? 'active' : ''}`} onClick={() => navigateTo('vales')}>
-              <span className="material-symbols-outlined">payments</span> Adiantamentos (Vales)
+              <span className="material-symbols-outlined">payments</span> Adiantamentos
             </li>
             <li className={`menu-item ${currentView === 'comissoes' ? 'active' : ''}`} onClick={() => navigateTo('comissoes')}>
               <span className="material-symbols-outlined">add_chart</span> Lançar Comissões
@@ -767,7 +892,7 @@ export default function Adminterno() {
                 <span className="metric-footer">Ver equipe cadastrada →</span>
               </div>
               <div className="metric-card clickable" onClick={() => navigateTo('faltas')}>
-                <span className="metric-title">Ausências (Maio)</span>
+                <span className="metric-title">Ausências ({formatMonthNameOnly(currentMonth)})</span>
                 <span className="metric-value" style={{ color: 'var(--error)' }}>
                   {faltas.filter(f => f.data.startsWith(currentMonth)).length}
                 </span>
@@ -909,7 +1034,7 @@ export default function Adminterno() {
                 <span className="metric-value" style={{ color: 'var(--error)' }}>
                   {getAbsencesCount(activeColaborador.id)}
                 </span>
-                <span className="metric-footer">Para alterar, use Lançar Faltas</span>
+                <span className="metric-footer">Toque no calendário abaixo para alterar</span>
               </div>
               
               <div className="metric-card" style={{ opacity: 0.65, border: '1px dashed var(--outline)', position: 'relative' }} onClick={handlePremiumAlert}>
@@ -922,44 +1047,153 @@ export default function Adminterno() {
               </div>
             </div>
 
-            <button className="btn btn-secondary" style={{ border: '1px solid var(--outline)' }} onClick={() => {
-              setFaltasActiveColaboradorId(activeColaborador.id)
-              navigateTo('faltas')
-            }}>
-              <span className="material-symbols-outlined">calendar_today</span> Registrar Faltas no Calendário
-            </button>
+            {/* Calendário de Frequência no Perfil */}
+            <div className="card calendar-container">
+              <div className="calendar-header">
+                <span className="calendar-month-title">Frequência - {formatMonthName(currentMonth)}</span>
+                <span className="subtitle" style={{ fontSize: '11px' }}>Toque nos dias para marcar/desmarcar faltas</span>
+              </div>
+              
+              <div className="calendar-grid">
+                <span className="calendar-day-header">D</span>
+                <span className="calendar-day-header">S</span>
+                <span className="calendar-day-header">T</span>
+                <span className="calendar-day-header">Q</span>
+                <span className="calendar-day-header">Q</span>
+                <span className="calendar-day-header">S</span>
+                <span className="calendar-day-header">S</span>
+              </div>
+              
+              <div className="calendar-grid">
+                {renderCalendarDays(activeColaborador.id)}
+              </div>
+            </div>
 
+            {/* Seção Vales (Adiantamentos) */}
             <div>
-              <h2>Adiantamentos e Vales (Maio)</h2>
+              <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span className="material-symbols-outlined" style={{ color: 'var(--warning)' }}>payments</span>
+                Vales e Adiantamentos ({formatMonthNameOnly(currentMonth)})
+              </h2>
+              
               <div className="list-container">
-                {vales.filter(v => v.colaboradorId === activeColaborador.id).map(v => (
-                  <div key={v.id} className={`list-item finance-item ${v.status === 'Aprovado' ? 'expense' : 'pending'}`}>
-                    <div className="item-info">
-                      <span className="item-name">Vale/Adiantamento ({v.status})</span>
-                      <span className="item-subtitle">{v.data.split('-').reverse().join('/')}</span>
+                {vales
+                  .filter(v => v.colaboradorId === activeColaborador.id && v.data.startsWith(currentMonth))
+                  .map(v => (
+                    <div key={v.id} className="list-item finance-item expense" style={{ cursor: 'default' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <div className="item-info">
+                          <span className="item-name">Vale Aprovado</span>
+                          <span className="item-subtitle">{v.data.split('-').reverse().join('/')}</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <span className="item-name expense" style={{ fontWeight: 700 }}>
+                            - {formatCurrency(v.valor)}
+                          </span>
+                          <button 
+                            className="btn-copy-pix" 
+                            style={{ padding: '6px', color: 'var(--error)' }} 
+                            onClick={() => handleDeleteVale(v.id)} 
+                            title="Excluir Vale"
+                          >
+                            <span className="material-symbols-outlined">delete</span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <span className={`item-name ${v.status === 'Aprovado' ? 'expense' : 'pending'}`} style={{ fontWeight: 700 }}>
-                      - {formatCurrency(v.valor)}
-                    </span>
-                  </div>
-                ))}
-                {comissoes.filter(c => c.colaboradorId === activeColaborador.id && c.mes === currentMonth).map(c => (
-                  <div key={c.id} className="list-item finance-item income">
-                    <div className="item-info">
-                      <span className="item-name">Comissão Comercial</span>
-                      <span className="item-subtitle">Lançamento mensal</span>
-                    </div>
-                    <span className="item-name income" style={{ fontWeight: 700 }}>
-                      + {formatCurrency(c.valor)}
-                    </span>
-                  </div>
-                ))}
-                {vales.filter(v => v.colaboradorId === activeColaborador.id).length === 0 && 
-                 comissoes.filter(c => c.colaboradorId === activeColaborador.id && c.mes === currentMonth).length === 0 && (
-                  <div style={{ textAlign: 'center', color: 'var(--secondary)', padding: '16px', fontSize: '13px' }}>
-                    Nenhum registro financeiro neste mês.
+                  ))}
+                
+                {vales.filter(v => v.colaboradorId === activeColaborador.id && v.data.startsWith(currentMonth)).length === 0 && (
+                  <div style={{ textAlign: 'center', color: 'var(--secondary)', padding: '12px', fontSize: '13px', border: '1px dashed var(--outline)', borderRadius: 'var(--radius-md)' }}>
+                    Nenhum vale lançado neste mês.
                   </div>
                 )}
+                
+                {/* Formulário Inline de Vale */}
+                <div style={{ display: 'flex', gap: '8px', marginTop: '4px', alignItems: 'center' }}>
+                  <input
+                    type="number"
+                    placeholder="Valor do Vale (R$)"
+                    value={profileValeValor}
+                    onChange={(e) => setProfileValeValor(e.target.value)}
+                    style={{ flex: 1, padding: '10px 12px', fontSize: '13px', borderRadius: '8px', border: '1px solid var(--outline)', outline: 'none' }}
+                  />
+                  <input
+                    type="date"
+                    value={profileValeData}
+                    onChange={(e) => setProfileValeData(e.target.value)}
+                    style={{ width: '125px', padding: '10px 12px', fontSize: '13px', borderRadius: '8px', border: '1px solid var(--outline)', outline: 'none' }}
+                  />
+                  <button 
+                    className="btn" 
+                    onClick={() => handleAddValeDirect(activeColaborador.id)} 
+                    style={{ width: 'auto', padding: '10px 16px', borderRadius: '8px', height: '40px' }}
+                    title="Lançar Vale"
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>add</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Seção Comissão */}
+            <div style={{ marginTop: '10px' }}>
+              <h2 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span className="material-symbols-outlined" style={{ color: 'var(--success)' }}>add_chart</span>
+                Comissão Comercial ({formatMonthNameOnly(currentMonth)})
+              </h2>
+              
+              <div className="list-container">
+                {comissoes
+                  .filter(c => c.colaboradorId === activeColaborador.id && c.mes === currentMonth)
+                  .map(c => (
+                    <div key={c.id} className="list-item finance-item income" style={{ cursor: 'default' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <div className="item-info">
+                          <span className="item-name">Comissão Comercial</span>
+                          <span className="item-subtitle">Lançamento mensal</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <span className="item-name income" style={{ fontWeight: 700 }}>
+                            + {formatCurrency(c.valor)}
+                          </span>
+                          <button 
+                            className="btn-copy-pix" 
+                            style={{ padding: '6px', color: 'var(--error)' }} 
+                            onClick={() => handleDeleteComissao(c.id)} 
+                            title="Excluir Comissão"
+                          >
+                            <span className="material-symbols-outlined">delete</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                
+                {comissoes.filter(c => c.colaboradorId === activeColaborador.id && c.mes === currentMonth).length === 0 && (
+                  <div style={{ textAlign: 'center', color: 'var(--secondary)', padding: '12px', fontSize: '13px', border: '1px dashed var(--outline)', borderRadius: 'var(--radius-md)' }}>
+                    Nenhuma comissão lançada neste mês.
+                  </div>
+                )}
+                
+                {/* Formulário Inline de Comissão */}
+                <div style={{ display: 'flex', gap: '8px', marginTop: '4px', alignItems: 'center' }}>
+                  <input
+                    type="number"
+                    placeholder="Valor da Comissão (R$)"
+                    value={profileComissaoValor}
+                    onChange={(e) => setProfileComissaoValor(e.target.value)}
+                    style={{ flex: 1, padding: '10px 12px', fontSize: '13px', borderRadius: '8px', border: '1px solid var(--outline)', outline: 'none' }}
+                  />
+                  <button 
+                    className="btn btn-secondary" 
+                    onClick={() => handleAddComissaoDirect(activeColaborador.id)} 
+                    style={{ width: 'auto', padding: '10px 16px', borderRadius: '8px', height: '40px', border: '1px solid var(--outline)' }}
+                    title="Definir Comissão"
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>check</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -991,7 +1225,7 @@ export default function Adminterno() {
             {faltasActiveColaboradorId && (
               <div className="card calendar-container">
                 <div className="calendar-header">
-                  <span className="calendar-month-title">Maio 2026</span>
+                  <span className="calendar-month-title">{formatMonthName(currentMonth)}</span>
                   <span className="subtitle" style={{ fontSize: '11px' }}>Toque nos dias para marcar/desmarcar faltas</span>
                 </div>
                 
@@ -1158,7 +1392,7 @@ export default function Adminterno() {
               </div>
 
               <div className="calc-card">
-                <span className="calc-title">Resumo de Fechamento (Maio 2026)</span>
+                <span className="calc-title">Resumo de Fechamento ({formatMonthName(currentMonth)})</span>
                 <div className="calc-row">
                   <span>Valor Base Contrato:</span>
                   <span>{formatCurrency(calcRes.base)}</span>
@@ -1168,8 +1402,8 @@ export default function Adminterno() {
                   <span>{formatCurrency(calcRes.comissao)}</span>
                 </div>
                 <div className="calc-row deduction">
-                  <span>(-) Desconto Faltas (diária base/30):</span>
-                  <span>- {formatCurrency(calcRes.faltas)} ({calcRes.faltasCount} d)</span>
+                  <span>(-) Desconto Faltas (diária base / {calcRes.workingDays} d.ú.):</span>
+                  <span>- {formatCurrency(calcRes.faltas)} ({calcRes.faltasCount} f)</span>
                 </div>
                 <div className="calc-row deduction">
                   <span>(-) Vales Aprovados Adiantados:</span>
