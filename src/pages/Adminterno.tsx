@@ -33,6 +33,13 @@ interface Comissao {
   mes: string
 }
 
+interface Note {
+  id: string
+  titulo: string
+  conteudo: string
+  data: string
+}
+
 // Mock Data
 const MOCK_COLABORADORES: Colaborador[] = [
   {
@@ -88,7 +95,7 @@ export default function Adminterno() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   // Navigation State
-  const [currentView, setCurrentView] = useState<'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento'>('dashboard')
+  const [currentView, setCurrentView] = useState<'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes'>('dashboard')
   const [activeColaboradorId, setActiveColaboradorId] = useState<string | null>(null)
   const [faltasActiveColaboradorId, setFaltasActiveColaboradorId] = useState<string>('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -99,6 +106,14 @@ export default function Adminterno() {
   const [vales, setVales] = useState<Vale[]>([])
   const [faltas, setFaltas] = useState<Falta[]>([])
   const [comissoes, setComissoes] = useState<Comissao[]>([])
+  const [notes, setNotes] = useState<Note[]>([])
+
+  // Form: Notes
+  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false)
+  const [noteFormTitle, setNoteFormTitle] = useState('')
+  const [noteFormContent, setNoteFormContent] = useState('')
+  const [noteFormId, setNoteFormId] = useState<string | null>(null)
+  const [notesSearchQuery, setNotesSearchQuery] = useState('')
 
   // Search & Forms State
   const [searchQuery, setSearchQuery] = useState('')
@@ -174,6 +189,21 @@ export default function Adminterno() {
     else {
       setComissoes(MOCK_COMISSOES)
       localStorage.setItem('comissoes', JSON.stringify(MOCK_COMISSOES))
+    }
+
+    const localNotes = localStorage.getItem('anotacoes')
+    if (localNotes) setNotes(JSON.parse(localNotes))
+    else {
+      const defaultNotes = [
+        {
+          id: 'note-1',
+          titulo: 'Lembrete de Fechamento',
+          conteudo: 'Lembrar de fechar as contas de repasse até o dia 5 de cada mês e enviar os comprovantes PIX.',
+          data: new Date().toISOString().split('T')[0]
+        }
+      ]
+      setNotes(defaultNotes)
+      localStorage.setItem('anotacoes', JSON.stringify(defaultNotes))
     }
   }, [])
 
@@ -374,6 +404,66 @@ export default function Adminterno() {
     const updated = vales.filter(v => v.id !== valeId)
     saveVales(updated)
     showToast('Vale excluído!', 'delete')
+  }
+
+  // Notes Actions
+  const saveNotes = (newNotes: Note[]) => {
+    setNotes(newNotes)
+    localStorage.setItem('anotacoes', JSON.stringify(newNotes))
+  }
+
+  const handleOpenNoteModal = (note: Note | null = null) => {
+    if (note) {
+      setNoteFormId(note.id)
+      setNoteFormTitle(note.titulo)
+      setNoteFormContent(note.conteudo)
+    } else {
+      setNoteFormId(null)
+      setNoteFormTitle('')
+      setNoteFormContent('')
+    }
+    setIsNoteModalOpen(true)
+  }
+
+  const handleSaveNote = () => {
+    if (!noteFormTitle || !noteFormContent) {
+      showToast('Preencha o título e o conteúdo.', 'warning', true)
+      return
+    }
+
+    if (noteFormId) {
+      const updated = notes.map(n => {
+        if (n.id === noteFormId) {
+          return {
+            ...n,
+            titulo: noteFormTitle,
+            conteudo: noteFormContent,
+            data: new Date().toISOString().split('T')[0]
+          }
+        }
+        return n
+      })
+      saveNotes(updated)
+      showToast('Anotação atualizada!', 'check_circle')
+    } else {
+      const newNote: Note = {
+        id: 'note-' + Date.now(),
+        titulo: noteFormTitle,
+        conteudo: noteFormContent,
+        data: new Date().toISOString().split('T')[0]
+      }
+      saveNotes([...notes, newNote])
+      showToast('Anotação criada!', 'check_circle')
+    }
+    setIsNoteModalOpen(false)
+  }
+
+  const handleDeleteNote = (noteId: string) => {
+    if (confirm('Deseja realmente excluir esta anotação?')) {
+      const updated = notes.filter(n => n.id !== noteId)
+      saveNotes(updated)
+      showToast('Anotação excluída!', 'delete')
+    }
   }
 
   // Add Commission
@@ -614,6 +704,9 @@ export default function Adminterno() {
             </li>
             <li className={`menu-item ${currentView === 'fechamento' ? 'active' : ''}`} onClick={() => navigateTo('fechamento')}>
               <span className="material-symbols-outlined">account_balance_wallet</span> Fechamento de Caixa
+            </li>
+            <li className={`menu-item ${currentView === 'anotacoes' ? 'active' : ''}`} onClick={() => navigateTo('anotacoes')}>
+              <span className="material-symbols-outlined">edit_note</span> Anotações Gerais
             </li>
             
             <li className="drawer-separator"></li>
@@ -1073,6 +1166,63 @@ export default function Adminterno() {
           </div>
         )}
 
+        {/* 8. ANOTAÇÕES GERAIS */}
+        {currentView === 'anotacoes' && (
+          <div className="view active">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h1>Anotações Gerais</h1>
+                <p className="subtitle">Bloco de notas interno para registro de lembretes e informações operacionais.</p>
+              </div>
+              <button className="btn" style={{ width: 'auto', padding: '10px 16px' }} onClick={() => handleOpenNoteModal(null)}>
+                <span className="material-symbols-outlined">add</span> Nova Nota
+              </button>
+            </div>
+
+            <div className="search-container">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Buscar anotações pelo título ou conteúdo..."
+                value={notesSearchQuery}
+                onChange={(e) => setNotesSearchQuery(e.target.value)}
+              />
+            </div>
+
+            <div className="list-container">
+              {notes
+                .filter(n => n.titulo.toLowerCase().includes(notesSearchQuery.toLowerCase()) || n.conteudo.toLowerCase().includes(notesSearchQuery.toLowerCase()))
+                .map(note => (
+                  <div key={note.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px', position: 'relative' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <h3 style={{ fontSize: '16px', fontWeight: 600, color: 'var(--primary)' }}>{note.titulo}</h3>
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        <button className="btn-copy-pix" style={{ padding: '4px', color: 'var(--secondary)' }} onClick={() => handleOpenNoteModal(note)} title="Editar Nota">
+                          <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>edit</span>
+                        </button>
+                        <button className="btn-copy-pix" style={{ padding: '4px', color: 'var(--error)' }} onClick={() => handleDeleteNote(note.id)} title="Excluir Nota">
+                          <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>delete</span>
+                        </button>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: '13px', color: 'var(--secondary)', whiteSpace: 'pre-wrap' }}>{note.conteudo}</p>
+                    <span style={{ fontSize: '10px', color: 'var(--secondary)', alignSelf: 'flex-end', marginTop: '4px' }}>
+                      Criado/Alterado em {note.data.split('-').reverse().join('/')}
+                    </span>
+                  </div>
+                ))}
+
+              {notes.length === 0 && (
+                <div style={{ textAlign: 'center', color: 'var(--secondary)', padding: '30px 20px' }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: '48px', opacity: 0.3, marginBottom: '8px' }}>edit_note</span>
+                  <p>Nenhuma anotação criada ainda.</p>
+                  <p style={{ fontSize: '12px', marginTop: '4px' }}>Clique em "Nova Nota" para começar.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
       </main>
 
       {/* Modal Add Colaborador */}
@@ -1206,6 +1356,39 @@ export default function Adminterno() {
           </div>
           <button className="btn btn-success" onClick={handleEditColaborador}>
             <span className="material-symbols-outlined">save</span> Salvar Alterações
+          </button>
+        </div>
+      </div>
+
+      {/* Modal Notes */}
+      <div className={`modal-overlay ${isNoteModalOpen ? 'active' : ''}`}>
+        <div className="modal-content">
+          <div className="modal-header">
+            <h2>{noteFormId ? 'Editar Anotação' : 'Nova Anotação'}</h2>
+            <button className="btn-close-modal" onClick={() => setIsNoteModalOpen(false)}>&times;</button>
+          </div>
+          <div className="form-group">
+            <label htmlFor="note-title">Título</label>
+            <input
+              type="text"
+              id="note-title"
+              placeholder="Digite o título do lembrete..."
+              value={noteFormTitle}
+              onChange={(e) => setNoteFormTitle(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="note-content">Conteúdo</label>
+            <textarea
+              id="note-content"
+              placeholder="Escreva a anotação ou instrução aqui..."
+              rows={6}
+              value={noteFormContent}
+              onChange={(e) => setNoteFormContent(e.target.value)}
+            />
+          </div>
+          <button className="btn btn-success" onClick={handleSaveNote}>
+            <span className="material-symbols-outlined">save</span> Salvar Anotação
           </button>
         </div>
       </div>

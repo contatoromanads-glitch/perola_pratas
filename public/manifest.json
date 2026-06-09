@@ -4,7 +4,7 @@
   "description": "Painel de controle de frequência, vales e fechamento de colaboradores para a Pérola Pratas.",
   "start_url": "/adminterno",
   "display": "standalone",
-  "background_color": "#fcf8fa",
+  "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "orientation": "portrait",
   "icons": [

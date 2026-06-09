@@ -678,7 +678,7 @@
   color: var(--secondary);
 }
 
-.admin-wrapper .form-group input, .admin-wrapper .form-group select {
+.admin-wrapper .form-group input, .admin-wrapper .form-group select, .admin-wrapper .form-group textarea {
   border: 1px solid var(--outline);
   border-radius: var(--radius-sm);
   padding: 10px 14px;
@@ -687,6 +687,7 @@
   background-color: var(--surface);
   width: 100%;
   color: var(--primary);
+  font-family: inherit;
 }
 
 /* Modals */
