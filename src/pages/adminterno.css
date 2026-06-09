@@ -822,3 +822,18 @@
   color: var(--primary);
   text-align: center;
 }
+
+.admin-wrapper .metric-card.clickable {
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.admin-wrapper .metric-card.clickable:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.admin-wrapper .metric-card.clickable:active {
+  transform: translateY(0);
+}

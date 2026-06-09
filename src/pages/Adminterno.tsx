@@ -66,7 +66,7 @@ const MOCK_COLABORADORES: Colaborador[] = [
 
 const MOCK_VALES: Vale[] = [
   { id: "val-1", colaboradorId: "col-1", valor: 400, data: "2026-05-10", status: "Aprovado" },
-  { id: "val-2", colaboradorId: "col-1", valor: 250, data: "2026-05-18", status: "Pendente" },
+  { id: "val-2", colaboradorId: "col-1", valor: 250, data: "2026-05-18", status: "Aprovado" },
   { id: "val-3", colaboradorId: "col-2", valor: 300, data: "2026-05-12", status: "Aprovado" }
 ];
 
@@ -285,19 +285,19 @@ export default function Adminterno() {
       colaboradorId: formValeCol,
       valor: val,
       data: formValeData,
-      status: 'Pendente'
+      status: 'Aprovado'
     }
 
     saveVales([...vales, newVale])
     setFormValeValor('')
-    showToast('Vale enviado para aprovação!', 'check_circle')
+    showToast('Vale registrado!', 'check_circle')
   }
 
-  // Approve / Reject Vale
-  const updateValeStatus = (valeId: string, status: 'Aprovado' | 'Recusado') => {
-    const updated = vales.map(v => v.id === valeId ? { ...v, status } : v)
+  // Delete Vale
+  const handleDeleteVale = (valeId: string) => {
+    const updated = vales.filter(v => v.id !== valeId)
     saveVales(updated)
-    showToast(status === 'Aprovado' ? 'Vale aprovado!' : 'Vale recusado.', 'check_circle')
+    showToast('Vale excluído!', 'delete')
   }
 
   // Add Commission
@@ -567,31 +567,31 @@ export default function Adminterno() {
             </div>
 
             <div className="metrics-grid">
-              <div className="metric-card">
+              <div className="metric-card clickable" onClick={() => navigateTo('colaboradores')}>
                 <span className="metric-title">Colaboradores</span>
                 <span className="metric-value">{colaboradores.length}</span>
-                <span className="metric-footer">Cadastrados no app</span>
+                <span className="metric-footer">Ver equipe cadastrada →</span>
               </div>
-              <div className="metric-card">
+              <div className="metric-card clickable" onClick={() => navigateTo('faltas')}>
                 <span className="metric-title">Ausências (Maio)</span>
                 <span className="metric-value" style={{ color: 'var(--error)' }}>
                   {faltas.filter(f => f.data.startsWith(currentMonth)).length}
                 </span>
-                <span className="metric-footer">Não comparecimentos</span>
+                <span className="metric-footer">Marcar faltas no calendário →</span>
               </div>
-              <div className="metric-card">
-                <span className="metric-title">Vales Pendentes</span>
+              <div className="metric-card clickable" onClick={() => navigateTo('vales')}>
+                <span className="metric-title">Total em Vales</span>
                 <span className="metric-value" style={{ color: 'var(--warning)' }}>
-                  {vales.filter(v => v.status === 'Pendente').length}
+                  {formatCurrency(vales.filter(v => v.data.startsWith(currentMonth)).reduce((sum, v) => sum + v.valor, 0))}
                 </span>
-                <span className="metric-footer">Aguardando aprovação</span>
+                <span className="metric-footer">Histórico e adiantamentos →</span>
               </div>
-              <div className="metric-card">
+              <div className="metric-card clickable" onClick={() => navigateTo('fechamento')}>
                 <span className="metric-title">Repasse Líquido</span>
                 <span className="metric-value" style={{ color: 'var(--success)' }}>
                   {formatCurrency(getDashboardTotalLiquido())}
                 </span>
-                <span className="metric-footer">Total calculado do mês</span>
+                <span className="metric-footer">Visualizar fechamento de caixa →</span>
               </div>
             </div>
 
@@ -822,7 +822,7 @@ export default function Adminterno() {
           <div className="view active">
             <div>
               <h1>Adiantamentos (Vales)</h1>
-              <p className="subtitle">Registre novos vales e aprove solicitações pendentes.</p>
+              <p className="subtitle">Registre novos vales e visualize o histórico de adiantamentos.</p>
             </div>
 
             <div className="card">
@@ -860,30 +860,32 @@ export default function Adminterno() {
             </div>
 
             <div>
-              <h2>Aprovação e Histórico de Vales</h2>
+              <h2>Histórico de Vales</h2>
               <div className="list-container">
                 {vales.map(vale => {
                   const col = colaboradores.find(c => c.id === vale.colaboradorId)
                   if (!col) return null
                   const formattedDate = vale.data.split('-').reverse().join('/')
                   return (
-                    <div key={vale.id} className={`list-item finance-item ${vale.status === 'Aprovado' ? 'expense' : (vale.status === 'Recusado' ? 'expense' : 'pending')}`}>
-                      <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div className="item-info">
-                            <span className="item-name">{col.nome}</span>
-                            <span className="item-subtitle">Vale em {formattedDate} • Status: <strong>{vale.status}</strong></span>
-                          </div>
-                          <span className="item-name" style={{ fontWeight: 700 }}>
-                            {formatCurrency(vale.valor)}
-                          </span>
+                    <div key={vale.id} className="list-item finance-item expense" style={{ cursor: 'default' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                        <div className="item-info">
+                          <span className="item-name">{col.nome}</span>
+                          <span className="item-subtitle">Vale em {formattedDate}</span>
                         </div>
-                        {vale.status === 'Pendente' && (
-                          <div style={{ display: 'flex', gap: '6px', marginTop: '10px' }}>
-                            <button className="btn btn-success" style={{ padding: '6px 12px', fontSize: '11px' }} onClick={() => updateValeStatus(vale.id, 'Aprovado')}>Aprovar</button>
-                            <button className="btn btn-danger" style={{ padding: '6px 12px', fontSize: '11px', backgroundColor: 'var(--error)' }} onClick={() => updateValeStatus(vale.id, 'Recusado')}>Recusar</button>
-                          </div>
-                        )}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <span className="item-name expense" style={{ fontWeight: 700 }}>
+                            - {formatCurrency(vale.valor)}
+                          </span>
+                          <button 
+                            className="btn-copy-pix" 
+                            style={{ padding: '6px', color: 'var(--error)' }} 
+                            onClick={() => handleDeleteVale(vale.id)} 
+                            title="Excluir Vale"
+                          >
+                            <span className="material-symbols-outlined">delete</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )
