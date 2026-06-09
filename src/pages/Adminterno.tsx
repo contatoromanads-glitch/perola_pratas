@@ -111,6 +111,15 @@ export default function Adminterno() {
   const [formColPix, setFormColPix] = useState('')
   const [formColData, setFormColData] = useState(new Date().toISOString().split('T')[0])
 
+  // Form: Edit Colaborador
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [editColNome, setEditColNome] = useState('')
+  const [editColCargo, setEditColCargo] = useState('')
+  const [editColValor, setEditColValor] = useState('')
+  const [editColPix, setEditColPix] = useState('')
+  const [editColData, setEditColData] = useState('')
+  const [editColStatus, setEditColStatus] = useState('Ativo')
+
   // Form: Add Vale
   const [formValeCol, setFormValeCol] = useState('')
   const [formValeValor, setFormValeValor] = useState('')
@@ -270,6 +279,73 @@ export default function Adminterno() {
     setFormColValor('')
     setFormColPix('')
     showToast('Colaborador cadastrado!', 'check_circle')
+  }
+
+  // Edit Colaborador
+  const openEditModal = (col: Colaborador) => {
+    setEditColNome(col.nome)
+    setEditColCargo(col.cargo)
+    setEditColValor(col.valorBase.toString())
+    setEditColPix(col.pix)
+    setEditColData(col.dataInicio)
+    setEditColStatus(col.status)
+    setIsEditModalOpen(true)
+  }
+
+  const handleEditColaborador = () => {
+    const valor = parseFloat(editColValor)
+    if (!editColNome || !editColCargo || isNaN(valor) || valor <= 0 || !editColPix || !editColData) {
+      showToast('Preencha todos os campos.', 'warning', true)
+      return
+    }
+
+    if (!activeColaboradorId) return
+
+    const updatedCols = colaboradores.map(c => {
+      if (c.id === activeColaboradorId) {
+        return {
+          ...c,
+          nome: editColNome,
+          cargo: editColCargo,
+          valorBase: valor,
+          pix: editColPix,
+          dataInicio: editColData,
+          status: editColStatus
+        }
+      }
+      return c
+    })
+
+    saveColaboradores(updatedCols)
+    setIsEditModalOpen(false)
+    showToast('Colaborador atualizado!', 'check_circle')
+  }
+
+  // Delete Colaborador
+  const handleDeleteColaborador = (colId: string) => {
+    if (confirm('Tem certeza que deseja excluir este colaborador e todos os seus lançamentos?')) {
+      const updatedCols = colaboradores.filter(c => c.id !== colId)
+      saveColaboradores(updatedCols)
+
+      // Clean up associated data
+      const updatedVales = vales.filter(v => v.colaboradorId !== colId)
+      saveVales(updatedVales)
+
+      const updatedFaltas = faltas.filter(f => f.colaboradorId !== colId)
+      saveFaltas(updatedFaltas)
+
+      const updatedComissoes = comissoes.filter(c => c.colaboradorId !== colId)
+      saveComissoes(updatedComissoes)
+
+      // Reset selection state if necessary
+      if (faltasActiveColaboradorId === colId) setFaltasActiveColaboradorId('')
+      if (formValeCol === colId) setFormValeCol('')
+      if (formComissaoCol === colId) setFormComissaoCol('')
+      if (calcColId === colId) setCalcColId('')
+
+      navigateTo('colaboradores')
+      showToast('Colaborador excluído!', 'delete')
+    }
   }
 
   // Add Vale
@@ -700,6 +776,15 @@ export default function Adminterno() {
               </div>
             </div>
 
+            <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
+              <button className="btn" style={{ flex: 1, backgroundColor: 'var(--surface)', color: 'var(--primary)', border: '1px solid var(--outline)' }} onClick={() => openEditModal(activeColaborador)}>
+                <span className="material-symbols-outlined">edit</span> Editar Perfil
+              </button>
+              <button className="btn btn-danger" style={{ flex: 1 }} onClick={() => handleDeleteColaborador(activeColaborador.id)}>
+                <span className="material-symbols-outlined">delete</span> Excluir
+              </button>
+            </div>
+
             <div className="metrics-grid">
               <div className="metric-card">
                 <span className="metric-title">Faltas no Mês</span>
@@ -1048,6 +1133,79 @@ export default function Adminterno() {
           </div>
           <button className="btn btn-success" onClick={handleAddColaborador}>
             <span className="material-symbols-outlined">save</span> Cadastrar Colaborador
+          </button>
+        </div>
+      </div>
+
+      {/* Modal Edit Colaborador */}
+      <div className={`modal-overlay ${isEditModalOpen ? 'active' : ''}`}>
+        <div className="modal-content">
+          <div className="modal-header">
+            <h2>Editar Colaborador</h2>
+            <button className="btn-close-modal" onClick={() => setIsEditModalOpen(false)}>&times;</button>
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-col-nome">Nome Completo</label>
+            <input
+              type="text"
+              id="edit-col-nome"
+              placeholder="Ex: Ana Maria da Silva"
+              value={editColNome}
+              onChange={(e) => setEditColNome(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-col-cargo">Cargo/Função</label>
+            <input
+              type="text"
+              id="edit-col-cargo"
+              placeholder="Ex: Vendedora, Social Media..."
+              value={editColCargo}
+              onChange={(e) => setEditColCargo(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-col-valor">Valor Base Mensal (R$)</label>
+            <input
+              type="number"
+              id="edit-col-valor"
+              placeholder="Ex: 3500"
+              value={editColValor}
+              onChange={(e) => setEditColValor(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-col-pix">Chave PIX</label>
+            <input
+              type="text"
+              id="edit-col-pix"
+              placeholder="E-mail, CPF, celular ou PIX"
+              value={editColPix}
+              onChange={(e) => setEditColPix(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-col-data">Data de Início do Contrato</label>
+            <input
+              type="date"
+              id="edit-col-data"
+              value={editColData}
+              onChange={(e) => setEditColData(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="edit-col-status">Status</label>
+            <select
+              id="edit-col-status"
+              value={editColStatus}
+              onChange={(e) => setEditColStatus(e.target.value)}
+            >
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
+            </select>
+          </div>
+          <button className="btn btn-success" onClick={handleEditColaborador}>
+            <span className="material-symbols-outlined">save</span> Salvar Alterações
           </button>
         </div>
       </div>
