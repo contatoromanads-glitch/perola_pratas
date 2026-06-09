@@ -41,6 +41,21 @@ interface Note {
   data: string
 }
 
+interface Pagamento {
+  id: string
+  colaboradorId: string
+  nomeColaborador: string
+  cargoColaborador: string
+  pixColaborador: string
+  valorBase: number
+  valorComissao: number
+  valorFaltas: number
+  valorVales: number
+  valorLiquido: number
+  mesReferencia: string
+  dataPagamento: string
+}
+
 // Helpers for Dynamic Months and Working Days
 const getLocalYearMonth = () => {
   const d = new Date()
@@ -149,6 +164,23 @@ const MOCK_COMISSOES: Comissao[] = [
   { id: "com-2", colaboradorId: "col-2", valor: 300, mes: currentMonthDefault }
 ];
 
+const MOCK_PAGAMENTOS: Pagamento[] = [
+  {
+    id: "pag-1",
+    colaboradorId: "col-1",
+    nomeColaborador: "Mariana Silva",
+    cargoColaborador: "Vendedora",
+    pixColaborador: "mariana.silva@pix.com",
+    valorBase: 3000,
+    valorComissao: 850,
+    valorFaltas: 272.72,
+    valorVales: 650,
+    valorLiquido: 2927.28,
+    mesReferencia: currentMonthDefault,
+    dataPagamento: `${currentMonthDefault}-05`
+  }
+];
+
 export default function Adminterno() {
   // Authentication State
   const [loginUser, setLoginUser] = useState('')
@@ -158,7 +190,7 @@ export default function Adminterno() {
 
   // Navigation & Search Params State
   const [searchParams, setSearchParams] = useSearchParams()
-  const currentView = (searchParams.get('v') || 'dashboard') as 'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes'
+  const currentView = (searchParams.get('v') || 'dashboard') as 'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes' | 'historico'
   const activeColaboradorId = searchParams.get('cId')
   const [faltasActiveColaboradorId, setFaltasActiveColaboradorId] = useState<string>('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -169,7 +201,11 @@ export default function Adminterno() {
   const [vales, setVales] = useState<Vale[]>([])
   const [faltas, setFaltas] = useState<Falta[]>([])
   const [comissoes, setComissoes] = useState<Comissao[]>([])
+  const [pagamentos, setPagamentos] = useState<Pagamento[]>([])
   const [notes, setNotes] = useState<Note[]>([])
+
+  // Search & Forms State
+  const [historySearchQuery, setHistorySearchQuery] = useState('')
 
   // Form: Notes
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false)
@@ -257,6 +293,13 @@ export default function Adminterno() {
     else {
       setComissoes(MOCK_COMISSOES)
       localStorage.setItem('comissoes', JSON.stringify(MOCK_COMISSOES))
+    }
+
+    const localPagamentos = localStorage.getItem('pagamentos')
+    if (localPagamentos) setPagamentos(JSON.parse(localPagamentos))
+    else {
+      setPagamentos(MOCK_PAGAMENTOS)
+      localStorage.setItem('pagamentos', JSON.stringify(MOCK_PAGAMENTOS))
     }
 
     const localNotes = localStorage.getItem('anotacoes')
@@ -350,6 +393,11 @@ export default function Adminterno() {
   const saveComissoes = (newComs: Comissao[]) => {
     setComissoes(newComs)
     localStorage.setItem('comissoes', JSON.stringify(newComs))
+  }
+
+  const savePagamentos = (newPags: Pagamento[]) => {
+    setPagamentos(newPags)
+    localStorage.setItem('pagamentos', JSON.stringify(newPags))
   }
 
   // Add Colaborador
@@ -526,6 +574,42 @@ export default function Adminterno() {
     const updated = comissoes.filter(c => c.id !== comissaoId)
     saveComissoes(updated)
     showToast('Comissão excluída!', 'delete')
+  }
+
+  // Payment History Actions
+  const handleMarkAsPaid = () => {
+    const col = colaboradores.find(c => c.id === calcColId)
+    if (!col) return
+
+    const res = getCalculation(calcColId)
+    
+    // Create new payment record
+    const newPayment: Pagamento = {
+      id: 'pag-' + Date.now(),
+      colaboradorId: calcColId,
+      nomeColaborador: col.nome,
+      cargoColaborador: col.cargo,
+      pixColaborador: col.pix,
+      valorBase: res.base,
+      valorComissao: res.comissao,
+      valorFaltas: res.faltas,
+      valorVales: res.vales,
+      valorLiquido: res.liquido,
+      mesReferencia: currentMonth,
+      dataPagamento: new Date().toISOString().split('T')[0]
+    }
+
+    savePagamentos([...pagamentos, newPayment])
+    showToast(`Pagamento registrado para ${col.nome}!`, 'done_all')
+    navigateTo('historico')
+  }
+
+  const handleDeletePagamento = (pagamentoId: string) => {
+    if (confirm('Tem certeza que deseja excluir este registro de pagamento do histórico?')) {
+      const updated = pagamentos.filter(p => p.id !== pagamentoId)
+      savePagamentos(updated)
+      showToast('Pagamento excluído do histórico!', 'delete')
+    }
   }
 
   // Notes Actions
@@ -854,6 +938,9 @@ export default function Adminterno() {
             </li>
             <li className={`menu-item ${currentView === 'fechamento' ? 'active' : ''}`} onClick={() => navigateTo('fechamento')}>
               <span className="material-symbols-outlined">account_balance_wallet</span> Fechamento de Caixa
+            </li>
+            <li className={`menu-item ${currentView === 'historico' ? 'active' : ''}`} onClick={() => navigateTo('historico')}>
+              <span className="material-symbols-outlined">history</span> Histórico de Pagamentos
             </li>
             <li className={`menu-item ${currentView === 'anotacoes' ? 'active' : ''}`} onClick={() => navigateTo('anotacoes')}>
               <span className="material-symbols-outlined">edit_note</span> Anotações Gerais
@@ -1416,12 +1503,105 @@ export default function Adminterno() {
                 </div>
               </div>
 
-              <button className="btn btn-success" style={{ marginTop: '15px' }} onClick={() => {
-                const name = colaboradores.find(c => c.id === calcColId)?.nome || ''
-                showToast(`Fechamento concluído para ${name}!`, 'done_all')
-              }}>
+              <button className="btn btn-success" style={{ marginTop: '15px' }} onClick={handleMarkAsPaid}>
                 <span className="material-symbols-outlined">done_all</span> Fechar e Marcar como Pago
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* 7.5. HISTÓRICO DE PAGAMENTOS */}
+        {currentView === 'historico' && (
+          <div className="view active">
+            <div>
+              <h1>Histórico de Pagamentos</h1>
+              <p className="subtitle">Consulte o registro permanente de repasses já efetuados aos colaboradores.</p>
+            </div>
+
+            <div className="search-container">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Buscar por colaborador ou mês..."
+                value={historySearchQuery}
+                onChange={(e) => setHistorySearchQuery(e.target.value)}
+              />
+            </div>
+
+            <div className="list-container">
+              {pagamentos
+                .filter(p => 
+                  p.nomeColaborador.toLowerCase().includes(historySearchQuery.toLowerCase()) || 
+                  p.mesReferencia.toLowerCase().includes(historySearchQuery.toLowerCase()) ||
+                  formatMonthName(p.mesReferencia).toLowerCase().includes(historySearchQuery.toLowerCase())
+                )
+                .slice().reverse() // Show newest first
+                .map(pag => (
+                  <div key={pag.id} className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderLeft: '4px solid var(--success)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div>
+                        <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--primary)' }}>{pag.nomeColaborador}</h3>
+                        <span className="subtitle" style={{ fontSize: '11px' }}>{pag.cargoColaborador}</span>
+                      </div>
+                      <button 
+                        className="btn-copy-pix" 
+                        style={{ padding: '4px', color: 'var(--error)' }} 
+                        onClick={() => handleDeletePagamento(pag.id)} 
+                        title="Excluir do Histórico"
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>delete</span>
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px', fontSize: '12px', borderTop: '1px solid var(--outline-variant)', borderBottom: '1px solid var(--outline-variant)', padding: '8px 0', margin: '4px 0' }}>
+                      <div>
+                        <span style={{ color: 'var(--secondary)', fontWeight: 500 }}>Referência:</span>
+                        <div style={{ fontWeight: 600 }}>{formatMonthName(pag.mesReferencia)}</div>
+                      </div>
+                      <div>
+                        <span style={{ color: 'var(--secondary)', fontWeight: 500 }}>Pago em:</span>
+                        <div style={{ fontWeight: 600 }}>{pag.dataPagamento.split('-').reverse().join('/')}</div>
+                      </div>
+                      <div>
+                        <span style={{ color: 'var(--secondary)', fontWeight: 500 }}>Contrato Base:</span>
+                        <div>{formatCurrency(pag.valorBase)}</div>
+                      </div>
+                      <div>
+                        <span style={{ color: 'var(--secondary)', fontWeight: 500 }}>Comissões:</span>
+                        <div style={{ color: 'var(--success-text)', fontWeight: 600 }}>+ {formatCurrency(pag.valorComissao)}</div>
+                      </div>
+                      <div>
+                        <span style={{ color: 'var(--secondary)', fontWeight: 500 }}>Desconto Faltas:</span>
+                        <div style={{ color: 'var(--error-text)' }}>- {formatCurrency(pag.valorFaltas)}</div>
+                      </div>
+                      <div>
+                        <span style={{ color: 'var(--secondary)', fontWeight: 500 }}>Desconto Vales:</span>
+                        <div style={{ color: 'var(--error-text)' }}>- {formatCurrency(pag.valorVales)}</div>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
+                      <div>
+                        <span style={{ fontSize: '11px', color: 'var(--secondary)' }}>Chave PIX creditada:</span>
+                        <div style={{ fontSize: '11px', fontFamily: 'monospace', fontWeight: 600, color: 'var(--primary)' }}>{pag.pixColaborador}</div>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <span style={{ fontSize: '11px', color: 'var(--secondary)', fontWeight: 500 }}>Líquido Pago</span>
+                        <div style={{ fontSize: '18px', fontWeight: 800, color: 'var(--success-text)' }}>
+                          {formatCurrency(pag.valorLiquido)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+              {pagamentos.length === 0 && (
+                <div style={{ textAlign: 'center', color: 'var(--secondary)', padding: '30px 20px' }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: '48px', opacity: 0.3, marginBottom: '8px' }}>history</span>
+                  <p>Nenhum pagamento registrado ainda.</p>
+                  <p style={{ fontSize: '12px', marginTop: '4px' }}>Marque fechamentos como pagos para popular o histórico.</p>
+                </div>
+              )}
             </div>
           </div>
         )}
