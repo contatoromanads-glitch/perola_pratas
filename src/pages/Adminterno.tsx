@@ -200,7 +200,7 @@ export default function Adminterno() {
   // Handle Login Submission
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    if (loginUser === 'PerolaPratasAdm' && loginPass === 'Perol@prat@asadm') {
+    if (loginUser === 'PerolaPratasAdm' && loginPass === '1234') {
       setIsAuthenticated(true)
       sessionStorage.setItem('admin_session', 'true')
       showToast('Login efetuado!', 'check_circle')
