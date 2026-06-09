@@ -1110,7 +1110,7 @@ export default function Adminterno() {
                 )}
                 
                 {/* Formulário Inline de Vale */}
-                <div style={{ display: 'flex', gap: '8px', marginTop: '4px', alignItems: 'center' }}>
+                <div className="profile-inline-form">
                   <input
                     type="number"
                     placeholder="Valor do Vale (R$)"
@@ -1122,12 +1122,13 @@ export default function Adminterno() {
                     type="date"
                     value={profileValeData}
                     onChange={(e) => setProfileValeData(e.target.value)}
-                    style={{ width: '125px', padding: '10px 12px', fontSize: '13px', borderRadius: '8px', border: '1px solid var(--outline)', outline: 'none' }}
+                    style={{ padding: '10px 12px', fontSize: '13px', borderRadius: '8px', border: '1px solid var(--outline)', outline: 'none' }}
+                    className="profile-vale-date-input"
                   />
                   <button 
                     className="btn" 
                     onClick={() => handleAddValeDirect(activeColaborador.id)} 
-                    style={{ width: 'auto', padding: '10px 16px', borderRadius: '8px', height: '40px' }}
+                    style={{ padding: '10px 16px', borderRadius: '8px', height: '40px' }}
                     title="Lançar Vale"
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>add</span>
@@ -1177,7 +1178,7 @@ export default function Adminterno() {
                 )}
                 
                 {/* Formulário Inline de Comissão */}
-                <div style={{ display: 'flex', gap: '8px', marginTop: '4px', alignItems: 'center' }}>
+                <div className="profile-inline-form">
                   <input
                     type="number"
                     placeholder="Valor da Comissão (R$)"
@@ -1188,7 +1189,7 @@ export default function Adminterno() {
                   <button 
                     className="btn btn-secondary" 
                     onClick={() => handleAddComissaoDirect(activeColaborador.id)} 
-                    style={{ width: 'auto', padding: '10px 16px', borderRadius: '8px', height: '40px', border: '1px solid var(--outline)' }}
+                    style={{ padding: '10px 16px', borderRadius: '8px', height: '40px', border: '1px solid var(--outline)' }}
                     title="Definir Comissão"
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>check</span>

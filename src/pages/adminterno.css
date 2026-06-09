@@ -838,3 +838,117 @@
 .admin-wrapper .metric-card.clickable:active {
   transform: translateY(0);
 }
+
+/* Responsive and Overflow Layout Polish */
+.admin-wrapper .item-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.admin-wrapper .item-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-wrapper .item-subtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-wrapper .profile-inline-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  align-items: center;
+  width: 100%;
+}
+
+.admin-wrapper .profile-vale-date-input {
+  width: 125px;
+}
+
+.admin-wrapper .quick-actions {
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-wrapper .quick-actions::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  .admin-wrapper main {
+    padding: 12px 12px 20px 12px;
+  }
+  
+  .admin-wrapper .card {
+    padding: 14px;
+  }
+  
+  .admin-wrapper .metrics-grid {
+    gap: 8px;
+  }
+  
+  .admin-wrapper .metric-card {
+    padding: 10px;
+    gap: 4px;
+  }
+  
+  .admin-wrapper .metric-value {
+    font-size: 16px;
+    word-break: break-all;
+  }
+  
+  .admin-wrapper .metric-title {
+    font-size: 10px;
+  }
+  
+  .admin-wrapper .calendar-grid {
+    gap: 4px;
+  }
+  
+  .admin-wrapper .calendar-day {
+    font-size: 11px;
+  }
+  
+  .admin-wrapper .profile-inline-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  
+  .admin-wrapper .profile-inline-form input,
+  .admin-wrapper .profile-inline-form select,
+  .admin-wrapper .profile-inline-form button {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .admin-wrapper .brand-name {
+    font-size: 16px;
+  }
+  
+  .admin-wrapper .metric-value {
+    font-size: 14px;
+  }
+  
+  .admin-wrapper .list-item {
+    padding: 10px;
+  }
+  
+  .admin-wrapper .item-name {
+    font-size: 13px;
+  }
+  
+  .admin-wrapper .item-subtitle {
+    font-size: 11px;
+  }
+  
+  .admin-wrapper .status-pill {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+}
