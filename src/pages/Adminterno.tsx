@@ -93,6 +93,7 @@ export default function Adminterno() {
   const [loginUser, setLoginUser] = useState('')
   const [loginPass, setLoginPass] = useState('')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   // Navigation State
   const [currentView, setCurrentView] = useState<'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes'>('dashboard')
@@ -626,14 +627,38 @@ export default function Adminterno() {
               </div>
               <div className="form-group">
                 <label htmlFor="pass">Senha</label>
-                <input
-                  type="password"
-                  id="pass"
-                  value={loginPass}
-                  onChange={(e) => setLoginPass(e.target.value)}
-                  placeholder="Sua senha"
-                  required
-                />
+                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%' }}>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="pass"
+                    value={loginPass}
+                    onChange={(e) => setLoginPass(e.target.value)}
+                    placeholder="Sua senha"
+                    style={{ paddingRight: '40px' }}
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: '10px',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: 'var(--secondary)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '4px'
+                    }}
+                    title={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+                      {showPassword ? 'visibility_off' : 'visibility'}
+                    </span>
+                  </button>
+                </div>
               </div>
               
               <button type="submit" className="btn" style={{ marginTop: '8px' }}>
