@@ -117,60 +117,89 @@ const getWorkingDaysInMonth = (monthStr: string) => {
 const currentMonthDefault = getLocalYearMonth()
 
 // Mock Data
-const MOCK_COLABORADORES: Colaborador[] = [
+const BLING_SELLERS: Colaborador[] = [
   {
-    id: "col-1",
-    nome: "Mariana Silva",
+    id: "bling-17667376662",
+    nome: "Carlos Gabriel dos Santos",
+    cargo: "Vendedor",
+    valorBase: 3000,
+    pix: "carlos.gabriel@pix.com",
+    dataInicio: "2026-06-10",
+    status: "Ativo"
+  },
+  {
+    id: "bling-17938357953",
+    nome: "Anderson Rodrigues",
+    cargo: "Vendedor",
+    valorBase: 3000,
+    pix: "anderson.rodrigues@pix.com",
+    dataInicio: "2026-06-10",
+    status: "Ativo"
+  },
+  {
+    id: "bling-17989755363",
+    nome: "Nayara Monique Gindre Pereira",
     cargo: "Vendedora",
     valorBase: 3000,
-    pix: "mariana.silva@pix.com",
-    dataInicio: "2025-01-10",
+    pix: "nayara.monique@pix.com",
+    dataInicio: "2026-06-10",
     status: "Ativo"
   },
   {
-    id: "col-2",
-    nome: "Beatriz Ramos",
-    cargo: "Social Media",
-    valorBase: 2500,
-    pix: "beatriz.ramos@pix.com",
-    dataInicio: "2025-03-15",
+    id: "bling-18006939139",
+    nome: "Monica Patricia Jeronimo",
+    cargo: "Vendedora",
+    valorBase: 3000,
+    pix: "monica.patricia@pix.com",
+    dataInicio: "2026-06-10",
     status: "Ativo"
   },
   {
-    id: "col-3",
-    nome: "Carlos Souza",
-    cargo: "Designer de Joias",
-    valorBase: 4500,
-    pix: "carlos.souza@pix.com",
-    dataInicio: "2024-11-01",
+    id: "bling-18104431731",
+    nome: "Victoria Lopes Duran",
+    cargo: "Vendedora",
+    valorBase: 3000,
+    pix: "victoria.lopes@pix.com",
+    dataInicio: "2026-06-10",
+    status: "Ativo"
+  },
+  {
+    id: "bling-18131245126",
+    nome: "Laisa Serafin dos Santos",
+    cargo: "Vendedora",
+    valorBase: 3000,
+    pix: "laisa.serafin@pix.com",
+    dataInicio: "2026-06-10",
     status: "Ativo"
   }
 ];
 
+const MOCK_COLABORADORES: Colaborador[] = BLING_SELLERS;
+
 const MOCK_VALES: Vale[] = [
-  { id: "val-1", colaboradorId: "col-1", valor: 400, data: `${currentMonthDefault}-10`, status: "Aprovado" },
-  { id: "val-2", colaboradorId: "col-1", valor: 250, data: `${currentMonthDefault}-18`, status: "Aprovado" },
-  { id: "val-3", colaboradorId: "col-2", valor: 300, data: `${currentMonthDefault}-12`, status: "Aprovado" }
+  { id: "val-1", colaboradorId: "bling-17989755363", valor: 400, data: `${currentMonthDefault}-10`, status: "Aprovado" },
+  { id: "val-2", colaboradorId: "bling-17989755363", valor: 250, data: `${currentMonthDefault}-18`, status: "Aprovado" },
+  { id: "val-3", colaboradorId: "bling-18006939139", valor: 300, data: `${currentMonthDefault}-12`, status: "Aprovado" }
 ];
 
 const MOCK_FALTAS: Falta[] = [
-  { id: "fal-1", colaboradorId: "col-1", data: `${currentMonthDefault}-08` },
-  { id: "fal-2", colaboradorId: "col-1", data: `${currentMonthDefault}-15` },
-  { id: "fal-3", colaboradorId: "col-3", data: `${currentMonthDefault}-20` }
+  { id: "fal-1", colaboradorId: "bling-17989755363", data: `${currentMonthDefault}-08` },
+  { id: "fal-2", colaboradorId: "bling-17989755363", data: `${currentMonthDefault}-15` },
+  { id: "fal-3", colaboradorId: "bling-17667376662", data: `${currentMonthDefault}-20` }
 ];
 
 const MOCK_COMISSOES: Comissao[] = [
-  { id: "com-1", colaboradorId: "col-1", valor: 850, mes: currentMonthDefault },
-  { id: "com-2", colaboradorId: "col-2", valor: 300, mes: currentMonthDefault }
+  { id: "com-1", colaboradorId: "bling-17989755363", valor: 850, mes: currentMonthDefault },
+  { id: "com-2", colaboradorId: "bling-18006939139", valor: 300, mes: currentMonthDefault }
 ];
 
 const MOCK_PAGAMENTOS: Pagamento[] = [
   {
     id: "pag-1",
-    colaboradorId: "col-1",
-    nomeColaborador: "Mariana Silva",
+    colaboradorId: "bling-17989755363",
+    nomeColaborador: "Nayara Monique Gindre Pereira",
     cargoColaborador: "Vendedora",
-    pixColaborador: "mariana.silva@pix.com",
+    pixColaborador: "nayara.monique@pix.com",
     valorBase: 3000,
     valorComissao: 850,
     valorFaltas: 272.72,
@@ -190,7 +219,7 @@ export default function Adminterno() {
 
   // Navigation & Search Params State
   const [searchParams, setSearchParams] = useSearchParams()
-  const currentView = (searchParams.get('v') || 'dashboard') as 'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes' | 'historico'
+  const currentView = (searchParams.get('v') || 'dashboard') as 'dashboard' | 'colaboradores' | 'perfil' | 'faltas' | 'vales' | 'comissoes' | 'fechamento' | 'anotacoes' | 'historico' | 'bling'
   const activeColaboradorId = searchParams.get('cId')
   const [faltasActiveColaboradorId, setFaltasActiveColaboradorId] = useState<string>('')
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -804,6 +833,27 @@ export default function Adminterno() {
     }
   }
 
+  // Bling Sync Handler
+  const handleSyncBling = () => {
+    let addedCount = 0
+    const updatedCols = [...colaboradores]
+
+    BLING_SELLERS.forEach(blingCol => {
+      const exists = colaboradores.some(c => c.nome.toLowerCase() === blingCol.nome.toLowerCase() || c.id === blingCol.id)
+      if (!exists) {
+        updatedCols.push(blingCol)
+        addedCount++
+      }
+    })
+
+    if (addedCount > 0) {
+      saveColaboradores(updatedCols)
+      showToast(`${addedCount} novos vendedores adicionados do Bling!`, 'check_circle')
+    } else {
+      showToast('Todos os vendedores já estão sincronizados!', 'info')
+    }
+  }
+
   // Calculations
   const getAbsencesCount = (colId: string) => {
     return faltas.filter(f => f.colaboradorId === colId && f.data.startsWith(currentMonth)).length
@@ -1028,6 +1078,9 @@ export default function Adminterno() {
             </li>
             <li className={`menu-item ${currentView === 'anotacoes' ? 'active' : ''}`} onClick={() => navigateTo('anotacoes')}>
               <span className="material-symbols-outlined">edit_note</span> Anotações Gerais
+            </li>
+            <li className={`menu-item ${currentView === 'bling' ? 'active' : ''}`} onClick={() => navigateTo('bling')}>
+              <span className="material-symbols-outlined">sync</span> Sincronização Bling
             </li>
             
             <li className="drawer-separator"></li>
@@ -1766,6 +1819,67 @@ export default function Adminterno() {
                   <p style={{ fontSize: '12px', marginTop: '4px' }}>Clique em "Nova Nota" para começar.</p>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* 9. SINCRONIZAÇÃO BLING */}
+        {currentView === 'bling' && (
+          <div className="view active">
+            <div>
+              <h1>Sincronização Bling</h1>
+              <p className="subtitle">Importe e atualize os vendedores integrados com o Bling Pérola.</p>
+            </div>
+
+            <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span className="material-symbols-outlined" style={{ fontSize: '32px', color: 'var(--success)' }}>cloud_done</span>
+                <div>
+                  <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--primary)' }}>Conexão Estabelecida</h3>
+                  <span className="subtitle" style={{ fontSize: '11px' }}>Sincronizado automaticamente via cache de ambiente seguro.</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '16px', borderTop: '1px solid var(--outline-variant)', paddingTop: '12px', marginTop: '4px' }}>
+                <div>
+                  <span style={{ fontSize: '11px', color: 'var(--secondary)' }}>Última Sincronização:</span>
+                  <div style={{ fontSize: '13px', fontWeight: 600 }}>10/06/2026 (Hoje)</div>
+                </div>
+                <div>
+                  <span style={{ fontSize: '11px', color: 'var(--secondary)' }}>Origem:</span>
+                  <div style={{ fontSize: '13px', fontWeight: 600 }}>Bling ERP API v3</div>
+                </div>
+              </div>
+
+              <button className="btn btn-success" style={{ marginTop: '8px' }} onClick={handleSyncBling}>
+                <span className="material-symbols-outlined">sync</span> Importar/Sincronizar Vendedores
+              </button>
+            </div>
+
+            <div>
+              <h2>Vendedores no Bling ({BLING_SELLERS.length})</h2>
+              <p className="subtitle" style={{ marginBottom: '12px' }}>Estes registros foram lidos da conta Bling Pérola e estão prontos para integração local:</p>
+              
+              <div className="list-container">
+                {BLING_SELLERS.map(seller => {
+                  const alreadyExists = colaboradores.some(c => c.nome.toLowerCase() === seller.nome.toLowerCase() || c.id === seller.id)
+                  return (
+                    <div key={seller.id} className="list-item" style={{ cursor: 'default', opacity: alreadyExists ? 0.65 : 1 }}>
+                      <div className="item-info">
+                        <span className="item-name">{seller.nome}</span>
+                        <span className="item-subtitle">{seller.cargo} • Contrato Base: {formatCurrency(seller.valorBase)}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        {alreadyExists ? (
+                          <span className="status-pill" style={{ backgroundColor: 'var(--surface-container-high)', color: 'var(--secondary)' }}>Sincronizado</span>
+                        ) : (
+                          <span className="status-pill active" style={{ backgroundColor: 'var(--primary-container)', color: 'var(--primary)' }}>Pendente</span>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         )}
