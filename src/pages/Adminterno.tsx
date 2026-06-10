@@ -316,6 +316,13 @@ export default function Adminterno() {
       setNotes(defaultNotes)
       localStorage.setItem('anotacoes', JSON.stringify(defaultNotes))
     }
+
+    // Reforce storage persistence
+    if (navigator.storage && navigator.storage.persist) {
+      navigator.storage.persist().then((persisted) => {
+        console.log('Persistência garantida pelo navegador:', persisted)
+      })
+    }
   }, [])
 
   // Set default selectors when lists load
@@ -609,6 +616,83 @@ export default function Adminterno() {
       const updated = pagamentos.filter(p => p.id !== pagamentoId)
       savePagamentos(updated)
       showToast('Pagamento excluído do histórico!', 'delete')
+    }
+  }
+
+  // Backup and Restore Actions
+  const handleExportBackup = () => {
+    try {
+      const data = {
+        colaboradores: JSON.parse(localStorage.getItem('colaboradores') || '[]'),
+        vales: JSON.parse(localStorage.getItem('vales') || '[]'),
+        faltas: JSON.parse(localStorage.getItem('faltas') || '[]'),
+        comissoes: JSON.parse(localStorage.getItem('comissoes') || '[]'),
+        pagamentos: JSON.parse(localStorage.getItem('pagamentos') || '[]'),
+        anotacoes: JSON.parse(localStorage.getItem('anotacoes') || '[]'),
+        exportDate: new Date().toISOString()
+      }
+      
+      const jsonStr = JSON.stringify(data, null, 2)
+      const blob = new Blob([jsonStr], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      
+      const downloadAnchor = document.createElement('a')
+      downloadAnchor.setAttribute("href", url)
+      downloadAnchor.setAttribute("download", `backup_gestao_perola_${new Date().toISOString().split('T')[0]}.json`)
+      document.body.appendChild(downloadAnchor)
+      downloadAnchor.click()
+      downloadAnchor.remove()
+      URL.revokeObjectURL(url)
+      
+      showToast('Backup exportado!', 'download')
+    } catch (err) {
+      showToast('Erro ao exportar backup.', 'warning', true)
+    }
+  }
+
+  const handleImportBackup = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileReader = new FileReader()
+    const files = e.target.files
+    if (!files || files.length === 0) return
+    
+    fileReader.readAsText(files[0], "UTF-8")
+    fileReader.onload = (event) => {
+      try {
+        const parsed = JSON.parse(event.target?.result as string)
+        if (parsed && typeof parsed === 'object') {
+          const newCols = parsed.colaboradores || []
+          const newVales = parsed.vales || []
+          const newFaltas = parsed.faltas || []
+          const newComs = parsed.comissoes || []
+          const newPags = parsed.pagamentos || []
+          const newNotes = parsed.anotacoes || []
+          
+          // Save to LocalStorage
+          localStorage.setItem('colaboradores', JSON.stringify(newCols))
+          localStorage.setItem('vales', JSON.stringify(newVales))
+          localStorage.setItem('faltas', JSON.stringify(newFaltas))
+          localStorage.setItem('comissoes', JSON.stringify(newComs))
+          localStorage.setItem('pagamentos', JSON.stringify(newPags))
+          localStorage.setItem('anotacoes', JSON.stringify(newNotes))
+          
+          // Update States
+          setColaboradores(newCols)
+          setVales(newVales)
+          setFaltas(newFaltas)
+          setComissoes(newComs)
+          setPagamentos(newPags)
+          setNotes(newNotes)
+          
+          showToast('Backup restaurado!', 'upload')
+          
+          // Reset file input
+          e.target.value = ''
+        } else {
+          showToast('Arquivo de backup inválido.', 'warning', true)
+        }
+      } catch (err) {
+        showToast('Erro ao processar backup.', 'warning', true)
+      }
     }
   }
 
@@ -944,6 +1028,29 @@ export default function Adminterno() {
             </li>
             <li className={`menu-item ${currentView === 'anotacoes' ? 'active' : ''}`} onClick={() => navigateTo('anotacoes')}>
               <span className="material-symbols-outlined">edit_note</span> Anotações Gerais
+            </li>
+            
+            <li className="drawer-separator"></li>
+            <li className="drawer-section-title">Ajustes & Backup</li>
+            <li className="menu-item" onClick={handleExportBackup}>
+              <span className="material-symbols-outlined">download</span> Exportar Backup
+            </li>
+            <li className="menu-item" style={{ position: 'relative' }}>
+              <span className="material-symbols-outlined">upload</span> Importar Backup
+              <input
+                type="file"
+                accept=".json"
+                onChange={handleImportBackup}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  opacity: 0,
+                  cursor: 'pointer'
+                }}
+              />
             </li>
             
             <li className="drawer-separator"></li>
