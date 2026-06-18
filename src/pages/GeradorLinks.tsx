@@ -17,7 +17,18 @@ interface PaymentLink {
   sandbox_init_point: string
   title: string
   amount: number
+  totalWithInterest: number
+  installmentValue: number
+  installments: number
+  withInterest: boolean
   payer_name: string
+}
+
+// ── Juros compostos: parcela = P * i*(1+i)^n / ((1+i)^n - 1) ──
+function calcInstallment(principal: number, monthlyRatePct: number, n: number): number {
+  if (n <= 1 || monthlyRatePct <= 0) return principal / n
+  const i = monthlyRatePct / 100
+  return (principal * (i * Math.pow(1 + i, n))) / (Math.pow(1 + i, n) - 1)
 }
 
 // ────────────────────────────────────────────────────────────
@@ -92,6 +103,8 @@ export default function GeradorLinks() {
   const [amount, setAmount] = useState('')
   const [quantity, setQuantity] = useState('1')
   const [installments, setInstallments] = useState('1')
+  const [withInterest, setWithInterest] = useState(false)
+  const [interestRate, setInterestRate] = useState('2.99')
   const [payerName, setPayerName] = useState('')
   const [payerEmail, setPayerEmail] = useState('')
 
@@ -123,6 +136,12 @@ export default function GeradorLinks() {
         return
       }
 
+      const n = parseInt(installments) || 1
+      const rate = parseFloat(interestRate.replace(',', '.')) || 0
+      // Se com juros e parcelado: o total enviado ao MP é parcela * n
+      const installmentVal = withInterest && n > 1 ? calcInstallment(parsedAmount, rate, n) : parsedAmount / n
+      const totalToCharge = withInterest && n > 1 ? Math.round(installmentVal * n * 100) / 100 : parsedAmount
+
       setStatus('loading')
       setErrorMsg('')
 
@@ -130,9 +149,9 @@ export default function GeradorLinks() {
         const result = await createPreference({
           title,
           description,
-          amount: parsedAmount,
+          amount: totalToCharge,
           quantity: parseInt(quantity) || 1,
-          installments: parseInt(installments) || 1,
+          installments: n,
           payerName,
           payerEmail,
         })
@@ -143,6 +162,10 @@ export default function GeradorLinks() {
           sandbox_init_point: result.sandbox_init_point,
           title,
           amount: parsedAmount,
+          totalWithInterest: totalToCharge,
+          installmentValue: Math.round(installmentVal * 100) / 100,
+          installments: n,
+          withInterest: withInterest && n > 1,
           payer_name: payerName,
         }
 
@@ -155,6 +178,8 @@ export default function GeradorLinks() {
         setAmount('')
         setQuantity('1')
         setInstallments('1')
+        setWithInterest(false)
+        setInterestRate('2.99')
         setPayerName('')
         setPayerEmail('')
       } catch (err: unknown) {
@@ -162,7 +187,7 @@ export default function GeradorLinks() {
         setStatus('error')
       }
     },
-    [title, description, amount, quantity, installments, payerName, payerEmail]
+    [title, description, amount, quantity, installments, withInterest, interestRate, payerName, payerEmail]
   )
 
   const copyToClipboard = async (text: string, id: string) => {
@@ -285,11 +310,71 @@ export default function GeradorLinks() {
                 >
                   <option value="1">À vista (1x)</option>
                   {[2,3,4,5,6,7,8,9,10,11,12].map((n) => (
-                    <option key={n} value={n}>{n}x sem juros</option>
+                    <option key={n} value={n}>{n}x</option>
                   ))}
                 </select>
                 <span className="gl-field-hint">O cliente verá essa opção já selecionada e não poderá alterá-la.</span>
               </div>
+
+              {parseInt(installments) > 1 && (
+                <div className="gl-interest-box">
+                  <div className="gl-interest-toggle">
+                    <span className="gl-label" style={{marginBottom: 0}}>Juros</span>
+                    <div className="gl-toggle-row">
+                      <button
+                        type="button"
+                        className={`gl-toggle-btn${!withInterest ? ' gl-toggle-active' : ''}`}
+                        onClick={() => setWithInterest(false)}
+                      >Sem juros</button>
+                      <button
+                        type="button"
+                        className={`gl-toggle-btn${withInterest ? ' gl-toggle-active' : ''}`}
+                        onClick={() => setWithInterest(true)}
+                      >Com juros</button>
+                    </div>
+                  </div>
+
+                  {withInterest && (
+                    <div className="gl-field" style={{marginTop: '0.75rem'}}>
+                      <label className="gl-label">Taxa de juros (% ao mês)</label>
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        className="gl-input"
+                        placeholder="Ex: 2.99"
+                        value={interestRate}
+                        onChange={(e) => setInterestRate(e.target.value)}
+                      />
+                    </div>
+                  )}
+
+                  {/* Preview da parcela */}
+                  {(() => {
+                    const n = parseInt(installments) || 1
+                    const base = parseFloat(amount.replace(',', '.')) || 0
+                    const rate = parseFloat(interestRate.replace(',', '.')) || 0
+                    if (base <= 0 || n <= 1) return null
+                    const installVal = withInterest && rate > 0
+                      ? calcInstallment(base, rate, n)
+                      : base / n
+                    const total = withInterest && rate > 0
+                      ? Math.round(installVal * n * 100) / 100
+                      : base
+                    return (
+                      <div className="gl-preview">
+                        <span className="gl-preview-parcela">
+                          {n}x de{' '}
+                          <strong>{installVal.toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}</strong>
+                          {withInterest && rate > 0 ? ` (${rate}% a.m.)` : ' sem juros'}
+                        </span>
+                        <span className="gl-preview-total">
+                          Total: {total.toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}
+                        </span>
+                      </div>
+                    )
+                  })()}
+                </div>
+              )}
 
               <div className="gl-divider-label">Dados do cliente (opcional)</div>
 
@@ -360,7 +445,10 @@ export default function GeradorLinks() {
                     <div className="gl-link-info">
                       <span className="gl-link-title">{lnk.title}</span>
                       <span className="gl-link-meta">
-                        {formatCurrency(lnk.amount)}
+                        {lnk.installments > 1
+                          ? `${lnk.installments}x de ${formatCurrency(lnk.installmentValue)}${lnk.withInterest ? ' c/ juros' : ' s/ juros'} · Total: ${formatCurrency(lnk.totalWithInterest)}`
+                          : `À vista · ${formatCurrency(lnk.amount)}`
+                        }
                         {lnk.payer_name && ` · Para: ${lnk.payer_name}`}
                       </span>
                       <span className="gl-link-url">{lnk.init_point}</span>
@@ -548,6 +636,70 @@ export default function GeradorLinks() {
           font-size: 0.72rem;
           color: hsl(150 15% 50%);
           font-style: italic;
+        }
+        /* Interest box */
+        .gl-interest-box {
+          background: hsl(160 45% 8%);
+          border: 1px solid hsl(160 40% 20%);
+          border-radius: 12px;
+          padding: 1rem 1.1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+        .gl-interest-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+        .gl-toggle-row {
+          display: flex;
+          border: 1px solid hsl(160 40% 22%);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+        .gl-toggle-btn {
+          background: transparent;
+          border: none;
+          color: hsl(150 20% 65%);
+          padding: 0.35rem 0.9rem;
+          font-size: 0.8rem;
+          cursor: pointer;
+          font-family: inherit;
+          transition: background 0.15s, color 0.15s;
+        }
+        .gl-toggle-btn + .gl-toggle-btn {
+          border-left: 1px solid hsl(160 40% 22%);
+        }
+        .gl-toggle-active {
+          background: hsl(160 70% 45%);
+          color: hsl(160 60% 6%);
+          font-weight: 700;
+        }
+        /* Preview */
+        .gl-preview {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 0.85rem;
+          padding: 0.6rem 0.85rem;
+          background: hsl(160 70% 45% / 0.1);
+          border: 1px solid hsl(160 70% 45% / 0.3);
+          border-radius: 8px;
+          flex-wrap: wrap;
+          gap: 0.3rem;
+        }
+        .gl-preview-parcela {
+          font-size: 0.85rem;
+          color: hsl(150 40% 90%);
+        }
+        .gl-preview-parcela strong {
+          color: hsl(160 70% 58%);
+        }
+        .gl-preview-total {
+          font-size: 0.78rem;
+          color: hsl(150 20% 65%);
         }
         .gl-row {
           display: flex;
