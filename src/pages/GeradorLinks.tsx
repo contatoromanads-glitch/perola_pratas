@@ -58,7 +58,17 @@ async function createPreference(data: {
       email: data.payerEmail || undefined,
     },
     payment_methods: {
-      excluded_payment_types: [],
+      // Apenas cartão de crédito: exclui todos os demais tipos
+      excluded_payment_types: [
+        { id: 'debit_card' },
+        { id: 'prepaid_card' },
+        { id: 'ticket' },        // boleto
+        { id: 'bank_transfer' }, // PIX / TED
+        { id: 'atm' },
+        { id: 'digital_currency' },
+        { id: 'digital_wallet' },
+        { id: 'voucher_card' },
+      ],
       // Fixar exatamente a quantidade de parcelas escolhida — cliente não pode alterar
       installments: data.installments,
       default_installments: data.installments,
