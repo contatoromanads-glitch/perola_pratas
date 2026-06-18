@@ -111,7 +111,6 @@ export default function GeradorLinks() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [amount, setAmount] = useState('')
-  const [quantity, setQuantity] = useState('1')
   const [installments, setInstallments] = useState('1')
   const [withInterest, setWithInterest] = useState(false)
   const [interestRate, setInterestRate] = useState('2.99')
@@ -160,7 +159,7 @@ export default function GeradorLinks() {
           title,
           description,
           amount: totalToCharge,
-          quantity: parseInt(quantity) || 1,
+          quantity: 1,
           installments: n,
           payerName,
           payerEmail,
@@ -186,7 +185,6 @@ export default function GeradorLinks() {
         setTitle('')
         setDescription('')
         setAmount('')
-        setQuantity('1')
         setInstallments('1')
         setWithInterest(false)
         setInterestRate('2.99')
@@ -197,7 +195,7 @@ export default function GeradorLinks() {
         setStatus('error')
       }
     },
-    [title, description, amount, quantity, installments, withInterest, interestRate, payerName, payerEmail]
+    [title, description, amount, installments, withInterest, interestRate, payerName, payerEmail]
   )
 
   const copyToClipboard = async (text: string, id: string) => {
@@ -286,29 +284,17 @@ export default function GeradorLinks() {
                 />
               </div>
 
-              <div className="gl-row">
-                <div className="gl-field gl-field-grow">
-                  <label className="gl-label">Valor (R$) *</label>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    className="gl-input"
-                    placeholder="0,00"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="gl-field gl-field-shrink">
-                  <label className="gl-label">Quantidade</label>
-                  <input
-                    type="number"
-                    min="1"
-                    className="gl-input"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                  />
-                </div>
+              <div className="gl-field">
+                <label className="gl-label">Valor (R$) *</label>
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  className="gl-input"
+                  placeholder="0,00"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                />
               </div>
 
               <div className="gl-field">
