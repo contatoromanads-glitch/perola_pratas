@@ -28,6 +28,7 @@ async function createPreference(data: {
   description: string
   amount: number
   quantity: number
+  installments: number
   payerName: string
   payerEmail: string
 }): Promise<{ id: string; init_point: string; sandbox_init_point: string }> {
@@ -47,7 +48,9 @@ async function createPreference(data: {
     },
     payment_methods: {
       excluded_payment_types: [],
-      installments: 12,
+      // Fixar exatamente a quantidade de parcelas escolhida — cliente não pode alterar
+      installments: data.installments,
+      default_installments: data.installments,
     },
     back_urls: {
       success: 'https://www.perolapratas.com.br',
@@ -88,6 +91,7 @@ export default function GeradorLinks() {
   const [description, setDescription] = useState('')
   const [amount, setAmount] = useState('')
   const [quantity, setQuantity] = useState('1')
+  const [installments, setInstallments] = useState('1')
   const [payerName, setPayerName] = useState('')
   const [payerEmail, setPayerEmail] = useState('')
 
@@ -128,6 +132,7 @@ export default function GeradorLinks() {
           description,
           amount: parsedAmount,
           quantity: parseInt(quantity) || 1,
+          installments: parseInt(installments) || 1,
           payerName,
           payerEmail,
         })
@@ -149,6 +154,7 @@ export default function GeradorLinks() {
         setDescription('')
         setAmount('')
         setQuantity('1')
+        setInstallments('1')
         setPayerName('')
         setPayerEmail('')
       } catch (err: unknown) {
@@ -156,7 +162,7 @@ export default function GeradorLinks() {
         setStatus('error')
       }
     },
-    [title, description, amount, quantity, payerName, payerEmail]
+    [title, description, amount, quantity, installments, payerName, payerEmail]
   )
 
   const copyToClipboard = async (text: string, id: string) => {
@@ -268,6 +274,21 @@ export default function GeradorLinks() {
                     onChange={(e) => setQuantity(e.target.value)}
                   />
                 </div>
+              </div>
+
+              <div className="gl-field">
+                <label className="gl-label">Parcelamento (fixo para o cliente)</label>
+                <select
+                  className="gl-input gl-select"
+                  value={installments}
+                  onChange={(e) => setInstallments(e.target.value)}
+                >
+                  <option value="1">À vista (1x)</option>
+                  {[2,3,4,5,6,7,8,9,10,11,12].map((n) => (
+                    <option key={n} value={n}>{n}x sem juros</option>
+                  ))}
+                </select>
+                <span className="gl-field-hint">O cliente verá essa opção já selecionada e não poderá alterá-la.</span>
               </div>
 
               <div className="gl-divider-label">Dados do cliente (opcional)</div>
@@ -514,6 +535,20 @@ export default function GeradorLinks() {
         .gl-input::placeholder { color: hsl(150 15% 45%); }
         .gl-input-error { border-color: hsl(0 72% 55%) !important; }
         .gl-textarea { resize: vertical; min-height: 64px; }
+        .gl-select {
+          appearance: none;
+          -webkit-appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2368c9a0' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+          background-repeat: no-repeat;
+          background-position: right 0.9rem center;
+          padding-right: 2.2rem;
+          cursor: pointer;
+        }
+        .gl-field-hint {
+          font-size: 0.72rem;
+          color: hsl(150 15% 50%);
+          font-style: italic;
+        }
         .gl-row {
           display: flex;
           gap: 0.8rem;
