@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 // ────────────────────────────────────────────────────────────
 // IMPORTANT: This page is protected by a local password to
@@ -22,6 +22,8 @@ interface PaymentLink {
   installments: number
   withInterest: boolean
   payer_name: string
+  paymentStatus: 'pending' | 'approved' | 'rejected' | 'cancelled' | 'unknown'
+  createdAt: string
 }
 
 // ── Juros compostos: parcela = P * i*(1+i)^n / ((1+i)^n - 1) ──
@@ -120,8 +122,23 @@ export default function GeradorLinks() {
   // State
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
-  const [links, setLinks] = useState<PaymentLink[]>([])
+  const [links, setLinksRaw] = useState<PaymentLink[]>(() => {
+    try {
+      const saved = localStorage.getItem('gl_links')
+      return saved ? JSON.parse(saved) : []
+    } catch { return [] }
+  })
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [checkingId, setCheckingId] = useState<string | null>(null)
+
+  // Persist links to localStorage whenever they change
+  const setLinks = useCallback((updater: PaymentLink[] | ((prev: PaymentLink[]) => PaymentLink[])) => {
+    setLinksRaw((prev) => {
+      const next = typeof updater === 'function' ? updater(prev) : updater
+      try { localStorage.setItem('gl_links', JSON.stringify(next)) } catch {}
+      return next
+    })
+  }, [])
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -176,6 +193,8 @@ export default function GeradorLinks() {
           installments: n,
           withInterest: withInterest && n > 1,
           payer_name: payerName,
+          paymentStatus: 'pending',
+          createdAt: new Date().toLocaleString('pt-BR'),
         }
 
         setLinks((prev) => [newLink, ...prev])
@@ -210,6 +229,45 @@ export default function GeradorLinks() {
 
   const formatCurrency = (v: number) =>
     v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+
+  // ── Check payment status via MP Payments Search API ───────
+  const checkPaymentStatus = useCallback(async (preferenceId: string) => {
+    setCheckingId(preferenceId)
+    try {
+      const res = await fetch(
+        `https://api.mercadopago.com/v1/payments/search?preference_id=${preferenceId}&sort=date_created&criteria=desc&limit=1`,
+        { headers: { Authorization: `Bearer ${ACCESS_TOKEN}` } }
+      )
+      if (!res.ok) throw new Error('Erro ao consultar')
+      const data = await res.json()
+      const results: { status: string }[] = data?.results ?? []
+      let paymentStatus: PaymentLink['paymentStatus'] = 'pending'
+      if (results.length > 0) {
+        const s = results[0].status
+        if (s === 'approved') paymentStatus = 'approved'
+        else if (s === 'rejected') paymentStatus = 'rejected'
+        else if (s === 'cancelled') paymentStatus = 'cancelled'
+        else paymentStatus = 'pending'
+      }
+      setLinks((prev) =>
+        prev.map((lnk) => lnk.id === preferenceId ? { ...lnk, paymentStatus } : lnk)
+      )
+    } catch {
+      // silently fail — keep current status
+    } finally {
+      setCheckingId(null)
+    }
+  }, [setLinks])
+
+  // Auto-check status for all pending links on load
+  useEffect(() => {
+    links.forEach((lnk) => {
+      if (lnk.paymentStatus === 'pending' || lnk.paymentStatus === 'unknown') {
+        checkPaymentStatus(lnk.id)
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // ── LOGIN SCREEN ──────────────────────────────────────────
   if (!authed) {
@@ -436,37 +494,60 @@ export default function GeradorLinks() {
               </div>
             ) : (
               <ul className="gl-links-list">
-                {links.map((lnk) => (
-                  <li key={lnk.id} className="gl-link-item">
-                    <div className="gl-link-info">
-                      <span className="gl-link-title">{lnk.title}</span>
-                      <span className="gl-link-meta">
-                        {lnk.installments > 1
-                          ? `${lnk.installments}x de ${formatCurrency(lnk.installmentValue)}${lnk.withInterest ? ' c/ juros' : ' s/ juros'} · Total: ${formatCurrency(lnk.totalWithInterest)}`
-                          : `À vista · ${formatCurrency(lnk.amount)}`
-                        }
-                        {lnk.payer_name && ` · Para: ${lnk.payer_name}`}
-                      </span>
-                      <span className="gl-link-url">{lnk.init_point}</span>
-                    </div>
-                    <div className="gl-link-actions">
-                      <button
-                        className="gl-btn-copy"
-                        onClick={() => copyToClipboard(lnk.init_point, lnk.id)}
-                      >
-                        {copiedId === lnk.id ? '✓ Copiado!' : '📋 Copiar'}
-                      </button>
-                      <a
-                        href={lnk.init_point}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="gl-btn-open"
-                      >
-                        🔗 Abrir
-                      </a>
-                    </div>
-                  </li>
-                ))}
+                {links.map((lnk) => {
+                  const statusMap = {
+                    approved:  { label: '✅ Pago',      cls: 'gl-badge-approved' },
+                    pending:   { label: '⏳ Pendente',  cls: 'gl-badge-pending' },
+                    rejected:  { label: '❌ Recusado',  cls: 'gl-badge-rejected' },
+                    cancelled: { label: '🚫 Cancelado', cls: 'gl-badge-cancelled' },
+                    unknown:   { label: '❓ Desconhecido', cls: 'gl-badge-pending' },
+                  }
+                  const { label: badgeLabel, cls: badgeCls } = statusMap[lnk.paymentStatus] ?? statusMap.unknown
+                  const isChecking = checkingId === lnk.id
+                  return (
+                    <li key={lnk.id} className="gl-link-item">
+                      <div className="gl-link-info">
+                        <div className="gl-link-header">
+                          <span className="gl-link-title">{lnk.title}</span>
+                          <span className={`gl-badge ${badgeCls}`}>{badgeLabel}</span>
+                        </div>
+                        <span className="gl-link-meta">
+                          {lnk.installments > 1
+                            ? `${lnk.installments}x de ${formatCurrency(lnk.installmentValue)}${lnk.withInterest ? ' c/ juros' : ' s/ juros'} · Total: ${formatCurrency(lnk.totalWithInterest)}`
+                            : `À vista · ${formatCurrency(lnk.amount)}`
+                          }
+                          {lnk.payer_name && ` · Para: ${lnk.payer_name}`}
+                        </span>
+                        {lnk.createdAt && <span className="gl-link-date">🕐 {lnk.createdAt}</span>}
+                        <span className="gl-link-url">{lnk.init_point}</span>
+                      </div>
+                      <div className="gl-link-actions">
+                        <button
+                          className="gl-btn-check"
+                          onClick={() => checkPaymentStatus(lnk.id)}
+                          disabled={isChecking}
+                          title="Verificar status do pagamento"
+                        >
+                          {isChecking ? '⟳' : '🔄'}
+                        </button>
+                        <button
+                          className="gl-btn-copy"
+                          onClick={() => copyToClipboard(lnk.init_point, lnk.id)}
+                        >
+                          {copiedId === lnk.id ? '✓ Copiado!' : '📋 Copiar'}
+                        </button>
+                        <a
+                          href={lnk.init_point}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="gl-btn-open"
+                        >
+                          🔗 Abrir
+                        </a>
+                      </div>
+                    </li>
+                  )
+                })}
               </ul>
             )}
           </section>
@@ -697,6 +778,58 @@ export default function GeradorLinks() {
           font-size: 0.78rem;
           color: hsl(150 20% 65%);
         }
+        /* ── Status badges ────────────────────── */
+        .gl-link-header {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+          flex-wrap: wrap;
+        }
+        .gl-badge {
+          font-size: 0.7rem;
+          font-weight: 600;
+          padding: 0.18rem 0.6rem;
+          border-radius: 999px;
+          letter-spacing: 0.03em;
+          white-space: nowrap;
+        }
+        .gl-badge-approved {
+          background: hsl(145 60% 45% / 0.18);
+          border: 1px solid hsl(145 60% 45% / 0.5);
+          color: hsl(145 60% 68%);
+        }
+        .gl-badge-pending {
+          background: hsl(45 90% 50% / 0.15);
+          border: 1px solid hsl(45 90% 50% / 0.4);
+          color: hsl(45 90% 72%);
+        }
+        .gl-badge-rejected {
+          background: hsl(0 72% 55% / 0.15);
+          border: 1px solid hsl(0 72% 55% / 0.4);
+          color: hsl(0 72% 75%);
+        }
+        .gl-badge-cancelled {
+          background: hsl(220 20% 40% / 0.2);
+          border: 1px solid hsl(220 20% 50% / 0.4);
+          color: hsl(220 20% 70%);
+        }
+        .gl-link-date {
+          font-size: 0.72rem;
+          color: hsl(150 15% 48%);
+        }
+        .gl-btn-check {
+          background: hsl(160 45% 14%);
+          border: 1px solid hsl(160 40% 22%);
+          color: hsl(160 70% 58%);
+          border-radius: 7px;
+          padding: 0.35rem 0.6rem;
+          font-size: 0.85rem;
+          cursor: pointer;
+          font-family: inherit;
+          transition: background 0.15s;
+        }
+        .gl-btn-check:hover:not(:disabled) { background: hsl(160 45% 18%); }
+        .gl-btn-check:disabled { opacity: 0.4; cursor: default; animation: spin 1s linear infinite; }
         .gl-row {
           display: flex;
           gap: 0.8rem;
