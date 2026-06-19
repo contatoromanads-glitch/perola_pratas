@@ -130,6 +130,7 @@ export default function GeradorLinks() {
   })
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [checkingId, setCheckingId] = useState<string | null>(null)
+  const [isSyncing, setIsSyncing] = useState(false)
 
   // Persist links to localStorage whenever they change
   const setLinks = useCallback((updater: PaymentLink[] | ((prev: PaymentLink[]) => PaymentLink[])) => {
@@ -264,8 +265,80 @@ export default function GeradorLinks() {
     }
   }, [setLinks])
 
-  // Auto-check status for all pending links on load
+  // ── Sync from MP (Cloud Database) ─────────────────────────
+  const syncFromMercadoPago = useCallback(async () => {
+    setIsSyncing(true)
+    try {
+      const searchRes = await fetch(
+        `https://api.mercadopago.com/checkout/preferences/search?limit=20`,
+        { headers: { Authorization: `Bearer ${ACCESS_TOKEN}` } }
+      )
+      if (!searchRes.ok) return
+      const searchData = await searchRes.json()
+      const prefs: {id: string}[] = searchData?.elements ?? []
+
+      // Fetch links synchronously from localStorage to check missing ones
+      let currentLinks: PaymentLink[] = []
+      try {
+        const saved = localStorage.getItem('gl_links')
+        if (saved) currentLinks = JSON.parse(saved)
+      } catch {}
+
+      const missingIds = prefs.map(p => p.id).filter(id => !currentLinks.some(l => l.id === id))
+
+      if (missingIds.length > 0) {
+        const newLinksPromises = missingIds.map(async (id) => {
+          try {
+            const res = await fetch(`https://api.mercadopago.com/checkout/preferences/${id}`, {
+              headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }
+            })
+            if (!res.ok) return null
+            const pref = await res.json()
+            const item = pref.items?.[0]
+            
+            const newLink: PaymentLink = {
+              id: pref.id,
+              init_point: pref.init_point,
+              sandbox_init_point: pref.sandbox_init_point,
+              title: item?.title || 'Link recuperado',
+              amount: item?.unit_price || 0,
+              totalWithInterest: item?.unit_price || 0,
+              installmentValue: item?.unit_price || 0,
+              installments: pref.payment_methods?.installments || 1,
+              withInterest: false, // Historicamente não temos como saber se foi com juros
+              payer_name: pref.payer?.name || '',
+              paymentStatus: 'pending',
+              createdAt: new Date(pref.date_created).toLocaleString('pt-BR')
+            }
+            return newLink
+          } catch { return null }
+        })
+
+        const resolvedLinks = (await Promise.all(newLinksPromises)).filter((l): l is PaymentLink => l !== null)
+        
+        if (resolvedLinks.length > 0) {
+          setLinks((prev) => {
+            // Unir os novos com os antigos
+            const combined = [...resolvedLinks, ...prev]
+            // Poderia ordenar por createdAt, mas colocar no topo ja resolve
+            return combined
+          })
+          
+          // Verificar o status de pagamento dos links recém-chegados
+          resolvedLinks.forEach(lnk => checkPaymentStatus(lnk.id))
+        }
+      }
+    } catch (err) {
+      console.error('Erro na sincronização:', err)
+    } finally {
+      setIsSyncing(false)
+    }
+  }, [setLinks, checkPaymentStatus])
+
+  // Auto-check status for all pending links on load, and Sync missing links
   useEffect(() => {
+    syncFromMercadoPago()
+
     links.forEach((lnk) => {
       if (lnk.paymentStatus === 'pending' || lnk.paymentStatus === 'unknown') {
         checkPaymentStatus(lnk.id)
@@ -490,7 +563,18 @@ export default function GeradorLinks() {
 
           {/* Links History */}
           <section className="gl-card gl-history-card">
-            <h2 className="gl-section-title">Links Gerados</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <h2 className="gl-section-title" style={{ marginBottom: 0 }}>Links Gerados</h2>
+              <button 
+                className="gl-btn-check" 
+                onClick={syncFromMercadoPago} 
+                disabled={isSyncing}
+                title="Sincronizar histórico com o Mercado Pago"
+                style={{ padding: '4px 8px', fontSize: '0.85rem' }}
+              >
+                {isSyncing ? <span className="gl-spinner" style={{width:'12px',height:'12px',borderWidth:'2px',marginRight:'4px'}}/> : '☁️'} Sincronizar
+              </button>
+            </div>
             {links.length === 0 ? (
               <div className="gl-empty">
                 <span className="gl-empty-icon">🔗</span>
