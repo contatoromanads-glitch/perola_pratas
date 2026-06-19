@@ -262,11 +262,11 @@ export default function GeradorLinks() {
             <h2 className="gl-section-title">Novo Link de Pagamento</h2>
             <form onSubmit={handleSubmit} className="gl-form">
               <div className="gl-field">
-                <label className="gl-label">Título / Produto *</label>
+                <label className="gl-label">Data / Vendedor / Cliente *</label>
                 <input
                   type="text"
                   className="gl-input"
-                  placeholder="Ex: Anel Solitário Prata 925"
+                  placeholder="Ex: 18/06/2025 · Carlos · João Silva"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
