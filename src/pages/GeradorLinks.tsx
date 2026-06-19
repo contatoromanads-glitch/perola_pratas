@@ -135,7 +135,12 @@ export default function GeradorLinks() {
   const setLinks = useCallback((updater: PaymentLink[] | ((prev: PaymentLink[]) => PaymentLink[])) => {
     setLinksRaw((prev) => {
       const next = typeof updater === 'function' ? updater(prev) : updater
-      try { localStorage.setItem('gl_links', JSON.stringify(next)) } catch {}
+      try { 
+        localStorage.setItem('gl_links', JSON.stringify(next))
+      } catch (err) {
+        console.error('Falha ao salvar no localStorage:', err)
+        alert('Seu navegador bloqueou o salvamento. Os links sumirão ao atualizar a página. (Tente abrir no Chrome fora de aba anônima)')
+      }
       return next
     })
   }, [])
