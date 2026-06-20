@@ -142,6 +142,14 @@ export default function GeradorLinks() {
         console.error('Falha ao salvar no localStorage:', err)
         alert('Seu navegador bloqueou o salvamento. Os links sumirão ao atualizar a página. (Tente abrir no Chrome fora de aba anônima)')
       }
+
+      // Sincronizar silenciosamente na nuvem
+      fetch('https://kvdb.io/DBjP31cjynmumGWPLNpoJz/links', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(next)
+      }).catch(err => console.error('Erro ao salvar no KVDB', err))
+
       return next
     })
   }, [])
@@ -265,79 +273,55 @@ export default function GeradorLinks() {
     }
   }, [setLinks])
 
-  // ── Sync from MP (Cloud Database) ─────────────────────────
-  const syncFromMercadoPago = useCallback(async () => {
+  // ── Sync from KVDB (Cloud Database) ─────────────────────
+  const syncFromCloud = useCallback(async () => {
     setIsSyncing(true)
     try {
-      const searchRes = await fetch(
-        `https://api.mercadopago.com/checkout/preferences/search?limit=20`,
-        { headers: { Authorization: `Bearer ${ACCESS_TOKEN}` } }
-      )
-      if (!searchRes.ok) return
-      const searchData = await searchRes.json()
-      const prefs: {id: string}[] = searchData?.elements ?? []
+      const res = await fetch('https://kvdb.io/DBjP31cjynmumGWPLNpoJz/links')
+      if (!res.ok) return
+      const cloudLinks: PaymentLink[] = await res.json()
 
-      // Fetch links synchronously from localStorage to check missing ones
-      let currentLinks: PaymentLink[] = []
-      try {
-        const saved = localStorage.getItem('gl_links')
-        if (saved) currentLinks = JSON.parse(saved)
-      } catch {}
-
-      const missingIds = prefs.map(p => p.id).filter(id => !currentLinks.some(l => l.id === id))
-
-      if (missingIds.length > 0) {
-        const newLinksPromises = missingIds.map(async (id) => {
-          try {
-            const res = await fetch(`https://api.mercadopago.com/checkout/preferences/${id}`, {
-              headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }
-            })
-            if (!res.ok) return null
-            const pref = await res.json()
-            const item = pref.items?.[0]
-            
-            const newLink: PaymentLink = {
-              id: pref.id,
-              init_point: pref.init_point,
-              sandbox_init_point: pref.sandbox_init_point,
-              title: item?.title || 'Link recuperado',
-              amount: item?.unit_price || 0,
-              totalWithInterest: item?.unit_price || 0,
-              installmentValue: item?.unit_price || 0,
-              installments: pref.payment_methods?.installments || 1,
-              withInterest: false, // Historicamente não temos como saber se foi com juros
-              payer_name: pref.payer?.name || '',
-              paymentStatus: 'pending',
-              createdAt: new Date(pref.date_created).toLocaleString('pt-BR')
-            }
-            return newLink
-          } catch { return null }
-        })
-
-        const resolvedLinks = (await Promise.all(newLinksPromises)).filter((l): l is PaymentLink => l !== null)
-        
-        if (resolvedLinks.length > 0) {
-          setLinks((prev) => {
-            // Unir os novos com os antigos
-            const combined = [...resolvedLinks, ...prev]
-            // Poderia ordenar por createdAt, mas colocar no topo ja resolve
-            return combined
-          })
+      if (Array.isArray(cloudLinks) && cloudLinks.length > 0) {
+        setLinks((prev) => {
+          const combined = [...prev]
+          let changed = false
           
-          // Verificar o status de pagamento dos links recém-chegados
-          resolvedLinks.forEach(lnk => checkPaymentStatus(lnk.id))
-        }
+          for (const cl of cloudLinks) {
+            if (!combined.some(l => l.id === cl.id)) {
+              combined.push(cl)
+              changed = true
+            }
+          }
+
+          if (changed) {
+            // Ordenar por data
+            combined.sort((a, b) => {
+              // Format is DD/MM/YYYY HH:mm:ss
+              // Converte para um formato comparável
+              const parseDate = (str: string) => {
+                if (!str) return 0
+                const [datePart, timePart] = str.split(' ')
+                if (!datePart || !timePart) return 0
+                const [d, m, y] = datePart.split('/')
+                return new Date(`${y}-${m}-${d}T${timePart}`).getTime()
+              }
+              return parseDate(b.createdAt) - parseDate(a.createdAt)
+            })
+            return combined
+          }
+          return prev
+        })
       }
     } catch (err) {
       console.error('Erro na sincronização:', err)
     } finally {
       setIsSyncing(false)
     }
-  }, [setLinks, checkPaymentStatus])
+  }, [setLinks])
 
-  // Auto-check status for all pending links on load, and Sync missing links
+  // Auto-check status for all pending links on load, and Sync from cloud
   useEffect(() => {
-    syncFromMercadoPago()
+    syncFromCloud()
 
     links.forEach((lnk) => {
       if (lnk.paymentStatus === 'pending' || lnk.paymentStatus === 'unknown') {
@@ -567,9 +551,9 @@ export default function GeradorLinks() {
               <h2 className="gl-section-title" style={{ marginBottom: 0 }}>Links Gerados</h2>
               <button 
                 className="gl-btn-check" 
-                onClick={syncFromMercadoPago} 
+                onClick={syncFromCloud} 
                 disabled={isSyncing}
-                title="Sincronizar histórico com o Mercado Pago"
+                title="Sincronizar histórico na nuvem"
                 style={{ padding: '4px 8px', fontSize: '0.85rem' }}
               >
                 {isSyncing ? <span className="gl-spinner" style={{width:'12px',height:'12px',borderWidth:'2px',marginRight:'4px'}}/> : '☁️'} Sincronizar
