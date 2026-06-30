@@ -87,12 +87,25 @@ serve(async (req) => {
     }
 
     // 3. Forward request to Bling API
-    // We expect the frontend to pass the target path in the body or query.
-    // For this simple proxy, we will just fetch products.
-    const url = new URL(req.url);
-    let targetPath = url.searchParams.get("path") || "produtos";
-    const page = url.searchParams.get("pagina") || "1";
-    const limit = url.searchParams.get("limite") || "100";
+    let targetPath = "produtos";
+    let page = "1";
+    let limit = "100";
+
+    if (req.method === "POST") {
+      try {
+        const body = await req.json();
+        if (body.path) targetPath = body.path;
+        if (body.pagina) page = String(body.pagina);
+        if (body.limite) limit = String(body.limite);
+      } catch (e) {
+        // ignore JSON parse error
+      }
+    } else {
+      const url = new URL(req.url);
+      targetPath = url.searchParams.get("path") || targetPath;
+      page = url.searchParams.get("pagina") || page;
+      limit = url.searchParams.get("limite") || limit;
+    }
 
     const fetchBlingApi = async (token: string) => {
       return fetch(`https://api.bling.com.br/Api/v3/${targetPath}?pagina=${page}&limite=${limit}`, {
