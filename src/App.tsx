@@ -7,6 +7,7 @@ import Termos from '@/pages/Termos'
 import Privacidade from '@/pages/Privacidade'
 import Adminterno from '@/pages/Adminterno'
 import GeradorLinks from '@/pages/GeradorLinks'
+import Catalogo from '@/pages/Catalogo'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/privacidade" element={<Privacidade />} />
         <Route path="/adminterno" element={<Adminterno />} />
         <Route path="/geradordelinksdepagamento" element={<GeradorLinks />} />
+        <Route path="/catalogo" element={<Catalogo />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
