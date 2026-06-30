@@ -14,7 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bling_tokens: {
+        Row: {
+          access_token: string | null
+          id: number
+          refresh_token: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          access_token?: string | null
+          id: number
+          refresh_token?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          access_token?: string | null
+          id?: number
+          refresh_token?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
