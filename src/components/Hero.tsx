@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const WA_LINK = "https://wa.me/5543991312661?text=Ol%C3%A1!%20Quero%20come%C3%A7ar%20a%20revender%20prata%20925.";
+const WA_LINK = "https://wa.me/554396784294?text=Ol%C3%A1!%20Quero%20come%C3%A7ar%20a%20revender%20prata%20925.";
 
 export default function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });

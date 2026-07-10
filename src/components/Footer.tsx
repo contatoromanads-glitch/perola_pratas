@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
           <img src="/logo.png" alt="Pérola Pratas" className="logo-img h-8" />
           <a
-            href="https://wa.me/5543991312661"
+            href="https://wa.me/554396784294"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[0.82rem] text-tertiary hover:text-primary transition-colors"

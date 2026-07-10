@@ -1,4 +1,4 @@
-const WA_LINK = 'https://wa.me/5543991312661?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20revenda%20de%20prata%20925.'
+const WA_LINK = 'https://wa.me/554396784294?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20revenda%20de%20prata%20925.'
 
 export default function Nav() {
   return (

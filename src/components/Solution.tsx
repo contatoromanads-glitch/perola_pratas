@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-const WA = 'https://wa.me/5543991312661?text=Ol%C3%A1!%20Quero%20saber%20como%20resolver%20meus%20problemas%20com%20fornecedores.'
+const WA = 'https://wa.me/554396784294?text=Ol%C3%A1!%20Quero%20saber%20como%20resolver%20meus%20problemas%20com%20fornecedores.'
 
 const ITEMS = [
   { problem: 'Prata falsa', solution: 'Prata 925 legítima com certificado e garantia estendida.' },

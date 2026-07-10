@@ -1,4 +1,4 @@
-const WA = 'https://wa.me/5543991312661?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais!'
+const WA = 'https://wa.me/554396784294?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais!'
 
 export default function FloatingWhatsApp() {
   return (
