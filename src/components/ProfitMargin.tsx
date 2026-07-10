@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
 
 const EXAMPLES = [
-  { item: 'Anel Solitário', cost: 'R$49,90', sell: 'R$79,60', profit: 'R$129,50' },
-  { item: 'Colar Ponto de Luz', cost: 'R$49,90', sell: 'R$79,60', profit: 'R$129,50' },
-  { item: 'Trio de Brinco', cost: 'R$49,90', sell: 'R$79,60', profit: 'R$129,50' },
+  { item: 'Anel Solitário', cost: 'R$29,90', sell: 'R$89,70', profit: 'R$59,80' },
+  { item: 'Colar Ponto de Luz', cost: 'R$49,90', sell: 'R$149,70', profit: 'R$99,80' },
+  { item: 'Trio de Brinco', cost: 'R$19,90', sell: 'R$59,70', profit: 'R$39,80' },
 ]
 
 export default function ProfitMargin() {
