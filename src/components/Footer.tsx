@@ -12,7 +12,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="text-[0.82rem] text-tertiary hover:text-primary transition-colors"
           >
-            WhatsApp: (43) 99131-2661
+            WhatsApp: (43) 99678-4294
           </a>
         </div>
 
