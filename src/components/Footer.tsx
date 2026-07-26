@@ -27,7 +27,7 @@ export default function Footer() {
             <Link to="/privacidade" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Política de Privacidade</Link>
           </div>
           <p className="text-[0.72rem] text-muted">
-            Fornecedor de Prata 925 · Atacado e Varejo
+            Fornecedor de Prata 925 no Atacado
           </p>
         </div>
       </div>
