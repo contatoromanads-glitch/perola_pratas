@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Index from '@/pages/Index'
 import Links from '@/pages/Links'
 import LpVip from '@/pages/LpVip'
@@ -7,6 +7,11 @@ import Termos from '@/pages/Termos'
 import Privacidade from '@/pages/Privacidade'
 import Adminterno from '@/pages/Adminterno'
 import GeradorLinks from '@/pages/GeradorLinks'
+
+function LegacyRedirect() {
+  const location = useLocation()
+  return <Navigate to={`/${location.search}`} replace />
+}
 
 export default function App() {
   return (
@@ -19,6 +24,11 @@ export default function App() {
         <Route path="/privacidade" element={<Privacidade />} />
         <Route path="/adminterno" element={<Adminterno />} />
         <Route path="/geradordelinksdepagamento" element={<GeradorLinks />} />
+        
+        {/* Redirecionamentos de URLs legadas (WooCommerce) */}
+        <Route path="/categoria-produto/*" element={<LegacyRedirect />} />
+        <Route path="/product-category/*" element={<LegacyRedirect />} />
+
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
