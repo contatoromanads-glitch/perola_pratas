@@ -6,7 +6,6 @@ import NotFound from '@/pages/NotFound'
 import Termos from '@/pages/Termos'
 import Privacidade from '@/pages/Privacidade'
 import Adminterno from '@/pages/Adminterno'
-import GeradorLinks from '@/pages/GeradorLinks'
 
 function LegacyRedirect() {
   const location = useLocation()
@@ -23,7 +22,6 @@ export default function App() {
         <Route path="/termos" element={<Termos />} />
         <Route path="/privacidade" element={<Privacidade />} />
         <Route path="/adminterno" element={<Adminterno />} />
-        <Route path="/geradordelinksdepagamento" element={<GeradorLinks />} />
         
         {/* Redirecionamentos de URLs legadas (WooCommerce) */}
         <Route path="/categoria-produto/*" element={<LegacyRedirect />} />
