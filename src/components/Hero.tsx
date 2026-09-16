@@ -98,7 +98,7 @@ export default function Hero() {
 
           <p className="font-sans text-[1.15rem] md:text-[1.3rem] leading-[1.8] text-secondary max-w-[640px] mx-auto font-light mb-12 animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.4s_both]">
             A Pérola Pratas é o seu fornecedor direto de <strong>Prata 925 no Atacado</strong>. Entregamos joias com
-            alta margem de lucro, estoque garantido e suporte completo para você lucrar sem dor de cabeça.
+            condições especiais de fábrica, estoque para pronta entrega e suporte completo para abastecer o seu negócio.
           </p>
 
           <div className="flex gap-5 flex-col sm:flex-row justify-center items-center w-full mb-16 animate-[blurReveal_1.5s_cubic-bezier(0.2,0.8,0.2,1)_0.6s_both]">

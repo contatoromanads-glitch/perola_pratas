@@ -17,12 +17,12 @@ export default function ProfitMargin() {
           transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
           className="text-center max-w-[640px] mx-auto mb-14"
         >
-          <span className="section-label block mb-4">Como funciona a Margem de Lucro?</span>
+          <span className="section-label block mb-4">Simulação de Revenda</span>
           <h2 className="font-serif font-normal text-[clamp(2.5rem,4.5vw,3.5rem)] tracking-[-0.02em] mb-5 leading-[1.05]">
-            Ganhe de <span className="gradient-text">100% a 300%</span> em cada peça
+            Potencial de <span className="gradient-text">Margem no Atacado</span>
           </h2>
           <p className="text-secondary text-[1.02rem] leading-[1.75]">
-            Trabalhamos com preço de fábrica real. Veja como é fácil triplicar o seu investimento com peças que se vendem sozinhas. Exemplos:
+            Trabalhamos com preço direto de fábrica para dar competitividade ao seu mix de produtos. Veja uma sugestão de precificação praticada no mercado:
           </p>
         </motion.div>
 
@@ -47,21 +47,25 @@ export default function ProfitMargin() {
               
               <div className="space-y-4 relative z-10">
                 <div className="flex justify-between items-center pb-3 border-b border-white/5">
-                  <span className="text-secondary text-sm">Seu Custo</span>
+                  <span className="text-secondary text-sm">Seu Custo Atacado</span>
                   <span className="text-primary font-medium">{ex.cost}</span>
                 </div>
                 <div className="flex justify-between items-center pb-3 border-b border-white/5">
-                  <span className="text-secondary text-sm">Preço de Venda</span>
+                  <span className="text-secondary text-sm">Venda Sugerida</span>
                   <span className="text-primary font-medium">{ex.sell}</span>
                 </div>
                 <div className="flex justify-between items-center pt-2">
-                  <span className="text-[hsl(var(--accent))] text-sm font-semibold uppercase tracking-wider">Lucro Limpo</span>
+                  <span className="text-[hsl(var(--accent))] text-sm font-semibold uppercase tracking-wider">Margem Bruta Estimada</span>
                   <span className="text-[hsl(var(--accent))] font-bold text-xl">{ex.profit}</span>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        <p className="text-xs text-secondary/70 text-center max-w-[800px] mx-auto mt-8 leading-relaxed">
+          * Os valores e preços de revenda apresentados acima são estimativas ilustrativas baseadas em sugestões de mercado. A Pérola Pratas não garante lucros, faturamento ou retorno financeiro específico. Os resultados comerciais dependem exclusivamente da estratégia, público e gestão de cada revendedor autônomo ou lojista.
+        </p>
       </div>
     </section>
   )

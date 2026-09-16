@@ -18,6 +18,12 @@ export default function Footer() {
 
         <div className="h-px bg-border-strong/10 mb-6" />
 
+        <div className="text-[0.7rem] text-muted/80 leading-relaxed text-center max-w-[900px] mx-auto mb-6">
+          <p>
+            <strong>Aviso Legal:</strong> Este site destina-se exclusivamente ao fornecimento no atacado de joias em Prata 925 para lojistas e revendedores autônomos. Quaisquer menções a valores sugeridos, estimativas de margem ou exemplos de mercado são ilustrativos. A Pérola Pratas não promete nem garante resultados financeiros, lucros ou faturamento, os quais dependem da estratégia comercial e do esforço de cada revendedor.
+          </p>
+        </div>
+
         <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
           <p className="text-[0.72rem] text-muted tracking-wide uppercase">
             © {new Date().getFullYear()} Pérola Pratas — Todos os Direitos Reservados | CNPJ: 61271311000180

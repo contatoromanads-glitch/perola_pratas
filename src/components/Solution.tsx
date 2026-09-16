@@ -4,7 +4,7 @@ const WA = 'https://wa.me/554396784294?text=Ol%C3%A1!%20Quero%20saber%20como%20r
 
 const ITEMS = [
   { problem: 'Prata falsa', solution: 'Prata 925 legítima com certificado e garantia estendida.' },
-  { problem: 'Margem apertada', solution: 'Preço de fábrica. Margem de 100% a 300% em cada peça.' },
+  { problem: 'Margem apertada', solution: 'Preço de fábrica real. Condições competitivas no atacado para precificação flexível.' },
   { problem: 'Sem experiência', solution: 'Suporte completo: fotos profissionais, tabela de preços, dicas de venda.' },
   { problem: 'Capital alto pra começar', solution: 'Pedido mínimo acessível de R$ 899 — entrada planejada para o lojista.' },
   { problem: 'Sozinho(a) depois da compra', solution: 'Atendimento humanizado via WhatsApp. Ajuda pra montar vitrine & coleções.' },

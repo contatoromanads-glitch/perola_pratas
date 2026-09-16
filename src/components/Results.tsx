@@ -40,8 +40,8 @@ function Counter({ target, suffix = '', prefix = '' }: { target: number; suffix?
 
 const STATS = [
   { target: 925, suffix: '', label: 'Prata Legítima' },
-  { target: 300, suffix: '%', label: 'Margem de Lucro' },
-  { target: 48, suffix: 'h', label: 'Envio Rápido' },
+  { target: 1000, suffix: '+', label: 'Modelos em Catálogo' },
+  { target: 24, suffix: 'h', label: 'Despacho Rápido' },
   { target: 100, suffix: '%', label: 'Fabricação Própria' },
 ]
 

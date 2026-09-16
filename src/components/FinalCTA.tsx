@@ -26,11 +26,10 @@ export default function FinalCTA() {
             Pare de <span className="text-strike">perder dinheiro</span> com
             fornecedores ruins.
             <br />
-            <span className="gradient-text">Comece a lucrar de verdade.</span>
+            <span className="gradient-text">Trabalhe com o Melhor Atacado.</span>
           </h2>
           <p className="text-secondary text-[1.05rem] leading-[1.8] mb-10 max-w-[520px] mx-auto">
-            Junte-se a centenas de revendedores que já transformaram prata 925
-            em um negócio lucrativo com a Pérola Pratas. O próximo passo é seu.
+            Junte-se a centenas de lojistas e revendedores que confiam na qualidade, procedência e pontualidade da Pérola Pratas. O próximo passo é seu.
           </p>
         </motion.div>
 

@@ -1,6 +1,6 @@
 const ITEMS = [
   "Prata 925 Legítima",
-  "Margem de até 300%",
+  "Preço Direto de Fábrica",
   "Envio em 24H",
   "Fabricação Própria",
   "Garantia Vitalícia",

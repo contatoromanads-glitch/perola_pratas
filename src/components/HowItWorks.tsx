@@ -23,9 +23,9 @@ const STEPS = [
   },
   {
     num: '4',
-    title: 'Venda e lucre',
-    desc: 'Com margem de 100% a 300%, fotos profissionais e suporte, suas vendas começam no primeiro dia.',
-    icon: '💰',
+    title: 'Comece a Revender',
+    desc: 'Com fotos profissionais em alta resolução e suporte dedicado, você abastece seu mostruário com facilidade.',
+    icon: '✨',
   },
 ]
 
@@ -58,7 +58,7 @@ export default function HowItWorks() {
         >
           <span className="section-label block mb-4">Como Funciona</span>
           <h2 className="font-serif font-normal text-[clamp(2.5rem,4.5vw,3.5rem)] tracking-[-0.02em] mb-5 leading-[1.05]">
-            4 passos pra <span className="gradient-text">começar a lucrar</span>
+            4 passos pra <span className="gradient-text">começar a revender</span>
           </h2>
           <p className="text-secondary text-[1.02rem]">
             É simples, rápido e sem burocracia. Você pode começar hoje.
