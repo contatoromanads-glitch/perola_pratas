@@ -50,15 +50,15 @@ export default function Argument() {
           {/* Texto em secondary → contraste forte */}
           <p className="font-sans text-[clamp(1rem,1.6vw,1.15rem)] leading-[1.95] text-secondary font-light">
             Estruturamos modelos de negócio onde a alta liquidez da prata 925 encontra
-            tickets médios de R$ 1.000,00. Nossa metodologia de escala é desenhada para
-            que parceiros alcancem faturamentos superiores a R$ 100 mil/mês, com margens
-            líquidas agressivas e um suporte comercial focado exclusivamente em expansão
-            financeira.
+            tickets médios expressivos. Nossa estrutura no atacado é desenhada para
+            que parceiros abasteçam seus mostruários com peças de alto giro, com condições
+            competitivas de fábrica e um suporte comercial focado exclusivamente em expansão
+            do seu catálogo.
           </p>
           <div className="flex items-center gap-4 pt-2">
             <div className="w-6 h-[1.5px] bg-accent" aria-hidden="true" />
             <span className="font-sans text-[0.85rem] text-tertiary tracking-[0.08em]">
-              Retorno comprovado em 90 dias
+              Qualidade e procedência garantidas
             </span>
           </div>
         </div>
