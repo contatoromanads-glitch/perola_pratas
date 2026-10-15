@@ -4,18 +4,21 @@ import {
   CheckCircle2, 
   MapPin, 
   Clock, 
-  ShieldCheck, 
   Sparkles, 
   Gem, 
   TrendingUp, 
   PackageCheck, 
   ChevronDown, 
   UserCheck, 
-  Eye, 
   CalendarCheck,
   Award,
   ArrowRight,
-  Coffee
+  Coffee,
+  Briefcase,
+  Store,
+  Building2,
+  Car,
+  ShieldCheck
 } from 'lucide-react'
 
 const WA_DEST = '5543991312661'
@@ -34,7 +37,7 @@ function WhatsAppIcon({ className = 'w-5 h-5' }: { className?: string }) {
 
 // Reusable WhatsApp Button with micro-interactions (lightweight, motion only on button)
 function CtaButton({ 
-  label = 'Agendar Atendimento Presencial no WhatsApp', 
+  label = 'Solicitar Atendimento Presencial no WhatsApp', 
   subtitle,
   className = '',
   size = 'md'
@@ -74,46 +77,50 @@ function CtaButton({
 const PAINS = [
   {
     icon: '❌',
-    title: 'Insegurança com o Acabamento e Peso Real',
-    desc: 'Comprar joias apenas por fotos na internet pode ser frustrante. Ao vivo, você percebe que a peça é oca, com fecho frágil ou acabamento grosseiro que espanta suas clientes mais exigentes.'
+    title: 'Insegurança com Fotos e Vídeos da Internet',
+    desc: 'Comprar joias apenas pela tela é arriscado. Você não sente o peso real da prata, não testa os fechos e fica refém de iluminação artificial que esconde imperfeições de polimento.'
   },
   {
     icon: '❌',
-    title: 'Medo de Prata Impura ou Banho de Baixa Qualidade',
-    desc: 'Sem ver a peça e sem poder atestar sua pureza com especialistas, fica o receio de adquirir peças que escurecem em dias ou descascam, queimando a sua reputação no mercado.'
+    title: 'Falta de Tempo e Custos Altos com Viagens',
+    desc: 'Ter que fechar sua loja, viajar centenas de quilômetros até polos atacadistas e gastar com pedágio, combustível e hospedagem apenas para renovar o mostruário de joias.'
   },
   {
     icon: '❌',
-    title: 'Dificuldade de Montar um Mix Vencedor Sozinho(a)',
-    desc: 'Sem um consultor de atacado para orientar os itens de maior giro da estação, é fácil gastar capital com produtos que encalham no mostruário e drenam o seu fluxo de caixa.'
+    title: 'Medo de Prata Impura sem Garantia de Fábrica',
+    desc: 'Comprar de fornecedores sem sede comprovada traz o perigo de receber peças banhadas ou com teor duvidoso, colocando em jogo a confiança das suas clientes fiéis.'
   },
   {
     icon: '❌',
-    title: 'Frete Caro e Ansiedade com Prazos de Encomenda',
-    desc: 'Ficar refém do envio, com prazos incertos e risco de extravio enquanto suas clientes pedem novidades para o final de semana. No presencial, você escolhe e já sai com o estoque pronto.'
+    title: 'Mix Desalinhado que Encalha e Drena seu Caixa',
+    desc: 'Escolher sozinho no catálogo sem a orientação de um consultor que conhece os itens com maior giro e saída rápida na sua região, amargando prejuízo com peças paradas.'
   }
 ]
 
 const FAQS = [
   {
-    q: 'Preciso ter CNPJ para ser atendido no presencial?',
-    a: 'Não! Atendemos tanto lojistas com CNPJ quanto revendedores autônomos e pessoas que desejam começar seu negócio com Prata 925. Você terá acesso às mesmas condições de fábrica no atacado.'
+    q: 'Como funciona a visita do consultor no meu endereço?',
+    a: 'Você nos chama no WhatsApp e alinhamos o melhor dia e horário. Nosso representante vai até a sua loja, boutique ou residência levando a maleta de mostruário completa para você avaliar e escolher com total comodidade.'
   },
   {
-    q: 'Como funciona o agendamento presencial?',
-    a: 'É muito simples: você clica no botão do WhatsApp com a mensagem automática, conversa diretamente com nossa equipe e nós reservamos o melhor dia e horário para seu atendimento privativo.'
+    q: 'A visita do representante tem algum custo?',
+    a: 'Não! A visita do nosso consultor comercial para apresentação do mostruário e condições de atacado é gratuita e sem taxa de deslocamento na nossa região de cobertura.'
   },
   {
-    q: 'Posso escolher as peças uma a uma no showroom?',
-    a: 'Sim! Essa é a maior vantagem do atendimento presencial. Você pega na mão, avalia o brilho, o fecho e o acabamento, e monta seu pedido com as peças exatas que seu público procura.'
+    q: 'O consultor já leva peças para pronta entrega imediata?',
+    a: 'Sim! Nosso representante leva um acervo abastecido com as principais joias da fábrica. Você escolhe, confere peça por peça e já fica com elas no mesmo instante para começar a vender.'
   },
   {
-    q: 'As peças têm garantia de autenticidade da Prata 925?',
-    a: 'Sim. Todas as peças da Pérola Pratas são produzidas em Prata 925 legítima, acompanham garantia vitalícia no teor do metal nobre e certificado de autenticidade da fábrica.'
+    q: 'Também posso ir até o escritório/showroom da Pérola Pratas?',
+    a: 'Com certeza! Temos sede física própria em Londrina - PR, com sala de atendimento privativa e cantinho do café. Você pode escolher: ou o representante vai até você, ou você agenda um horário para nos visitar.'
   },
   {
-    q: 'Já posso sair com as joias na hora?',
-    a: 'Com certeza! Nosso showroom conta com acervo completo para pronta entrega. Você escolhe, efetua o pagamento com condições facilitadas e já leva suas peças prontas para revender.'
+    q: 'Preciso ter CNPJ para ser atendido?',
+    a: 'Não! Atendemos tanto lojistas com CNPJ constituído quanto revendedores(as) autônomos que buscam joias de alta qualidade direto de fábrica no atacado.'
+  },
+  {
+    q: 'As joias acompanham garantia de autenticidade da Prata 925?',
+    a: 'Sim. Todas as peças produzidas e distribuídas pela Pérola Pratas acompanham certificado de garantia vitalícia na pureza e teor nobre da Prata 925 legítima.'
   }
 ]
 
@@ -133,7 +140,7 @@ export default function LpAtenPre() {
           <div className="flex items-center gap-4">
             <span className="hidden lg:inline-flex items-center gap-2 text-[0.72rem] tracking-widest uppercase text-tertiary">
               <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-              Showroom & Atendimento Presencial
+              Atendimento Presencial · Na Sua Loja ou no Escritório
             </span>
             <CtaButton 
               size="sm" 
@@ -148,23 +155,23 @@ export default function LpAtenPre() {
         
         {/* ─── HERO SECTION ─── */}
         <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 px-4 sm:px-6 md:px-8 overflow-hidden border-b border-border-strong/10 bg-gradient-to-b from-[#07130e] via-[#050D0A] to-[#050D0A]">
-          <div className="max-w-[1000px] mx-auto text-center flex flex-col items-center">
+          <div className="max-w-[1020px] mx-auto text-center flex flex-col items-center">
             
             {/* Top pill */}
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface-2/80 border border-border-strong/15 text-tertiary text-[0.72rem] tracking-wider uppercase mb-6 font-medium">
               <Sparkles className="w-3.5 h-3.5 text-[hsl(var(--accent))]" />
-              <span>Showroom em Londrina - PR · Atendimento Exclusivo 1 a 1</span>
+              <span>Atendimento Presencial VIP · Nosso Consultor Vai Até Você</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="font-serif text-[clamp(2.3rem,5.5vw,4.2rem)] font-normal leading-[1.12] tracking-tight mb-6 text-primary">
               Compre <span className="text-[hsl(var(--accent))] italic font-normal">Prata 925</span> Direto da Fábrica com{' '}
-              <span className="underline decoration-[hsl(var(--accent))]/40 underline-offset-8">Atendimento Presencial</span>
+              <span className="underline decoration-[hsl(var(--accent))]/40 underline-offset-8">Atendimento Presencial no Seu Espaço</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-secondary text-[1.05rem] md:text-[1.25rem] leading-relaxed max-w-[760px] mx-auto mb-10 font-light">
-              Toque nas peças, comprove o peso e acabamento de cada joia e receba uma <strong>consultoria especializada</strong> para montar o mix com maior margem de lucro para o seu negócio.
+            <p className="text-secondary text-[1.05rem] md:text-[1.25rem] leading-relaxed max-w-[780px] mx-auto mb-10 font-light">
+              Levamos a nossa <strong>maleta completa de mostruário até a sua loja ou residência</strong> — ou receba um atendimento exclusivo em nossa sede própria. Toque nas joias, comprove o peso real e monte seu estoque com pronta entrega.
             </p>
 
             {/* Hero CTA Button with exact user phrase */}
@@ -172,31 +179,31 @@ export default function LpAtenPre() {
               <CtaButton 
                 size="lg"
                 label="Agendar Atendimento Presencial no WhatsApp"
-                subtitle="Atendimento VIP com horário exclusivo · Sem compromisso"
+                subtitle="Receba nosso consultor na sua loja ou agende no escritório · Sem compromisso"
               />
             </div>
 
             {/* 3 Key Trust Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full max-w-[850px] pt-8 border-t border-border-strong/10">
-              <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-surface-1/40 border border-border-strong/10 text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full max-w-[900px] pt-8 border-t border-border-strong/10">
+              <div className="flex items-center justify-center gap-3 p-3.5 rounded-lg bg-surface-1/40 border border-border-strong/10 text-left">
+                <Store className="w-5 h-5 text-[hsl(var(--accent))] shrink-0" />
+                <div>
+                  <div className="font-serif text-lg font-medium text-primary leading-tight">Visita no Seu Endereço</div>
+                  <div className="text-[0.72rem] text-tertiary">Comodidade total na sua loja</div>
+                </div>
+              </div>
+              <div className="flex items-center justify-center gap-3 p-3.5 rounded-lg bg-surface-1/40 border border-border-strong/10 text-left">
                 <Gem className="w-5 h-5 text-[hsl(var(--accent))] shrink-0" />
                 <div>
                   <div className="font-serif text-lg font-medium text-primary leading-tight">Prata 925 Legítima</div>
                   <div className="text-[0.72rem] text-tertiary">Garantia vitalícia no teor</div>
                 </div>
               </div>
-              <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-surface-1/40 border border-border-strong/10 text-left">
+              <div className="flex items-center justify-center gap-3 p-3.5 rounded-lg bg-surface-1/40 border border-border-strong/10 text-left">
                 <PackageCheck className="w-5 h-5 text-[hsl(var(--accent))] shrink-0" />
                 <div>
-                  <div className="font-serif text-lg font-medium text-primary leading-tight">Pronta Entrega</div>
-                  <div className="text-[0.72rem] text-tertiary">Escolha e leve na hora</div>
-                </div>
-              </div>
-              <div className="flex items-center justify-center gap-3 p-3 rounded-lg bg-surface-1/40 border border-border-strong/10 text-left">
-                <TrendingUp className="w-5 h-5 text-[hsl(var(--accent))] shrink-0" />
-                <div>
-                  <div className="font-serif text-lg font-medium text-primary leading-tight">Até 200% de Margem</div>
-                  <div className="text-[0.72rem] text-tertiary">Condição direto de fábrica</div>
+                  <div className="font-serif text-lg font-medium text-primary leading-tight">Pronta Entrega na Maleta</div>
+                  <div className="text-[0.72rem] text-tertiary">Escolha e abasteça na hora</div>
                 </div>
               </div>
             </div>
@@ -204,17 +211,17 @@ export default function LpAtenPre() {
           </div>
         </section>
 
-        {/* ─── DORES (PROBLEMAS DE COMPRAR SEM VER DE PERTO) ─── */}
+        {/* ─── DORES (PROBLEMAS DE COMPRAR SEM VER DE PERTO E SEM TEMPO DE VIAJAR) ─── */}
         <section className="py-20 md:py-24 px-4 sm:px-6 md:px-8 bg-surface-0/60 border-b border-border-strong/10">
           <div className="max-w-[1100px] mx-auto">
             
-            <div className="text-center max-w-[680px] mx-auto mb-14">
-              <span className="section-label block mb-3 text-[hsl(var(--accent))]">Segurança para o seu investimento</span>
+            <div className="text-center max-w-[700px] mx-auto mb-14">
+              <span className="section-label block mb-3 text-[hsl(var(--accent))]">Mais segurança e zero perda de tempo</span>
               <h2 className="font-serif text-[clamp(2rem,4vw,3.2rem)] font-normal text-primary leading-tight mb-4">
-                Cansado da insegurança de comprar joias <span className="text-[hsl(var(--danger))]">sem tocar na peça?</span>
+                Cansado da insegurança da internet e do <span className="text-[hsl(var(--danger))]">cansaço de viajar</span> para comprar joias?
               </h2>
               <p className="text-secondary text-[0.98rem] leading-relaxed">
-                Revender joias exige confiança absoluta na qualidade. Comprar no escuro traz riscos que custam caro para quem quer crescer.
+                Abastecer seu mostruário não precisa ser um jogo de sorte na tela nem uma maratona exaustiva de estrada.
               </p>
             </div>
 
@@ -242,44 +249,45 @@ export default function LpAtenPre() {
             {/* Section WhatsApp CTA Button */}
             <div className="p-8 rounded-2xl bg-gradient-to-r from-surface-1 via-surface-2 to-surface-1 border border-border-strong/15 text-center flex flex-col items-center">
               <h3 className="font-serif text-2xl md:text-3xl font-normal text-primary mb-3">
-                Elimine todas essas dúvidas no nosso atendimento presencial
+                A fábrica vem até você com estoque físico e transparência
               </h3>
-              <p className="text-secondary text-[0.95rem] max-w-[620px] mb-6 font-light">
-                Venha conhecer o showroom da Pérola Pratas. Você confere cada detalhe com seus próprios olhos antes de fechar qualquer pedido.
+              <p className="text-secondary text-[0.95rem] max-w-[640px] mb-6 font-light">
+                Receba nosso consultor na sua loja para ver as peças de perto, sem custo de deslocamento e com a tranquilidade de quem negocia direto com a fonte.
               </p>
               <CtaButton 
                 label="Agendar Atendimento Presencial no WhatsApp"
-                subtitle="Fale agora com a equipe da fábrica e escolha seu horário"
+                subtitle="Fale com nossa equipe e agende a visita no seu endereço"
               />
             </div>
 
           </div>
         </section>
 
-        {/* ─── SESSÃO INFORMATIVA 1: SHOWROOM & TOQUE REAL ─── */}
+        {/* ─── SESSÃO INFORMATIVA 1: O REPRESENTANTE VAI ATÉ O CLIENTE (MALETA FÍSICA) ─── */}
         <section className="py-20 md:py-24 px-4 sm:px-6 md:px-8 border-b border-border-strong/10 bg-surface-1/20">
           <div className="max-w-[1100px] mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
               
               <div className="lg:col-span-6 space-y-6">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-2 text-[0.7rem] uppercase tracking-wider text-[hsl(var(--accent))] font-medium border border-border-strong/10">
-                  <span>Sessão 01 · Experiência Sensorial</span>
+                  <Briefcase className="w-3.5 h-3.5 text-[hsl(var(--accent))]" />
+                  <span>Sessão 01 · A Fábrica na Sua Loja</span>
                 </div>
                 
                 <h2 className="font-serif text-[clamp(2.2rem,4vw,3.4rem)] font-normal text-primary leading-[1.15]">
-                  Veja o Brilho, Sinta o Peso e Comprove o <span className="text-[hsl(var(--accent))] italic">Padrão da Prata 925</span>
+                  Nosso Consultor Vai Até Você com a <span className="text-[hsl(var(--accent))] italic">Maleta de Mostruário Completa</span>
                 </h2>
 
                 <p className="text-secondary text-[1rem] leading-relaxed font-light">
-                  No showroom presencial da <strong>Pérola Pratas</strong>, você sai da teoria e entra no controle total do que oferece às suas clientes. Tenha acesso a gaveteiros completos com centenas de modelos selecionados.
+                  Esqueça a dor de cabeça de fechar a loja para ir a feiras ou pagar fretes caros no escuro. O representante da <strong>Pérola Pratas</strong> visita o seu estabelecimento levando um acervo real de joias em Prata 925.
                 </p>
 
                 <div className="space-y-3.5 pt-2">
                   {[
-                    'Avalie fechos, cravação de zircônias e polimento espelhado em detalhes;',
-                    'Verifique a pureza da Prata 925 com suporte de balança de precisão e certificados;',
-                    'Compare espessuras de correntes venezianas, grumet, elo português e fita;',
-                    'Ambiente seguro, privativo e climatizado para fazer suas escolhas com calma.'
+                    'Toque nas peças, avalie espessura, fechos e acabamento na iluminação da sua própria loja;',
+                    'Centenas de modelos organizados em maletas de mostruário prontas para revenda;',
+                    'Conferência manual e detalhada item por item antes de qualquer fechamento;',
+                    'Pronta entrega física: você escolhe e já fica com o estoque em mãos para faturar.'
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <CheckCircle2 className="w-5 h-5 text-[hsl(var(--accent))] shrink-0 mt-0.5" />
@@ -290,207 +298,15 @@ export default function LpAtenPre() {
 
                 <div className="pt-4">
                   <CtaButton 
-                    label="Agendar Visita no Showroom via WhatsApp"
-                    subtitle="Clique para marcar seu horário exclusivo"
+                    label="Solicitar Visita do Consultor via WhatsApp"
+                    subtitle="Clique para combinar data e horário no seu endereço"
                   />
                 </div>
               </div>
 
               <div className="lg:col-span-6">
                 <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
-                  {/* Foto do Showroom & Escritório */}
-                  <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
-                    <img 
-                      src="/showroom-escritorio.jpg" 
-                      alt="Showroom e sala de atendimento presencial da Pérola Pratas" 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/95 via-[#050D0A]/20 to-transparent flex items-end p-4">
-                      <div className="flex items-center gap-2">
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse shadow-[0_0_8px_#25D366]" />
-                        <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
-                          Showroom Oficial & Sala de Atendimento VIP
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
-                      <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
-                        <Eye className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h4 className="font-serif text-xl text-primary font-medium">Toque Real & Transparência</h4>
-                        <p className="text-xs text-muted">Sem surpresas desagradáveis na entrega</p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4 pt-2">
-                      <div className="p-4 rounded-xl bg-surface-1/80 border border-border-strong/10">
-                        <div className="text-2xl font-serif text-[hsl(var(--accent))] font-medium mb-1">+1.500</div>
-                        <div className="text-xs text-tertiary">Modelos em pronta entrega no showroom</div>
-                      </div>
-                      <div className="p-4 rounded-xl bg-surface-1/80 border border-border-strong/10">
-                        <div className="text-2xl font-serif text-[hsl(var(--accent))] font-medium mb-1">100%</div>
-                        <div className="text-xs text-tertiary">Prata 925 legítima e pura garantida</div>
-                      </div>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20">
-                      <div className="flex items-center gap-2 text-[#25D366] text-xs font-semibold uppercase tracking-wider mb-1">
-                        <Award className="w-4 h-4" />
-                        Garantia Vitalícia
-                      </div>
-                      <p className="text-xs text-secondary leading-relaxed">
-                        Cada joia adquirida em nossa fábrica acompanha termo de garantia vitalícia na autenticidade e pureza da prata.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* ─── SESSÃO INFORMATIVA 2: CONSULTORIA ESPECIALIZADA 1 A 1 ─── */}
-        <section className="py-20 md:py-24 px-4 sm:px-6 md:px-8 border-b border-border-strong/10 bg-[#050D0A]">
-          <div className="max-w-[1100px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              
-              <div className="lg:col-span-6 order-2 lg:order-1">
-                <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
-                  {/* Foto do Cantinho do Café */}
-                  <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
-                    <img 
-                      src="/showroom-cafe.jpg" 
-                      alt="Cantinho do café e hospitalidade para clientes da Pérola Pratas" 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/95 via-[#050D0A]/20 to-transparent flex items-end p-4">
-                      <div className="flex items-center gap-2">
-                        <Coffee className="w-4 h-4 text-[hsl(var(--accent))]" />
-                        <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
-                          Recepção com Café Expresso · Conforto para suas escolhas
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
-                      <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
-                        <UserCheck className="w-6 h-6" />
-                      </div>
-                      <div>
-                        <h4 className="font-serif text-xl text-primary font-medium">Consultoria Estratégica</h4>
-                        <p className="text-xs text-muted">Apoio prático de quem entende do mercado</p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <div className="p-3.5 rounded-lg bg-surface-1/70 border border-border-strong/10">
-                        <div className="text-sm font-medium text-primary mb-1">1. Diagnóstico do seu Público</div>
-                        <p className="text-xs text-muted">Ajudamos a identificar a faixa de preço e o estilo que tem mais aderência aos seus clientes.</p>
-                      </div>
-                      <div className="p-3.5 rounded-lg bg-surface-1/70 border border-border-strong/10">
-                        <div className="text-sm font-medium text-primary mb-1">2. Mix com Giro Rápido</div>
-                        <p className="text-xs text-muted">Seleção balanceada entre peças âncora (alto volume) e joias de alto ticket para maximizar seu lucro.</p>
-                      </div>
-                      <div className="p-3.5 rounded-lg bg-surface-1/70 border border-border-strong/10">
-                        <div className="text-sm font-medium text-primary mb-1">3. Orientação de Precificação</div>
-                        <p className="text-xs text-muted">Sugestões de markup praticadas no mercado de joias para você precificar com segurança e rentabilidade.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-2 text-[0.7rem] uppercase tracking-wider text-[hsl(var(--accent))] font-medium border border-border-strong/10">
-                  <span>Sessão 02 · Atendimento 1 a 1</span>
-                </div>
-
-                <h2 className="font-serif text-[clamp(2.2rem,4vw,3.4rem)] font-normal text-primary leading-[1.15]">
-                  Você não escolhe sozinho(a): tenha uma <span className="text-[hsl(var(--accent))] italic">Consultoria Dedicada</span>
-                </h2>
-
-                <p className="text-secondary text-[1rem] leading-relaxed font-light">
-                  Diferente de um site impessoal, no atendimento presencial você é recebido por um <strong>especialista em atacado de joias</strong> que senta com você para estruturar o seu estoque.
-                </p>
-
-                <div className="space-y-3.5 pt-2">
-                  {[
-                    'Indicação das peças "top-sellers" com menor tempo de prateleira;',
-                    'Dicas de apresentação, composição de mix e kits presenteáveis;',
-                    'Auxílio para iniciantes: monte seu primeiro mostruário sem desperdiçar dinheiro;',
-                    'Atendimento acolhedor e focado no crescimento de longo prazo do seu negócio.'
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-[hsl(var(--accent))] shrink-0 mt-0.5" />
-                      <span className="text-secondary text-[0.92rem] font-light">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-4">
-                  <CtaButton 
-                    label="Quero Consultoria Presencial no WhatsApp"
-                    subtitle="Envie a mensagem e reserve seu atendimento exclusivo"
-                  />
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* ─── SESSÃO INFORMATIVA 3: CONDIÇÕES DE FÁBRICA & RETIRADA IMEDIATA ─── */}
-        <section className="py-20 md:py-24 px-4 sm:px-6 md:px-8 border-b border-border-strong/10 bg-surface-1/20">
-          <div className="max-w-[1100px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-              
-              <div className="lg:col-span-6 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-2 text-[0.7rem] uppercase tracking-wider text-[hsl(var(--accent))] font-medium border border-border-strong/10">
-                  <span>Sessão 03 · Vantagens de Fábrica</span>
-                </div>
-
-                <h2 className="font-serif text-[clamp(2.2rem,4vw,3.4rem)] font-normal text-primary leading-[1.15]">
-                  Preço Real de Fábrica e <span className="text-[hsl(var(--accent))] italic">Retirada Imediata</span> no Balcão
-                </h2>
-
-                <p className="text-secondary text-[1rem] leading-relaxed font-light">
-                  Elimine intermediários e custos de frete. No showroom presencial, você compra no atacado direto da fonte produtora e já sai com as joias embaladas na mão para começar a vender no mesmo dia.
-                </p>
-
-                <div className="space-y-3.5 pt-2">
-                  {[
-                    'Tabela de atacado direto de fábrica para margens líquidas superiores;',
-                    'Zero espera de transporte e zero custo de frete na retirada;',
-                    'Pagamento facilitado: Pix com desconto ou parcelamento para abastecer seu negócio;',
-                    'Agilidade para suprir reposições urgentes de clientes e datas comemorativas.'
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-[hsl(var(--accent))] shrink-0 mt-0.5" />
-                      <span className="text-secondary text-[0.92rem] font-light">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-4">
-                  <CtaButton 
-                    label="Garantir Preços de Fábrica via WhatsApp"
-                    subtitle="Clique para conversar direto com a equipe de vendas"
-                  />
-                </div>
-              </div>
-
-              <div className="lg:col-span-6">
-                <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
-                  {/* Foto do Mostruário de Joias */}
+                  {/* Foto do Mostruário Real */}
                   <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
                     <img 
                       src="/showroom-mostruario.jpg" 
@@ -502,7 +318,7 @@ export default function LpAtenPre() {
                       <div className="flex items-center gap-2">
                         <PackageCheck className="w-4 h-4 text-[#25D366]" />
                         <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
-                          Estoque Físico à Pronta Entrega · Conferência no Balcão
+                          Estoque Físico à Pronta Entrega na Maleta
                         </span>
                       </div>
                     </div>
@@ -511,32 +327,32 @@ export default function LpAtenPre() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
                       <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
-                        <PackageCheck className="w-6 h-6" />
+                        <Car className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="font-serif text-xl text-primary font-medium">Agilidade Operacional</h4>
-                        <p className="text-xs text-muted">Compre hoje, venda hoje</p>
+                        <h4 className="font-serif text-xl text-primary font-medium">Comodidade no seu Espaço</h4>
+                        <p className="text-xs text-muted">Zero custo de viagem ou frete antecipado</p>
                       </div>
                     </div>
 
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between p-3.5 rounded-lg bg-surface-1/80 border border-border-strong/10">
-                        <span className="text-sm text-secondary">Frete e envio:</span>
-                        <span className="text-sm font-semibold text-[#25D366]">R$ 0,00 (Retirada Imediata)</span>
+                    <div className="grid grid-cols-2 gap-4 pt-2">
+                      <div className="p-4 rounded-xl bg-surface-1/80 border border-border-strong/10">
+                        <div className="text-2xl font-serif text-[hsl(var(--accent))] font-medium mb-1">+1.500</div>
+                        <div className="text-xs text-tertiary">Modelos disponíveis para escolha presencial</div>
                       </div>
-                      <div className="flex items-center justify-between p-3.5 rounded-lg bg-surface-1/80 border border-border-strong/10">
-                        <span className="text-sm text-secondary">Tempo de espera:</span>
-                        <span className="text-sm font-semibold text-primary">Zero (Você leva na hora)</span>
-                      </div>
-                      <div className="flex items-center justify-between p-3.5 rounded-lg bg-surface-1/80 border border-border-strong/10">
-                        <span className="text-sm text-secondary">Conferência de peças:</span>
-                        <span className="text-sm font-semibold text-primary">Item por item no balcão</span>
+                      <div className="p-4 rounded-xl bg-surface-1/80 border border-border-strong/10">
+                        <div className="text-2xl font-serif text-[hsl(var(--accent))] font-medium mb-1">100%</div>
+                        <div className="text-xs text-tertiary">Prata 925 pura com garantia vitalícia</div>
                       </div>
                     </div>
 
-                    <div className="pt-2 text-center">
-                      <p className="text-xs text-muted">
-                        Condições exclusivas para compras e retiradas presenciais agendadas.
+                    <div className="p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20">
+                      <div className="flex items-center gap-2 text-[#25D366] text-xs font-semibold uppercase tracking-wider mb-1">
+                        <Award className="w-4 h-4" />
+                        Garantia Vitalícia no Teor
+                      </div>
+                      <p className="text-xs text-secondary leading-relaxed">
+                        Cada joia adquirida com o nosso representante acompanha certificado de garantia vitalícia da fábrica Pérola Pratas.
                       </p>
                     </div>
                   </div>
@@ -547,34 +363,228 @@ export default function LpAtenPre() {
           </div>
         </section>
 
-        {/* ─── COMO FUNCIONA O AGENDAMENTO ─── */}
+        {/* ─── SESSÃO INFORMATIVA 2: CONSULTORIA ESPECIALIZADA 1 A 1 & RETAGUARDA ─── */}
+        <section className="py-20 md:py-24 px-4 sm:px-6 md:px-8 border-b border-border-strong/10 bg-[#050D0A]">
+          <div className="max-w-[1100px] mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              
+              <div className="lg:col-span-6 order-2 lg:order-1">
+                <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
+                  {/* Foto do Escritório com a Equipe */}
+                  <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
+                    <img 
+                      src="/showroom-escritorio.jpg" 
+                      alt="Sede corporativa e equipe ativa da Pérola Pratas" 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/95 via-[#050D0A]/20 to-transparent flex items-end p-4">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse shadow-[0_0_8px_#25D366]" />
+                        <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
+                          Sede Corporativa & Equipe de Suporte da Fábrica
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
+                      <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
+                        <UserCheck className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-serif text-xl text-primary font-medium">Estrutura Real & Suporte Contínuo</h4>
+                        <p className="text-xs text-muted">A segurança de comprar de quem tem sede e equipe ativa</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="p-3.5 rounded-lg bg-surface-1/70 border border-border-strong/10">
+                        <div className="text-sm font-medium text-primary mb-1">1. Consultoria de Mix Estratégico</div>
+                        <p className="text-xs text-muted">O consultor avalia o perfil dos seus clientes para selecionar apenas joias com alta rotatividade.</p>
+                      </div>
+                      <div className="p-3.5 rounded-lg bg-surface-1/70 border border-border-strong/10">
+                        <div className="text-sm font-medium text-primary mb-1">2. Margem de Lucro de até 200%</div>
+                        <p className="text-xs text-muted">Preços reais de fábrica no atacado para você ter margem saudável e competitiva no varejo.</p>
+                      </div>
+                      <div className="p-3.5 rounded-lg bg-surface-1/70 border border-border-strong/10">
+                        <div className="text-sm font-medium text-primary mb-1">3. Reposição Ágil e Sem Fricção</div>
+                        <p className="text-xs text-muted">Canal direto de pós-venda para reposição contínua dos seus modelos campeões de venda.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-2 text-[0.7rem] uppercase tracking-wider text-[hsl(var(--accent))] font-medium border border-border-strong/10">
+                  <UserCheck className="w-3.5 h-3.5 text-[hsl(var(--accent))]" />
+                  <span>Sessão 02 · Consultoria Estratégica</span>
+                </div>
+
+                <h2 className="font-serif text-[clamp(2.2rem,4vw,3.4rem)] font-normal text-primary leading-[1.15]">
+                  Mais que um Mostruário: tenha uma <span className="text-[hsl(var(--accent))] italic">Consultoria de Vendas</span>
+                </h2>
+
+                <p className="text-secondary text-[1rem] leading-relaxed font-light">
+                  Nosso representante não vai até você apenas para vender peças: ele atua como um <strong>consultor do seu negócio</strong>, trazendo insights de mercado e orientações para acelerar o seu giro financeiro.
+                </p>
+
+                <div className="space-y-3.5 pt-2">
+                  {[
+                    'Indicação das joias mais vendidas da estação (anéis, correntes, brincos e pulseiras);',
+                    'Sugestões de precificação praticadas no mercado de luxo e semijoias finas;',
+                    'Combinações de mix para kits de presente que aumentam o ticket médio;',
+                    'Retaguarda de um escritório próprio estruturado garantindo reposição rápida.'
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-[hsl(var(--accent))] shrink-0 mt-0.5" />
+                      <span className="text-secondary text-[0.92rem] font-light">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-4">
+                  <CtaButton 
+                    label="Quero Consultoria Presencial no WhatsApp"
+                    subtitle="Envie a mensagem e reserve a visita do representante"
+                  />
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ─── SESSÃO INFORMATIVA 3: SEDE PRÓPRIA, SHOWROOM & CREDIBILIDADE DE FÁBRICA ─── */}
+        <section className="py-20 md:py-24 px-4 sm:px-6 md:px-8 border-b border-border-strong/10 bg-surface-1/20">
+          <div className="max-w-[1100px] mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+              
+              <div className="lg:col-span-6 space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-2 text-[0.7rem] uppercase tracking-wider text-[hsl(var(--accent))] font-medium border border-border-strong/10">
+                  <Building2 className="w-3.5 h-3.5 text-[hsl(var(--accent))]" />
+                  <span>Sessão 03 · Credibilidade & Showroom</span>
+                </div>
+
+                <h2 className="font-serif text-[clamp(2.2rem,4vw,3.4rem)] font-normal text-primary leading-[1.15]">
+                  Segurança de Fábrica: <span className="text-[hsl(var(--accent))] italic">Sede Própria</span> e Portas Abertas
+                </h2>
+
+                <p className="text-secondary text-[1rem] leading-relaxed font-light">
+                  A visita do nosso consultor é respaldada por uma <strong>empresa sólida com estrutura física em Londrina - PR</strong>. E se preferir vir nos visitar pessoalmente, nosso escritório está de portas abertas para receber você com um café expresso.
+                </p>
+
+                <div className="space-y-3.5 pt-2">
+                  {[
+                    'Empresa consolidada, com CNPJ ativo e sede física própria em Londrina - PR;',
+                    'Espaço corporativo com sala de reunião privativa e equipe de atendimento;',
+                    'Você escolhe: receba o consultor na sua loja ou venha nos visitar no showroom;',
+                    'Condições comerciais de atacado direto de fábrica em ambas as modalidades.'
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-[hsl(var(--accent))] shrink-0 mt-0.5" />
+                      <span className="text-secondary text-[0.92rem] font-light">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-4">
+                  <CtaButton 
+                    label="Conversar com a Fábrica pelo WhatsApp"
+                    subtitle="Clique para tirar dúvidas ou agendar seu atendimento"
+                  />
+                </div>
+              </div>
+
+              <div className="lg:col-span-6">
+                <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
+                  {/* Foto do Cantinho do Café */}
+                  <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
+                    <img 
+                      src="/showroom-cafe.jpg" 
+                      alt="Cantinho do café e hospitalidade na sede da Pérola Pratas" 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/95 via-[#050D0A]/20 to-transparent flex items-end p-4">
+                      <div className="flex items-center gap-2">
+                        <Coffee className="w-4 h-4 text-[hsl(var(--accent))]" />
+                        <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
+                          Recepção com Café Expresso na Sede em Londrina
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
+                      <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
+                        <ShieldCheck className="w-6 h-6" />
+                      </div>
+                      <div>
+                        <h4 className="font-serif text-xl text-primary font-medium">Transparência Total</h4>
+                        <p className="text-xs text-muted">Compre com a segurança de um fornecedor estabelecido</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3.5 rounded-lg bg-surface-1/80 border border-border-strong/10">
+                        <span className="text-sm text-secondary">Modalidade Principal:</span>
+                        <span className="text-sm font-semibold text-[#25D366]">Visita no seu endereço</span>
+                      </div>
+                      <div className="flex items-center justify-between p-3.5 rounded-lg bg-surface-1/80 border border-border-strong/10">
+                        <span className="text-sm text-secondary">Modalidade Opcional:</span>
+                        <span className="text-sm font-semibold text-primary">Showroom na sede da fábrica</span>
+                      </div>
+                      <div className="flex items-center justify-between p-3.5 rounded-lg bg-surface-1/80 border border-border-strong/10">
+                        <span className="text-sm text-secondary">Conferência de peças:</span>
+                        <span className="text-sm font-semibold text-primary">Ao vivo e em mãos</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 text-center">
+                      <p className="text-xs text-muted">
+                        Condições exclusivas de atacado para lojistas e revendedores.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ─── COMO FUNCIONA O ATENDIMENTO PRESENCIAL (3 PASSOS) ─── */}
         <section className="py-20 md:py-24 px-4 sm:px-6 md:px-8 border-b border-border-strong/10 bg-[#050D0A]">
           <div className="max-w-[1000px] mx-auto text-center">
             
-            <span className="section-label block mb-3 text-[hsl(var(--accent))]">Passo a passo simples</span>
+            <span className="section-label block mb-3 text-[hsl(var(--accent))]">Fluxo prático e sem burocracia</span>
             <h2 className="font-serif text-[clamp(2rem,4vw,3.2rem)] font-normal text-primary leading-tight mb-4">
               Como agendar o seu <span className="italic text-[hsl(var(--accent))]">Atendimento Presencial</span>
             </h2>
-            <p className="text-secondary text-[0.98rem] max-w-[600px] mx-auto mb-14 font-light">
-              Garantimos um horário reservado exclusivamente para você, sem filas e com consultor à disposição.
+            <p className="text-secondary text-[0.98rem] max-w-[640px] mx-auto mb-14 font-light">
+              Escolha receber o consultor na sua loja ou agendar uma visita ao nosso escritório. O processo leva menos de 2 minutos.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 text-left">
               {[
                 {
                   step: '01',
-                  title: 'Clique no WhatsApp',
-                  desc: 'Você será direcionado com a mensagem automática pronta para nossa equipe comercial.'
+                  title: 'Chame no WhatsApp',
+                  desc: 'Clique em qualquer botão da página. A mensagem de identificação já estará pronta para envio.'
                 },
                 {
                   step: '02',
-                  title: 'Escolha seu Horário',
-                  desc: 'Definimos o dia e horário mais conveniente para o seu atendimento no showroom.'
+                  title: 'Defina o Local e Data',
+                  desc: 'Informe o endereço da sua loja para receber o representante ou marque o horário para nos visitar.'
                 },
                 {
                   step: '03',
-                  title: 'Visite & Fature',
-                  desc: 'Venha tomar um café, escolha suas joias de Prata 925 com nossa consultoria e saia pronta para lucrar.'
+                  title: 'Toque, Escolha e Fature',
+                  desc: 'Manuseie a maleta com joias de Prata 925, monte seu mix estratégico e já fique com as peças na hora.'
                 }
               ].map((s, idx) => (
                 <div 
@@ -596,16 +606,16 @@ export default function LpAtenPre() {
 
             <CtaButton 
               size="lg"
-              label="Agendar Meu Horário no Showroom Agora"
-              subtitle="Atendimento VIP com horário reservado"
+              label="Agendar Visita Presencial no WhatsApp"
+              subtitle="Receba nosso consultor com a maleta ou venha nos visitar"
             />
 
           </div>
         </section>
 
-        {/* ─── SHOWROOM INFO & LOCALIZAÇÃO ─── */}
+        {/* ─── REGIÃO ATENDIDA & PROVA SOCIAL FÍSICA ─── */}
         <section className="py-16 md:py-20 px-4 sm:px-6 md:px-8 border-b border-border-strong/10 bg-surface-1/30">
-          <div className="max-w-[900px] mx-auto text-center">
+          <div className="max-w-[960px] mx-auto text-center">
             
             <div className="p-8 md:p-10 rounded-2xl bg-surface-2/80 border border-border-strong/15">
               <div className="w-12 h-12 rounded-full bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))] mx-auto mb-4">
@@ -613,57 +623,57 @@ export default function LpAtenPre() {
               </div>
 
               <h3 className="font-serif text-2xl md:text-3xl font-normal text-primary mb-3">
-                Localização e Horários do Showroom Pérola Pratas
+                Regiões Atendidas & Sede Corporativa
               </h3>
 
-              <p className="text-secondary text-[0.95rem] max-w-[600px] mx-auto mb-8 font-light">
-                Nosso showroom está preparado para receber você com total conforto, segurança e estacionamento fácil em Londrina e região.
+              <p className="text-secondary text-[0.95rem] max-w-[650px] mx-auto mb-8 font-light">
+                Nosso consultor atende presencialmente lojas e revendedoras em <strong>Londrina, Maringá, Arapongas, Apucarana, Cambé, Rolândia, Ibiporã e toda a região norte do Paraná</strong>.
               </p>
 
-              {/* Galeria Visual do Espaço */}
+              {/* Galeria Visual de Credibilidade */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
                 <div className="overflow-hidden rounded-xl border border-border-strong/15 aspect-[4/3] relative group shadow-md">
-                  <img src="/showroom-escritorio.jpg" alt="Showroom e Escritório Pérola Pratas" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <img src="/showroom-mostruario.jpg" alt="Maleta com Mostruário de Joias Pérola Pratas" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/90 via-transparent to-transparent flex items-end p-3">
-                    <span className="text-[0.72rem] font-medium text-primary">Sala de Atendimento VIP</span>
+                    <span className="text-[0.72rem] font-medium text-primary">Mostruário que Vai Até Você</span>
+                  </div>
+                </div>
+                <div className="overflow-hidden rounded-xl border border-border-strong/15 aspect-[4/3] relative group shadow-md">
+                  <img src="/showroom-escritorio.jpg" alt="Sede Corporativa Pérola Pratas" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/90 via-transparent to-transparent flex items-end p-3">
+                    <span className="text-[0.72rem] font-medium text-primary">Sede Corporativa & Equipe</span>
                   </div>
                 </div>
                 <div className="overflow-hidden rounded-xl border border-border-strong/15 aspect-[4/3] relative group shadow-md">
                   <img src="/showroom-cafe.jpg" alt="Cantinho do Café Pérola Pratas" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/90 via-transparent to-transparent flex items-end p-3">
-                    <span className="text-[0.72rem] font-medium text-primary">Cantinho do Café</span>
-                  </div>
-                </div>
-                <div className="overflow-hidden rounded-xl border border-border-strong/15 aspect-[4/3] relative group shadow-md">
-                  <img src="/showroom-mostruario.jpg" alt="Mostruário de Prata 925" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/90 via-transparent to-transparent flex items-end p-3">
-                    <span className="text-[0.72rem] font-medium text-primary">Pronta Entrega de Joias</span>
+                    <span className="text-[0.72rem] font-medium text-primary">Recepção no Showroom</span>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[500px] mx-auto text-left mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[550px] mx-auto text-left mb-8">
                 <div className="p-4 rounded-xl bg-surface-1/70 border border-border-strong/10">
                   <div className="flex items-center gap-2 text-[hsl(var(--accent))] text-xs font-semibold uppercase mb-1">
-                    <Clock className="w-4 h-4" />
-                    Horários
+                    <Car className="w-4 h-4" />
+                    Visita Comercial
                   </div>
-                  <div className="text-sm text-primary font-medium">Segunda a Sexta</div>
-                  <div className="text-xs text-muted">08h30 às 18h00 (Com agendamento)</div>
+                  <div className="text-sm text-primary font-medium">No seu estabelecimento</div>
+                  <div className="text-xs text-muted">Sem taxa de deslocamento na região</div>
                 </div>
 
                 <div className="p-4 rounded-xl bg-surface-1/70 border border-border-strong/10">
                   <div className="flex items-center gap-2 text-[hsl(var(--accent))] text-xs font-semibold uppercase mb-1">
-                    <CalendarCheck className="w-4 h-4" />
-                    Formato
+                    <Building2 className="w-4 h-4" />
+                    Sede em Londrina - PR
                   </div>
-                  <div className="text-sm text-primary font-medium">Com Hora Marcada</div>
-                  <div className="text-xs text-muted">Atendimento 1 a 1 sem espera</div>
+                  <div className="text-sm text-primary font-medium">Showroom e Sala VIP</div>
+                  <div className="text-xs text-muted">Com hora marcada de seg. a sex.</div>
                 </div>
               </div>
 
               <CtaButton 
-                label="Confirmar Horário pelo WhatsApp"
+                label="Agendar Atendimento Presencial no WhatsApp"
                 subtitle="Destino direto: (43) 99131-2661"
               />
             </div>
@@ -712,10 +722,10 @@ export default function LpAtenPre() {
 
             <div className="text-center">
               <p className="text-secondary text-sm mb-4">
-                Ainda tem alguma dúvida específica? Fale agora com nossa equipe.
+                Quer saber se atendemos a sua cidade hoje? Fale diretamente com nossa equipe.
               </p>
               <CtaButton 
-                label="Tirar Dúvidas no WhatsApp"
+                label="Consultar Minha Cidade no WhatsApp"
                 subtitle="Atendimento rápido e personalizado"
               />
             </div>
@@ -732,11 +742,11 @@ export default function LpAtenPre() {
             </div>
 
             <h2 className="font-serif text-[clamp(2.4rem,5vw,3.8rem)] font-normal leading-[1.15] text-primary mb-6">
-              Pronto para Conhecer a Fábrica e Abastecer seu Mostruário com <span className="text-[hsl(var(--accent))] italic">Prata 925 Legítima?</span>
+              Receba o Mostruário na Sua Loja e Abasteça com <span className="text-[hsl(var(--accent))] italic">Prata 925 Legítima</span>
             </h2>
 
-            <p className="text-secondary text-[1.05rem] md:text-[1.2rem] leading-relaxed max-w-[650px] mb-10 font-light">
-              Agende seu atendimento presencial agora mesmo. Venha ver de perto a pureza e a elegância de cada joia e leve seu negócio de revenda para o próximo nível.
+            <p className="text-secondary text-[1.05rem] md:text-[1.2rem] leading-relaxed max-w-[680px] mb-10 font-light">
+              Agende agora o atendimento presencial. Seja com a visita do nosso consultor no seu espaço ou em nossa sede em Londrina, nós levamos a fábrica até você.
             </p>
 
             <CtaButton 
@@ -785,7 +795,7 @@ export default function LpAtenPre() {
               <Link to="/privacidade" className="text-[0.72rem] text-muted hover:text-primary transition-colors underline">Política de Privacidade</Link>
             </div>
             <p className="text-[0.72rem] text-muted">
-              Fornecedor de Prata 925 no Atacado · Showroom Presencial
+              Fornecedor de Prata 925 no Atacado · Atendimento com Representante & Showroom
             </p>
           </div>
         </div>

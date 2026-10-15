@@ -13,26 +13,37 @@ function LegacyRedirect() {
   return <Navigate to={`/${location.search}`} replace />
 }
 
+function NormalizeUrl({ children }: { children: React.ReactNode }) {
+  const location = useLocation()
+  if (location.pathname !== location.pathname.toLowerCase()) {
+    return <Navigate to={location.pathname.toLowerCase() + location.search + location.hash} replace />
+  }
+  return <>{children}</>
+}
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/lp" element={<LpVip />} />
-        <Route path="/LPATENPRE" element={<LpAtenPre />} />
-        <Route path="/lpatenpre" element={<LpAtenPre />} />
-        <Route path="/links" element={<Links />} />
-        <Route path="/termos" element={<Termos />} />
-        <Route path="/privacidade" element={<Privacidade />} />
-        <Route path="/adminterno" element={<Adminterno />} />
-        
-        {/* Redirecionamentos de URLs legadas (WooCommerce) */}
-        <Route path="/categoria-produto/*" element={<LegacyRedirect />} />
-        <Route path="/product-category/*" element={<LegacyRedirect />} />
+      <NormalizeUrl>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/lp" element={<LpVip />} />
+          <Route path="/lpatenpre" element={<LpAtenPre />} />
+          <Route path="/links" element={<Links />} />
+          <Route path="/linkbio" element={<Links />} />
+          <Route path="/link-bio" element={<Links />} />
+          <Route path="/termos" element={<Termos />} />
+          <Route path="/privacidade" element={<Privacidade />} />
+          <Route path="/adminterno" element={<Adminterno />} />
+          
+          {/* Redirecionamentos de URLs legadas (WooCommerce) */}
+          <Route path="/categoria-produto/*" element={<LegacyRedirect />} />
+          <Route path="/product-category/*" element={<LegacyRedirect />} />
 
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </NormalizeUrl>
     </BrowserRouter>
   )
 }
