@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import Index from '@/pages/Index'
 import Links from '@/pages/Links'
 import LpVip from '@/pages/LpVip'
+import LpAtenPre from '@/pages/LpAtenPre'
 import NotFound from '@/pages/NotFound'
 import Termos from '@/pages/Termos'
 import Privacidade from '@/pages/Privacidade'
@@ -18,6 +19,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/lp" element={<LpVip />} />
+        <Route path="/LPATENPRE" element={<LpAtenPre />} />
+        <Route path="/lpatenpre" element={<LpAtenPre />} />
         <Route path="/links" element={<Links />} />
         <Route path="/termos" element={<Termos />} />
         <Route path="/privacidade" element={<Privacidade />} />
