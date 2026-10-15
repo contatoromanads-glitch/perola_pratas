@@ -14,7 +14,8 @@ import {
   Eye, 
   CalendarCheck,
   Award,
-  ArrowRight
+  ArrowRight,
+  Coffee
 } from 'lucide-react'
 
 const WA_DEST = '5543991312661'
@@ -152,7 +153,7 @@ export default function LpAtenPre() {
             {/* Top pill */}
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface-2/80 border border-border-strong/15 text-tertiary text-[0.72rem] tracking-wider uppercase mb-6 font-medium">
               <Sparkles className="w-3.5 h-3.5 text-[hsl(var(--accent))]" />
-              <span>Showroom de Fábrica · Atendimento Exclusivo 1 a 1</span>
+              <span>Showroom em Londrina - PR · Atendimento Exclusivo 1 a 1</span>
             </div>
 
             {/* Main Headline */}
@@ -297,6 +298,24 @@ export default function LpAtenPre() {
 
               <div className="lg:col-span-6">
                 <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
+                  {/* Foto do Showroom & Escritório */}
+                  <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
+                    <img 
+                      src="/showroom-escritorio.jpg" 
+                      alt="Showroom e sala de atendimento presencial da Pérola Pratas" 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/95 via-[#050D0A]/20 to-transparent flex items-end p-4">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse shadow-[0_0_8px_#25D366]" />
+                        <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
+                          Showroom Oficial & Sala de Atendimento VIP
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
                       <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
@@ -343,6 +362,24 @@ export default function LpAtenPre() {
               
               <div className="lg:col-span-6 order-2 lg:order-1">
                 <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
+                  {/* Foto do Cantinho do Café */}
+                  <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
+                    <img 
+                      src="/showroom-cafe.jpg" 
+                      alt="Cantinho do café e hospitalidade para clientes da Pérola Pratas" 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/95 via-[#050D0A]/20 to-transparent flex items-end p-4">
+                      <div className="flex items-center gap-2">
+                        <Coffee className="w-4 h-4 text-[hsl(var(--accent))]" />
+                        <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
+                          Recepção com Café Expresso · Conforto para suas escolhas
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
                       <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
@@ -453,6 +490,24 @@ export default function LpAtenPre() {
 
               <div className="lg:col-span-6">
                 <div className="relative p-6 sm:p-8 rounded-2xl bg-surface-2/90 border border-border-strong/20 shadow-2xl">
+                  {/* Foto do Mostruário de Joias */}
+                  <div className="relative overflow-hidden rounded-xl mb-6 border border-border-strong/15 aspect-[4/3] group shadow-lg">
+                    <img 
+                      src="/showroom-mostruario.jpg" 
+                      alt="Maleta com mostruário de joias de Prata 925 a pronta entrega no atacado" 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/95 via-[#050D0A]/20 to-transparent flex items-end p-4">
+                      <div className="flex items-center gap-2">
+                        <PackageCheck className="w-4 h-4 text-[#25D366]" />
+                        <span className="text-[0.75rem] font-medium text-primary tracking-wide drop-shadow">
+                          Estoque Físico à Pronta Entrega · Conferência no Balcão
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="space-y-4">
                     <div className="flex items-center gap-4 pb-4 border-b border-border-strong/10">
                       <div className="w-12 h-12 rounded-xl bg-[hsl(var(--accent))]/15 flex items-center justify-center text-[hsl(var(--accent))]">
@@ -561,9 +616,31 @@ export default function LpAtenPre() {
                 Localização e Horários do Showroom Pérola Pratas
               </h3>
 
-              <p className="text-secondary text-[0.95rem] max-w-[600px] mx-auto mb-6 font-light">
+              <p className="text-secondary text-[0.95rem] max-w-[600px] mx-auto mb-8 font-light">
                 Nosso showroom está preparado para receber você com total conforto, segurança e estacionamento fácil em Londrina e região.
               </p>
+
+              {/* Galeria Visual do Espaço */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+                <div className="overflow-hidden rounded-xl border border-border-strong/15 aspect-[4/3] relative group shadow-md">
+                  <img src="/showroom-escritorio.jpg" alt="Showroom e Escritório Pérola Pratas" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/90 via-transparent to-transparent flex items-end p-3">
+                    <span className="text-[0.72rem] font-medium text-primary">Sala de Atendimento VIP</span>
+                  </div>
+                </div>
+                <div className="overflow-hidden rounded-xl border border-border-strong/15 aspect-[4/3] relative group shadow-md">
+                  <img src="/showroom-cafe.jpg" alt="Cantinho do Café Pérola Pratas" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/90 via-transparent to-transparent flex items-end p-3">
+                    <span className="text-[0.72rem] font-medium text-primary">Cantinho do Café</span>
+                  </div>
+                </div>
+                <div className="overflow-hidden rounded-xl border border-border-strong/15 aspect-[4/3] relative group shadow-md">
+                  <img src="/showroom-mostruario.jpg" alt="Mostruário de Prata 925" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050D0A]/90 via-transparent to-transparent flex items-end p-3">
+                    <span className="text-[0.72rem] font-medium text-primary">Pronta Entrega de Joias</span>
+                  </div>
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-[500px] mx-auto text-left mb-8">
                 <div className="p-4 rounded-xl bg-surface-1/70 border border-border-strong/10">
