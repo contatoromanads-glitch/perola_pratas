@@ -3,36 +3,37 @@
 @tailwind utilities;
 
 /* ──────────────────────────────────────────────────────────
-   DESIGN TOKENS — Pérola Pratas · Problem-Solver + Brand Identity
-   Dark emerald premium palette · editorial typography
+   DESIGN TOKENS — Pérola Pratas · Identidade Oficial
+   Dark Emerald Luxury · Joalheria em Prata 925
    ────────────────────────────────────────────────────────── */
 :root {
-  /* Surfaces (escuro, base) */
-  --surface-0: 160 60% 6%;     /* page base / footer */
-  --surface-1: 160 50% 10%;    /* primary section bg */
-  --surface-2: 160 45% 14%;    /* card surface */
-  --surface-3: 160 40% 18%;    /* elevated / hover */
-  --surface-light: 160 40% 12%;/* marquee / contrast band */
+  /* Surfaces (Dark Emerald Nobre — DNA oficial da Pérola Pratas) */
+  --surface-0: 160 55% 5%;     /* #06110C - Base esmeralda profunda */
+  --surface-1: 160 45% 8%;     /* #0B1C14 - Fundo de seções */
+  --surface-2: 160 40% 12%;    /* #12281D - Cards nobres */
+  --surface-3: 160 35% 16%;    /* #183326 - Superfícies elevadas */
+  --surface-light: 160 30% 14%;
 
-  /* Text */
-  --text-primary:   150 40% 96%;
-  --text-secondary: 150 25% 82%;
-  --text-tertiary:  150 20% 70%;
-  --text-muted:     150 15% 60%;
+  /* Textos (Prata Pura & Seda) */
+  --text-primary:   150 30% 96%; /* Prata espelhada límpida */
+  --text-secondary: 150 20% 82%; /* Prata suave fosca */
+  --text-tertiary:  150 15% 68%; /* Prata mineral */
+  --text-muted:     150 12% 52%;
 
-  /* Brand — esmeralda */
-  --accent:        160 70% 45%;
-  --accent-hover:  160 75% 38%;
-  --accent-soft:   160 60% 72%;
-  --accent-on:     160 60%  8%;
+  /* Brand Esmeralda Pérola (Saturado na medida nobre, zero neon) */
+  --accent:        160 60% 36%;  /* #1B6E55 - Verde esmeralda rico da marca */
+  --accent-hover:  160 64% 30%;  /* #165B46 */
+  --accent-soft:   160 45% 72%;  /* #97D9C3 - Prata esmeralda sutil para itálicos */
+  --accent-gold:   38 40% 65%;   /* #C5B28A - Toque sutil de selo de autenticidade */
+  --accent-on:     150 30% 98%;
 
-  /* Borders */
-  --border-subtle: 150 30% 100%;
-  --border-strong: 150 30% 100%;
+  /* Borders Metálicas com toque esmeralda */
+  --border-subtle: 160 25% 18%;
+  --border-strong: 160 25% 26%;
 
   /* Semantic */
-  --danger: 0 72% 55%;
-  --success: 145 60% 45%;
+  --danger: 0 65% 50%;
+  --success: 160 50% 36%;
 
   /* Legacy aliases */
   --bg-a: var(--surface-2);
@@ -62,9 +63,8 @@ html {
 body {
   font-family: 'Jost', system-ui, sans-serif;
   background:
-    radial-gradient(ellipse 80% 60% at 12% 18%, hsl(var(--accent) / 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 80% at 92% 82%, hsl(160 70% 30% / 0.10) 0%, transparent 60%),
-    linear-gradient(165deg, hsl(var(--surface-1)) 0%, hsl(var(--surface-0)) 60%, hsl(var(--surface-1)) 100%);
+    radial-gradient(ellipse 70% 45% at 50% 0%, hsl(160 60% 16% / 0.22) 0%, transparent 65%),
+    linear-gradient(180deg, hsl(var(--surface-0)) 0%, hsl(var(--surface-1)) 50%, hsl(var(--surface-0)) 100%);
   background-attachment: fixed;
   color: hsl(var(--text-primary));
   min-height: 100vh;
@@ -84,10 +84,10 @@ p {
 }
 
 /* ──────────────────────────────────────────────────────────
-   ACCESSIBILITY
+   ACCESSIBILITY & FOCUS
    ────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid hsl(var(--accent));
+  outline: 2px solid hsl(var(--accent-soft));
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -109,82 +109,18 @@ p {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: hsl(var(--surface-0)); }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--accent) / 0.5);
+  background: hsl(var(--accent) / 0.4);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover { background: hsl(var(--accent)); }
-::selection { background: hsl(var(--accent)); color: hsl(var(--accent-on)); }
-
-/* ──────────────────────────────────────────────────────────
-   ANIMATIONS
-   ────────────────────────────────────────────────────────── */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(32px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px hsl(var(--accent) / 0.15); }
-  50%      { box-shadow: 0 0 40px hsl(var(--accent) / 0.35); }
-}
-@keyframes counter-slide {
-  from { transform: translateY(100%); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-@keyframes blurReveal {
-  0% { opacity: 0; filter: blur(12px); transform: translateY(20px) scale(0.97); }
-  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
-}
-@keyframes slidePane {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(5%, 3%) scale(1.05); }
-  100% { transform: translate(-2%, -4%) scale(0.98); }
-}
-@keyframes orbFloat {
-  0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.5; }
-  33% { transform: translate(5%, 5%) scale(1.1) rotate(5deg); opacity: 0.7; }
-  66% { transform: translate(-3%, 8%) scale(0.95) rotate(-3deg); opacity: 0.6; }
-  100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.5; }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* ──────────────────────────────────────────────────────────
-   REVEAL on scroll
-   ────────────────────────────────────────────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.12s; }
-.reveal-delay-2 { transition-delay: 0.24s; }
-.reveal-delay-3 { transition-delay: 0.36s; }
-.reveal-delay-4 { transition-delay: 0.48s; }
+::selection { background: hsl(var(--accent)); color: #FFFFFF; }
 
 /* ──────────────────────────────────────────────────────────
    LOGO FILTER
    ────────────────────────────────────────────────────────── */
 .logo-img {
   filter: brightness(0) invert(1);
-  opacity: 0.92;
+  opacity: 0.95;
 }
 
 /* ──────────────────────────────────────────────────────────
@@ -196,60 +132,44 @@ p {
   font-weight: 700;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: hsl(var(--accent));
+  color: hsl(var(--accent-soft));
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--accent-soft)) 50%, hsl(38 80% 85%) 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, hsl(var(--accent-soft)) 50%, #E2E8F0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.text-strike {
-  position: relative;
-  display: inline-block;
-}
-.text-strike::after {
-  content: '';
-  position: absolute;
-  left: -4px;
-  right: -4px;
-  top: 50%;
-  height: 3px;
-  background: hsl(var(--danger));
-  border-radius: 2px;
-  transform: rotate(-2deg);
-}
-
 /* ──────────────────────────────────────────────────────────
-   BUTTONS
+   BUTTONS (Equilibrados: Cor da Marca sem Neon)
    ────────────────────────────────────────────────────────── */
 .btn-whatsapp {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
-  min-height: 52px;
-  background: #25D366;
-  color: #fff;
+  min-height: 50px;
+  background: #1B6E55;
+  color: #FFFFFF;
   font-family: 'Jost', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.9rem 2.2rem;
-  border: none;
+  padding: 0.85rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.25);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 .btn-whatsapp:hover {
-  background: #20BA5A;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 36px rgba(37, 211, 102, 0.35);
+  background: #238568;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
 }
 
 .btn-primary {
@@ -257,144 +177,82 @@ p {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 50px;
+  min-height: 48px;
   background: hsl(var(--accent));
-  color: hsl(var(--accent-on));
+  color: #FFFFFF;
   font-family: 'Jost', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 0.9rem 2.4rem;
-  border: 1.5px solid hsl(var(--accent));
+  padding: 0.85rem 2.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.25s;
-  box-shadow: 0 8px 24px hsl(var(--accent) / 0.2);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 .btn-primary:hover {
   background: hsl(var(--accent-hover));
-  border-color: hsl(var(--accent-hover));
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px hsl(var(--accent) / 0.3);
 }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px;
-  background: transparent;
+  min-height: 48px;
+  background: rgba(255, 255, 255, 0.03);
   color: hsl(var(--text-primary));
   font-family: 'Jost', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  padding: 0.9rem 2.4rem;
-  border: 1.5px solid hsl(var(--border-strong) / 0.25);
+  padding: 0.85rem 2.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.25s;
+  transition: all 0.2s ease;
 }
 .btn-outline:hover {
-  border-color: hsl(var(--accent));
-  color: hsl(var(--accent));
-  background: hsl(var(--accent) / 0.06);
+  border-color: hsl(var(--accent-soft));
+  color: #FFFFFF;
+  background: hsl(var(--accent) / 0.1);
 }
 
 /* ──────────────────────────────────────────────────────────
-   PROBLEM CARD
+   CARDS & CONTAINERS (Dark Emerald Profundo)
    ────────────────────────────────────────────────────────── */
-.problem-card {
-  background: hsl(var(--surface-2) / 0.7);
-  border: 1px solid hsl(var(--border-strong) / 0.08);
-  border-radius: 12px;
-  padding: 2rem 1.75rem;
-  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-  position: relative;
-  overflow: hidden;
-}
-.problem-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: hsl(var(--danger));
-  opacity: 0.6;
-  border-radius: 12px 12px 0 0;
-}
-.problem-card:hover {
-  transform: translateY(-4px);
-  border-color: hsl(var(--danger) / 0.3);
-  box-shadow: 0 20px 50px hsl(0 0% 0% / 0.3);
-}
-
+.problem-card,
 .solution-card {
-  background: hsl(var(--surface-2) / 0.7);
-  border: 1px solid hsl(var(--border-strong) / 0.08);
+  background: hsl(var(--surface-2));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 2rem 1.75rem;
-  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-  position: relative;
-  overflow: hidden;
+  transition: all 0.25s ease;
 }
-.solution-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: hsl(var(--accent));
-  opacity: 0.7;
-  border-radius: 12px 12px 0 0;
-}
+.problem-card:hover,
 .solution-card:hover {
-  transform: translateY(-4px);
-  border-color: hsl(var(--accent) / 0.3);
-  box-shadow: 0 20px 50px hsl(var(--accent) / 0.1);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
 }
 
-/* ──────────────────────────────────────────────────────────
-   STAT CARD
-   ────────────────────────────────────────────────────────── */
 .stat-card {
   background: hsl(var(--surface-1));
-  border: 1px solid hsl(var(--border-strong) / 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.75rem;
   text-align: center;
-  transition: all 0.3s;
+  transition: all 0.2s ease;
 }
 .stat-card:hover {
-  border-color: hsl(var(--accent) / 0.3);
+  border-color: hsl(var(--accent-soft) / 0.3);
   background: hsl(var(--surface-2));
 }
 
-/* ──────────────────────────────────────────────────────────
-   STEP CONNECTOR
-   ────────────────────────────────────────────────────────── */
-.step-number {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1.1rem;
-  background: hsl(var(--accent) / 0.12);
-  color: hsl(var(--accent));
-  border: 2px solid hsl(var(--accent) / 0.3);
-  flex-shrink: 0;
-}
-
-/* ──────────────────────────────────────────────────────────
-   SVG
-   ────────────────────────────────────────────────────────── */
 svg { vertical-align: middle; }

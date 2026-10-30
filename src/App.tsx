@@ -26,8 +26,9 @@ export default function App() {
     <BrowserRouter>
       <NormalizeUrl>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<LpVip />} />
           <Route path="/lp" element={<LpVip />} />
+          <Route path="/home-legada" element={<Index />} />
           <Route path="/lpatenpre" element={<LpAtenPre />} />
           <Route path="/links" element={<Links />} />
           <Route path="/linkbio" element={<Links />} />
