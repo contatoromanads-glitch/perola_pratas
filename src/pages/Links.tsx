@@ -36,7 +36,7 @@ const LINKS: LinkItem[] = [
     icon: MessageCircle,
     label: 'WhatsApp Atendimento',
     description: 'Fale com nosso time',
-    href: 'https://wa.me/5543991312661?text=Ol%C3%A1%21%20Vim%20pelo%20link%20da%20bio%20da%20P%C3%A9rola%20Pratas.',
+    href: 'https://wa.me/554396784294?text=Ol%C3%A1%21%20Vim%20pelo%20link%20da%20bio%20da%20P%C3%A9rola%20Pratas.',
     external: true,
   },
   {

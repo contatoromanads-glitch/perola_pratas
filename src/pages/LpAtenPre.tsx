@@ -21,7 +21,7 @@ import {
   ShieldCheck
 } from 'lucide-react'
 
-const WA_DEST = '5543991312661'
+const WA_DEST = '554396784294'
 const WA_PHRASE = 'Olá, vim do Google, quero conhecer a Pérola Pratas'
 const WA_LINK = `https://wa.me/${WA_DEST}?text=${encodeURIComponent(WA_PHRASE)}`
 
@@ -674,7 +674,7 @@ export default function LpAtenPre() {
 
               <CtaButton 
                 label="Agendar Atendimento Presencial no WhatsApp"
-                subtitle="Destino direto: (43) 99131-2661"
+                subtitle="Destino direto: (43) 99678-4294"
               />
             </div>
 
@@ -774,7 +774,7 @@ export default function LpAtenPre() {
               className="text-[0.82rem] text-tertiary hover:text-primary transition-colors flex items-center gap-2"
             >
               <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
-              WhatsApp: (43) 99131-2661
+              WhatsApp: (43) 99678-4294
             </a>
           </div>
 

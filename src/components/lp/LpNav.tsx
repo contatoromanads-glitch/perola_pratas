@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WA_COMMERCIAL = 'https://wa.me/5543991312661?text=Ol%C3%A1!%20Sou%20lojista%20%2F%20revendedora%20e%20gostaria%20de%20acessar%20as%20condi%C3%A7%C3%B5es%20de%20atacado%20da%20P%C3%A9rola%20Pratas.'
+const WA_COMMERCIAL = 'https://wa.me/554396784294?text=Ol%C3%A1!%20Sou%20lojista%20%2F%20revendedora%20e%20gostaria%20de%20acessar%20as%20condi%C3%A7%C3%B5es%20de%20atacado%20da%20P%C3%A9rola%20Pratas.'
 
 export default function LpNav() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WA_DEST = '5543991312661'
+const WA_DEST = '554396784294'
 const WA_LINK = `https://wa.me/${WA_DEST}?text=${encodeURIComponent('Olá! Vim pelo site da Pérola Pratas e gostaria de falar com um consultor comercial de atacado.')}`
 
 export default function LpFloatingWhatsApp() {

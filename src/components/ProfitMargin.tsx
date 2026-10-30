@@ -1,72 +1,87 @@
-import { motion } from 'framer-motion'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { TrendingUp, Sparkles, CheckCircle2 } from 'lucide-react';
 
 const EXAMPLES = [
-  { item: 'Anel Solitário', cost: 'R$29,90', sell: 'R$89,70', profit: 'R$59,80' },
-  { item: 'Colar Ponto de Luz', cost: 'R$49,90', sell: 'R$149,70', profit: 'R$99,80' },
-  { item: 'Trio de Brinco', cost: 'R$19,90', sell: 'R$59,70', profit: 'R$39,80' },
-]
+  { 
+    item: 'Anel Solitário Cravejado', 
+    category: 'Prata 925 com Zircônia 6mm',
+    cost: 'R$ 59,90', 
+    sell: 'R$ 139,90', 
+    profit: 'R$ 80,00' 
+  },
+  { 
+    item: 'Colar Veneziana V15 + Pingente', 
+    category: 'Prata 925 Maciça 45cm',
+    cost: 'R$ 69,90', 
+    sell: 'R$ 159,90', 
+    profit: 'R$ 90,00' 
+  },
+  { 
+    item: 'Trio de Argolinhas Click Cravejadas', 
+    category: 'Prata 925 com Microzircônias',
+    cost: 'R$ 49,90', 
+    sell: 'R$ 119,90', 
+    profit: 'R$ 70,00' 
+  },
+];
 
 export default function ProfitMargin() {
   return (
-    <section id="margem" className="py-20 md:py-28 px-5 md:px-8 relative z-10 bg-surface-1">
-      <div className="max-w-[1000px] mx-auto">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
-          className="text-center max-w-[640px] mx-auto mb-14"
-        >
-          <span className="section-label block mb-4">Simulação de Revenda</span>
-          <h2 className="font-serif font-normal text-[clamp(2.5rem,4.5vw,3.5rem)] tracking-[-0.02em] mb-5 leading-[1.05]">
-            Potencial de <span className="gradient-text">Margem no Atacado</span>
+    <section id="margem" className="py-20 md:py-28 px-5 md:px-8 relative z-10 bg-[#06110C] border-b border-emerald-500/10">
+      <div className="max-w-[1160px] mx-auto">
+        <div className="text-center max-w-[680px] mx-auto mb-14">
+          <span className="text-[0.72rem] font-semibold tracking-widest uppercase text-emerald-400 mb-3 block">
+            Margem & Precificação no Varejo
+          </span>
+          <h2 className="font-serif font-normal text-[clamp(2.2rem,4vw,3.2rem)] tracking-tight mb-4 text-slate-100 leading-[1.12]">
+            Competitividade real com preço direto de fábrica
           </h2>
-          <p className="text-secondary text-[1.02rem] leading-[1.75]">
-            Trabalhamos com preço direto de fábrica para dar competitividade ao seu mix de produtos. Veja uma sugestão de precificação praticada no mercado:
+          <p className="text-slate-400 text-[1.02rem] leading-relaxed font-light">
+            Trabalhamos com custos de atacado calculados para permitir precificação equilibrada na sua loja ou mostruário. Veja exemplos médios com base em nosso catálogo de pronta entrega:
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {EXAMPLES.map((ex, i) => (
             <motion.div
               key={ex.item}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              whileHover={{ y: -5 }}
-              className="bg-surface-2/50 border border-white/5 rounded-2xl p-6 md:p-8 relative overflow-hidden group"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="bg-[#0B1B14]/80 border border-emerald-500/15 rounded-xl p-6 sm:p-7 relative overflow-hidden group hover:border-emerald-500/35 transition-all"
             >
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                </svg>
+              <div className="flex items-center gap-2 mb-3 text-emerald-400">
+                <Sparkles className="w-4 h-4" />
+                <span className="text-[0.7rem] font-semibold tracking-wider uppercase text-slate-400">{ex.category}</span>
               </div>
               
-              <h3 className="font-serif text-xl text-primary mb-6 relative z-10">{ex.item}</h3>
+              <h3 className="font-serif text-[1.3rem] text-slate-100 font-medium mb-6">{ex.item}</h3>
               
-              <div className="space-y-4 relative z-10">
-                <div className="flex justify-between items-center pb-3 border-b border-white/5">
-                  <span className="text-secondary text-sm">Seu Custo Atacado</span>
-                  <span className="text-primary font-medium">{ex.cost}</span>
+              <div className="space-y-3.5 mb-6">
+                <div className="flex justify-between items-center pb-2.5 border-b border-emerald-500/10 text-sm">
+                  <span className="text-slate-400 font-light">Custo Fábrica (Atacado)</span>
+                  <span className="text-slate-200 font-medium font-mono">{ex.cost}</span>
                 </div>
-                <div className="flex justify-between items-center pb-3 border-b border-white/5">
-                  <span className="text-secondary text-sm">Venda Sugerida</span>
-                  <span className="text-primary font-medium">{ex.sell}</span>
+                <div className="flex justify-between items-center pb-2.5 border-b border-emerald-500/10 text-sm">
+                  <span className="text-slate-400 font-light">Venda Sugerida Varejo</span>
+                  <span className="text-slate-200 font-medium font-mono">{ex.sell}</span>
                 </div>
-                <div className="flex justify-between items-center pt-2">
-                  <span className="text-[hsl(var(--accent))] text-sm font-semibold uppercase tracking-wider">Margem Bruta Estimada</span>
-                  <span className="text-[hsl(var(--accent))] font-bold text-xl">{ex.profit}</span>
+                <div className="flex justify-between items-center pt-1 text-sm">
+                  <span className="text-emerald-400 font-semibold tracking-wide">Margem Bruta Estimada</span>
+                  <span className="text-emerald-300 font-bold text-lg font-mono">{ex.profit}</span>
                 </div>
+              </div>
+
+              <div className="pt-4 border-t border-emerald-500/15 flex items-center gap-2 text-[0.75rem] text-slate-400">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                <span>Giro contínuo e reposição imediata</span>
               </div>
             </motion.div>
           ))}
         </div>
-
-        <p className="text-xs text-secondary/70 text-center max-w-[800px] mx-auto mt-8 leading-relaxed">
-          * Os valores e preços de revenda apresentados acima são estimativas ilustrativas baseadas em sugestões de mercado. A Pérola Pratas não garante lucros, faturamento ou retorno financeiro específico. Os resultados comerciais dependem exclusivamente da estratégia, público e gestão de cada revendedor autônomo ou lojista.
-        </p>
       </div>
     </section>
-  )
+  );
 }

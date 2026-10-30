@@ -1,10 +1,10 @@
 import React from "react";
 import { ArrowRight, Award, CheckCircle2 } from "lucide-react";
 
-const WA_LINK = "https://wa.me/5543991312661?text=Ol%C3%A1!%20Sou%20lojista%20%2F%20revendedora%20e%20gostaria%20de%20acessar%20o%20cat%C3%A1logo%20de%20atacado%20da%20P%C3%A9rola%20Pratas.";
+const WA_LINK = "https://wa.me/554396784294?text=Ol%C3%A1!%20Sou%20lojista%20%2F%20revendedora%20e%20gostaria%20de%20acessar%20o%20cat%C3%A1logo%20de%20atacado%20da%20P%C3%A9rola%20Pratas.";
 
 const BADGES = [
-  { value: "R$ 899", label: "Pedido Mínimo", sub: "Até 5x sem juros" },
+  { value: "R$ 899", label: "Pedido Mínimo", sub: "Até 3x sem juros" },
   { value: "+1.200", label: "Modelos Ativos", sub: "Pronta-entrega" },
   { value: "24h", label: "Despacho Rápido", sub: "Envio com seguro total" },
   { value: "925", label: "Prata Legítima", sub: "Garantia vitalícia do metal" },
@@ -56,7 +56,7 @@ export default function LpHero() {
         {/* Caixa de Regra Comercial (Ancoragem em R$ 899) */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-2/90 border border-border-subtle text-xs sm:text-sm text-secondary font-mono mb-8">
           <span className="text-[hsl(var(--accent-soft))] font-bold">Condição de Atacado:</span>
-          <span>Pedido mínimo de <strong className="text-primary">R$ 899,00</strong> em até 5x sem juros. Venda exclusiva para revenda.</span>
+          <span>Pedido mínimo de <strong className="text-primary">R$ 899,00</strong> em até 3x sem juros. Venda exclusiva para revenda.</span>
         </div>
 
         {/* Botões de Ação com o Verde Esmeralda da Marca */}
