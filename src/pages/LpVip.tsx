@@ -2,6 +2,7 @@ import LpNav from '@/components/lp/LpNav'
 import LpHero from '@/components/lp/LpHero'
 import LeadTriagem from '@/components/lp/LeadTriagem'
 import MinimumOrder from '@/components/MinimumOrder'
+import GoogleReviews from '@/components/lp/GoogleReviews'
 import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
 import LpFloatingWhatsApp from '@/components/lp/LpFloatingWhatsApp'
@@ -15,6 +16,7 @@ export default function LpVip() {
         <div id="lucro" />
         <LeadTriagem />
         <MinimumOrder />
+        <GoogleReviews />
         <FAQ />
         <div id="contato" />
       </main>
