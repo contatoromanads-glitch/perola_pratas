@@ -2,22 +2,55 @@ import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 
 export default function ProductPreview() {
-  const images = [
-    { src: '/gallery-1.png', alt: 'Colar Ponto Luz Redondo Crav G', label: 'Colares & Gargantilhas', desc: 'Venezianas italianas e pingentes maciços' },
-    { src: '/brinco-trio.jpg', alt: 'Brinco Trio Estrela', label: 'Brincos & Argolas', desc: 'Tarraxas reforçadas e pedras cravadas' },
-    { src: '/anel-borboleta.jpg', alt: 'Anel Borboletas Renda Italiana', label: 'Anéis & Solitários', desc: 'Aros 14 ao 22 com acabamento de alta joalheria' },
+  const products = [
+    { 
+      src: '/produtos/16715282306.jpg', 
+      alt: 'Colar Ponto Luz Caixa Alta Cristal', 
+      label: 'Colar Ponto de Luz', 
+      desc: 'Veneziana 45cm em Prata 925 com zircônia cristal' 
+    },
+    { 
+      src: '/produtos/16553786499.jpg', 
+      alt: 'Bracelete Redondo Liso em Prata 925', 
+      label: 'Bracelete Rígido', 
+      desc: 'Prata 925 maciça com acabamento polido espelhado' 
+    },
+    { 
+      src: '/produtos/16670004027.jpg', 
+      alt: 'Pulseira Olho Grego Prata 925', 
+      label: 'Pulseira Proteção', 
+      desc: 'Elo refinado com berloque esmaltado e fecho italiano' 
+    },
+    { 
+      src: '/produtos/16639700878.jpg', 
+      alt: 'Brinco Ponto de Luz 08mm', 
+      label: 'Brinco Ponto de Luz', 
+      desc: 'Pedra de 8mm em garra fina de alta joalheria' 
+    },
+    { 
+      src: '/produtos/16460515197.jpg', 
+      alt: 'Colar Cora Trevo 2 em 1', 
+      label: 'Colar Versátil 2 em 1', 
+      desc: 'Sistema magnético de trevo para coração' 
+    },
+    { 
+      src: '/produtos/16622165089.jpg', 
+      alt: 'Conjunto Ponto Luz Cristal', 
+      label: 'Conjunto Clássico', 
+      desc: 'Brinco e gargantilha harmonizados de alto giro' 
+    },
   ];
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.15 }
+      transition: { staggerChildren: 0.1 }
     }
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: { opacity: 0, y: 20 },
     show: { 
       opacity: 1, 
       y: 0,
@@ -30,13 +63,13 @@ export default function ProductPreview() {
       <div className="max-w-[1160px] mx-auto">
         <div className="text-center max-w-[640px] mx-auto mb-14">
           <span className="text-[0.72rem] font-semibold tracking-widest uppercase text-emerald-400 mb-3 block">
-            Mostruário de Pronta Entrega
+            Mostruário Oficial de Fábrica
           </span>
           <h2 className="font-serif font-normal text-[clamp(2.2rem,4vw,3.2rem)] tracking-tight mb-4 text-slate-100 leading-[1.12]">
-            Acabamento espelhado e padrão alta joalheria
+            Peças do catálogo real com pronta-entrega
           </h2>
           <p className="text-slate-400 text-[1.02rem] leading-relaxed font-light">
-            Joias 100% em Prata 925 legítima, fundidas sem níquel, antialérgicas e com laudo de pureza do metal.
+            Modelos de alto giro comercial com garantia vitalícia do metal e timbragem 925. Mais de 1.200 opções disponíveis no atacado.
           </p>
         </div>
 
@@ -45,27 +78,32 @@ export default function ProductPreview() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+          className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6"
         >
-          {images.map((img) => (
+          {products.map((item) => (
             <motion.div
-              key={img.alt}
+              key={item.alt}
               variants={itemVariants}
-              className="group relative overflow-hidden rounded-xl aspect-[4/5] bg-[#0B1B14] border border-emerald-500/15 hover:border-emerald-500/35 transition-all shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+              className="group relative overflow-hidden rounded-xl bg-[#0B1B14] border border-emerald-500/15 hover:border-emerald-500/35 transition-all shadow-xl"
             >
-              <img
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#06110C] via-[#06110C]/40 to-transparent pointer-events-none" />
-              <div className="absolute bottom-5 left-5 right-5 pointer-events-none">
-                <span className="text-[0.68rem] font-semibold tracking-[0.2em] uppercase text-emerald-400 block mb-1">
-                  {img.label}
+              <div className="aspect-square overflow-hidden bg-[#06110C]">
+                <img
+                  src={item.src}
+                  alt={item.alt}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                />
+              </div>
+              <div className="p-3.5 sm:p-4 border-t border-emerald-500/10">
+                <span className="text-[0.65rem] font-semibold tracking-wider uppercase text-emerald-400 block mb-1">
+                  {item.label}
                 </span>
-                <p className="text-slate-100 text-[0.95rem] font-serif font-medium">{img.desc}</p>
-                <span className="text-slate-400 text-[0.72rem] block mt-1">Prata 925 · Garantia Vitalícia</span>
+                <p className="text-slate-200 text-[0.82rem] sm:text-sm font-serif font-medium line-clamp-1">
+                  {item.alt}
+                </p>
+                <span className="text-slate-400 text-[0.7rem] block mt-0.5 font-light">
+                  Prata 925 Legítima
+                </span>
               </div>
             </motion.div>
           ))}

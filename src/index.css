@@ -256,3 +256,9 @@ p {
 }
 
 svg { vertical-align: middle; }
+
+/* Desativa o botão flutuante legado e torto injetado pelo GTM (com número antigo) para evitar duplicação */
+.whatsapp-button,
+#balloon {
+  display: none !important;
+}

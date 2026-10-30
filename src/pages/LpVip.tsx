@@ -8,9 +8,9 @@ import LpFloatingWhatsApp from '@/components/lp/LpFloatingWhatsApp'
 
 export default function LpVip() {
   return (
-    <div className="min-h-screen bg-[#080B11] text-slate-100 flex flex-col selection:bg-emerald-500/30 selection:text-white">
+    <div className="min-h-screen bg-[#080B11] text-slate-100 flex flex-col selection:bg-emerald-500/30 selection:text-white overflow-x-hidden w-full max-w-full">
       <LpNav />
-      <main className="flex-1">
+      <main className="flex-1 overflow-x-hidden w-full max-w-full">
         <LpHero />
         <div id="lucro" />
         <LeadTriagem />

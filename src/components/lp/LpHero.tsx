@@ -25,8 +25,8 @@ export default function LpHero() {
     <section className="min-h-[88svh] flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 md:px-10 relative overflow-hidden bg-surface-0 text-center border-b border-border-subtle">
       
       {/* ── Iluminação Esmeralda Suave da Pérola Pratas (Sem Neon) ── */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[380px] bg-[radial-gradient(ellipse_at_top,hsl(var(--accent)/0.18)_0%,transparent_70%)]" />
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden max-w-full">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[800px] h-[380px] bg-[radial-gradient(ellipse_at_top,hsl(var(--accent)/0.18)_0%,transparent_70%)]" />
       </div>
 
       {/* ── Conteúdo Central ── */}
@@ -60,7 +60,7 @@ export default function LpHero() {
         </div>
 
         {/* Botões de Ação com o Verde Esmeralda da Marca */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto mb-12">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto mb-10">
           <button
             onClick={scrollToTriagem}
             className="btn-primary !w-full sm:!w-auto !py-4 !px-8 !rounded-xl !text-xs sm:!text-sm !font-semibold !tracking-wider !uppercase cursor-pointer"
@@ -79,6 +79,24 @@ export default function LpHero() {
           >
             <span>Falar com Consultor no WhatsApp</span>
           </a>
+        </div>
+
+        {/* Banner Editorial de Alta Joalheria com o Clássico Colar Gota Cristal */}
+        <div className="w-full max-w-[940px] mb-10 rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl relative group bg-[#0B1B14]">
+          <img
+            src="/editorial/hero-mostruario-luxo.jpg"
+            alt="Coleção de Joias em Prata 925 com Colar Gota Cristal Pérola Pratas"
+            className="w-full h-[260px] sm:h-[360px] md:h-[400px] object-cover group-hover:scale-[1.02] transition-transform duration-700"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#06110C] via-transparent to-transparent pointer-events-none" />
+          <div className="absolute bottom-4 left-5 right-5 flex items-center justify-between pointer-events-none">
+            <span className="text-[0.72rem] font-semibold text-emerald-400 uppercase tracking-widest font-mono">
+              Alta Joalheria em Prata 925 • Padrão Fábrica
+            </span>
+            <span className="hidden sm:inline-block text-[0.72rem] text-slate-300 font-light">
+              Gota Cristal Solitária & Cravação em Garra Fina 925
+            </span>
+          </div>
         </div>
 
         {/* Diferenciais Oficiais da Fábrica */}

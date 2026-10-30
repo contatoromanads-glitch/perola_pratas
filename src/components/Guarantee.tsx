@@ -58,7 +58,7 @@ export default function Guarantee() {
           >
             <div className="aspect-[4/5] md:aspect-square rounded-3xl overflow-hidden relative">
               <img 
-                src="/gallery-2.png" 
+                src="/produtos/reais/colar-veludo-verde-real.jpeg" 
                 alt="Garantia Prata 925" 
                 loading="lazy"
                 className="w-full h-full object-cover"

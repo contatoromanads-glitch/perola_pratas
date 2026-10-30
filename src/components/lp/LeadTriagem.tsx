@@ -51,7 +51,7 @@ export default function LeadTriagem({ className = '' }: LeadTriagemProps) {
     '3500': {
       label: 'R$ 3.500,00+',
       tag: 'Coleção Estruturada',
-      parcelamento: 'Faturamento especial PJ ou até 3x sem juros',
+      parcelamento: 'Condição especial de parcelamento ou desconto agressivo à vista',
       totalPecas: '50 a 65 peças de fábrica',
       composicao: [
         { item: '16 a 20 Anéis de Alto Padrão', sub: 'Solitários nobres e peças cravejadas' },
